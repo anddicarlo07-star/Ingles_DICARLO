@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI English Master — Trilha Completa</title>
+<title>AI English Master — Imersão & Gamificação</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,600&display=swap');
 
@@ -19,6 +19,7 @@
   --gold: #FFC857;
   --success: #22C55E;
   --danger: #EF4444;
+  --kids-color: #FF70A6;
   --level-color: #34D399;
   --level-color-dark: #059669;
   --radius-lg: 22px;
@@ -38,9 +39,9 @@ button { font-family: inherit; cursor: pointer; }
 input, select { font-family: inherit; }
 .hidden { display: none !important; }
 
-/* ===================== Modais de onboarding ===================== */
+/* ===================== Modais e Overlays ===================== */
 .modal-overlay {
-  position: fixed; inset: 0; background: rgba(27, 37, 89, 0.55); backdrop-filter: blur(3px);
+  position: fixed; inset: 0; background: rgba(27, 37, 89, 0.55); backdrop-filter: blur(4px);
   z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px;
 }
 .modal-card {
@@ -54,7 +55,17 @@ input, select { font-family: inherit; }
   margin-bottom: 16px; outline: none; font-size: 1rem; transition: border-color .15s;
 }
 .modal-card input[type="text"]:focus { border-color: var(--primary); }
-.mascot-hero { font-size: 3.2rem; text-align: center; margin-bottom: 6px; }
+.mascot-hero { font-size: 3.5rem; text-align: center; margin-bottom: 8px; }
+
+/* Selector de Perfil */
+.profile-selector { display: flex; gap: 12px; margin-bottom: 20px; }
+.profile-card {
+  flex: 1; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-md);
+  text-align: center; cursor: pointer; transition: all 0.2s;
+}
+.profile-card:hover, .profile-card.active { border-color: var(--primary); background: #F0FBF9; }
+.profile-card .icon { font-size: 2rem; display: block; margin-bottom: 4px; }
+.profile-card b { font-size: 0.95rem; color: var(--ink); }
 
 /* ===================== Botões ===================== */
 .btn {
@@ -66,9 +77,10 @@ input, select { font-family: inherit; }
 .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--primary-dark); }
 .btn-outline { background: white; color: var(--ink); border: 2px solid var(--border); box-shadow: none; }
 .btn-outline:hover { border-color: var(--primary); background: white; }
-.btn-danger { background: var(--coral); box-shadow: 0 4px 0 #d94f4f; }
+.btn-danger { background: var(--coral); box-shadow: 0 4px 0 #d94f4f; color: white; border: none; }
+.btn-kids { background: var(--kids-color); box-shadow: 0 4px 0 #d94b83; }
 
-/* ===================== Shell principal ===================== */
+/* ===================== Layout Principal ===================== */
 #app-shell { display: flex; min-height: 100vh; }
 
 .sidebar {
@@ -98,7 +110,7 @@ nav.side-nav button {
 nav.side-nav button:hover { background: #F0F3FA; }
 nav.side-nav button.active { background: var(--primary); color: white; }
 
-/* ===================== Área principal ===================== */
+/* Área Principal */
 .main-area { flex: 1; padding: 26px 32px; overflow-y: auto; max-width: 980px; }
 
 .level-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
@@ -119,8 +131,8 @@ nav.side-nav button.active { background: var(--primary); color: white; }
   gap: 16px; margin-bottom: 26px; box-shadow: var(--shadow-soft);
 }
 .mascot-banner.boss-banner { background: linear-gradient(120deg, #FFC857, #FB923C); margin-bottom: 18px; }
-.mascot-emoji { font-size: 2.4rem; }
-.mascot-banner p { font-size: 0.88rem; opacity: 0.95; margin-top: 2px; }
+.mascot-emoji { font-size: 2.8rem; }
+.mascot-banner p { font-size: 0.9rem; opacity: 0.95; margin-top: 2px; }
 
 .unit-section { margin-bottom: 40px; }
 .unit-section.locked-unit { opacity: 0.5; }
@@ -128,50 +140,48 @@ nav.side-nav button.active { background: var(--primary); color: white; }
 .unit-header h3 { font-size: 1.25rem; }
 .unit-header p { color: var(--ink-soft); font-size: 0.9rem; margin-top: 2px; }
 
-.path-line { display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; padding: 10px 0; }
+.path-line { display: flex; flex-direction: column; align-items: center; gap: 12px; position: relative; padding: 10px 0; }
 .node-wrap { display: flex; flex-direction: column; align-items: center; }
 .path-node {
-  width: 72px; height: 72px; border-radius: 50%; border: none; background: var(--level-color);
+  width: 76px; height: 76px; border-radius: 50%; border: none; background: var(--level-color);
   box-shadow: 0 6px 0 var(--level-color-dark); display: flex; align-items: center; justify-content: center;
-  font-size: 1.7rem; transition: transform .12s;
+  font-size: 1.8rem; transition: transform .12s;
 }
-.path-node:hover:not(.locked) { transform: translateY(-2px) scale(1.03); }
+.path-node:hover:not(.locked) { transform: translateY(-2px) scale(1.04); }
 .path-node:active:not(.locked) { transform: translateY(4px); box-shadow: 0 2px 0 var(--level-color-dark); }
 .path-node.locked { background: #D9DEE8; box-shadow: 0 6px 0 #B9C1D1; cursor: not-allowed; }
 .path-node.completed { background: var(--success); box-shadow: 0 6px 0 #16803C; }
 .path-node.current { animation: pulseNode 1.6s infinite; }
 @keyframes pulseNode {
   0%, 100% { box-shadow: 0 6px 0 var(--level-color-dark), 0 0 0 0 rgba(52,211,153,0.4); }
-  50% { box-shadow: 0 6px 0 var(--level-color-dark), 0 0 0 10px rgba(52,211,153,0); }
+  50% { box-shadow: 0 6px 0 var(--level-color-dark), 0 0 0 12px rgba(52,211,153,0); }
 }
-.node-label { font-size: 0.72rem; color: var(--ink-soft); font-weight: 700; margin-top: 4px; }
+.node-label { font-size: 0.76rem; color: var(--ink-soft); font-weight: 700; margin-top: 6px; }
 
-/* ===================== Lição overlay ===================== */
+/* ===================== Lição Overlay ===================== */
 #lesson-overlay { z-index: 900; align-items: flex-start; padding: 30px 16px; overflow-y: auto; }
 .lesson-modal { background: var(--panel); border-radius: var(--radius-lg); width: 100%; max-width: 640px; margin: auto; box-shadow: var(--shadow-soft); }
 .lesson-modal-head { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--border); }
 .lesson-modal-head h2 { font-size: 1.15rem; }
 .close-btn { background: none; border: none; font-size: 1.4rem; color: var(--ink-soft); }
 .lesson-inner { padding: 24px; }
-.lesson-help { color: var(--ink-soft); font-size: 0.88rem; margin-bottom: 14px; line-height: 1.5; }
+.lesson-help { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5; }
 .lesson-actions { display: flex; gap: 10px; margin-top: 18px; }
 
-/* Flashcards */
-.flashcard { perspective: 1000px; height: 220px; cursor: pointer; margin-bottom: 10px; }
+/* Flashcards & Shadowing */
+.flashcard { perspective: 1000px; height: 230px; cursor: pointer; margin-bottom: 14px; }
 .flashcard > div { transition: transform .4s; transform-style: preserve-3d; position: relative; width: 100%; height: 100%; }
 .flashcard.flipped > .flash-front { transform: rotateY(180deg); }
 .flash-front, .flash-back {
   position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius-md);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-  background: linear-gradient(150deg, var(--level-color), var(--level-color-dark)); color: white;
+  background: linear-gradient(150deg, var(--level-color), var(--level-color-dark)); color: white; padding: 20px; text-align: center;
 }
 .flash-back { transform: rotateY(180deg); background: linear-gradient(150deg, #FFC857, #FB923C); }
-.flashcard.flipped { }
-.flashcard .flash-back { position: absolute; inset: 0; }
-.flash-emoji { font-size: 3rem; }
-.flash-progress { text-align: center; color: var(--ink-soft); font-size: 0.85rem; margin-bottom: 6px; }
+.flash-emoji { font-size: 3.5rem; }
+.flash-progress { text-align: center; color: var(--ink-soft); font-size: 0.85rem; margin-bottom: 8px; }
 
-/* Quiz */
+/* Quiz & Grid */
 .quiz-progressbar { height: 8px; background: var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 18px; }
 .quiz-progressbar-fill { height: 100%; background: var(--primary); transition: width .3s; }
 .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
@@ -182,63 +192,60 @@ nav.side-nav button.active { background: var(--primary); color: white; }
 .wrong-flash { background: #FEE2E2 !important; border-color: var(--danger) !important; }
 .success-text { color: var(--success); font-weight: 800; }
 .error-text { color: var(--danger); font-weight: 800; }
-#quiz-feedback, #l-feedback, #song-feedback { margin-top: 14px; font-size: 0.92rem; line-height: 1.5; min-height: 20px; }
+#quiz-feedback, #l-feedback, #song-feedback, #shadowing-feedback { margin-top: 14px; font-size: 0.95rem; line-height: 1.5; min-height: 20px; }
 
 .lesson-complete { text-align: center; padding: 20px 6px; }
-.lesson-complete h2 { font-size: 1.5rem; margin-bottom: 8px; }
+.lesson-complete h2 { font-size: 1.6rem; margin-bottom: 8px; }
 .lesson-complete p { color: var(--ink-soft); margin-bottom: 18px; }
 
-/* Listening / input group */
+/* Input Group */
 .input-group { display: flex; gap: 10px; }
 .input-group input { flex: 1; padding: 12px 14px; border: 2px solid var(--border); border-radius: 12px; outline: none; }
 .input-group input:focus { border-color: var(--primary); }
 
-/* Vídeo */
+/* Vídeo & Vídeo Kids */
 .video-frame { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius-md); overflow: hidden; background: #000; }
 .video-frame.small { aspect-ratio: 16/7; }
 
-/* Música / lyrics */
+/* Lyrics */
 .lyric-card { background: #FBF7ED; border: 1px solid #F0E4C4; border-radius: var(--radius-md); padding: 20px; margin-top: 14px; }
-.lyric-text { line-height: 2.4; font-size: 1.02rem; }
+.lyric-text { line-height: 2.4; font-size: 1.05rem; }
 .lyric-blank { border: 2px solid var(--gold); background: white; border-radius: 8px; padding: 4px 8px; font-weight: 700; color: var(--ink); }
 
-/* Chat */
-.chat-box { height: 420px; overflow-y: auto; border: 1px solid var(--border); padding: 16px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 12px; background: #FAFBFE; margin-bottom: 14px; }
+/* Chat Box */
+.chat-box { height: 400px; overflow-y: auto; border: 1px solid var(--border); padding: 16px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 12px; background: #FAFBFE; margin-bottom: 14px; }
 .msg { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-size: 0.95rem; line-height: 1.45; }
 .msg.ai { background: white; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 3px; }
 .msg.user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 3px; }
 .msg.typing { opacity: 0.6; font-style: italic; }
-.correction-note { margin-top: 8px; font-size: 0.78rem; color: #B45309; background: #FEF3C7; padding: 6px 10px; border-radius: 8px; line-height: 1.35; }
+.correction-note { margin-top: 8px; font-size: 0.8rem; color: #B45309; background: #FEF3C7; padding: 6px 10px; border-radius: 8px; line-height: 1.35; }
 
-/* Badges */
+/* Badges Grid */
 .badges-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
 .badge-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; text-align: center; opacity: 0.55; }
 .badge-card.unlocked { opacity: 1; box-shadow: var(--shadow-soft); border-color: var(--gold); }
-.badge-icon { font-size: 2rem; margin-bottom: 6px; }
+.badge-icon { font-size: 2.2rem; margin-bottom: 6px; }
 .badge-card b { display: block; font-size: 0.88rem; margin-bottom: 4px; }
 .badge-card p { font-size: 0.74rem; color: var(--ink-soft); line-height: 1.35; }
 
-/* Toasts */
+/* Toast Notifications */
 #toast-stack { position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1200; }
 .toast { background: var(--ink); color: white; padding: 12px 18px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; opacity: 0; transform: translateX(30px); transition: all .3s; box-shadow: var(--shadow-soft); }
 .toast.show { opacity: 1; transform: translateX(0); }
 
-/* Level up overlay */
+/* Level Up & Confetti */
 #levelup-overlay { z-index: 1100; }
 .levelup-card { background: white; border-radius: var(--radius-lg); padding: 40px; text-align: center; max-width: 420px; position: relative; overflow: hidden; }
-.levelup-card .big-emoji { font-size: 3.4rem; }
+.levelup-card .big-emoji { font-size: 3.5rem; }
 .confetti-piece { position: absolute; top: -10px; width: 8px; height: 14px; opacity: 0.9; animation: fall 1.3s ease-in forwards; }
 @keyframes fall { to { transform: translateY(340px) rotate(360deg); opacity: 0; } }
 
-/* Hearts recovery modal */
-.recovery-card { max-width: 460px; }
-
-/* Sync badge */
+/* Sync Badge */
 .sync-badge { font-size: 0.7rem; padding: 3px 9px; border-radius: 10px; display: inline-block; margin-top: 10px; }
 .sync-badge.on { background: rgba(34, 197, 94, 0.15); color: var(--success); }
 .sync-badge.off { background: rgba(107, 119, 148, 0.12); color: var(--ink-soft); }
 
-/* ===================== Responsivo ===================== */
+/* Responsividade */
 @media (max-width: 900px) {
   #app-shell { flex-direction: column; }
   .sidebar { width: 100%; flex-direction: row; align-items: center; flex-wrap: wrap; padding: 14px 16px; }
@@ -249,25 +256,38 @@ nav.side-nav button.active { background: var(--primary); color: white; }
   .chat-box { height: 320px; }
   .modal-card { padding: 22px; }
 }
-
 </style>
 </head>
 <body>
 
 <div id="toast-stack"></div>
 
-<!-- Modal 1: Boas-vindas -->
+<!-- Modal 1: Boas-vindas & Perfil -->
 <div id="modal-auth" class="modal-overlay">
   <div class="modal-card" style="text-align:center;">
     <div class="mascot-hero">🦉</div>
     <h2>AI English Master</h2>
-    <p class="sub">Sua trilha gamificada para aprender inglês do zero até a fluência — com gramática, vocabulário, escuta, vídeos e música.</p>
+    <p class="sub">Escolha a experiência de aprendizado ideal para você começar:</p>
+    
+    <div class="profile-selector">
+      <div class="profile-card active" id="mode-adult" onclick="selectProfile('adult')">
+        <span class="icon">🎓</span>
+        <b>Modo Geral</b>
+        <p style="font-size:0.75rem; color:var(--ink-soft);">Iniciante ao Avançado (CEFR)</p>
+      </div>
+      <div class="profile-card" id="mode-kids" onclick="selectProfile('kids')">
+        <span class="icon">🎨</span>
+        <b>Modo Kids</b>
+        <p style="font-size:0.75rem; color:var(--ink-soft);">Infantil, Intuitivo e Divertido</p>
+      </div>
+    </div>
+
     <input type="text" id="user-name-input" placeholder="Digite seu nome para começar">
-    <button class="btn" style="width:100%;" onclick="startApp()">Começar avaliação de nível</button>
+    <button class="btn" style="width:100%;" onclick="startApp()">Começar Jornada</button>
   </div>
 </div>
 
-<!-- Modal 2: Teste de Nivelamento -->
+<!-- Modal 2: Teste de Nivelamento (Geral) -->
 <div id="modal-test" class="modal-overlay hidden">
   <div class="modal-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
@@ -283,33 +303,30 @@ nav.side-nav button.active { background: var(--primary); color: white; }
   </div>
 </div>
 
-<!-- Overlay: Nível Desbloqueado -->
+<!-- Overlays de Gamificação -->
 <div id="levelup-overlay" class="modal-overlay hidden">
   <div class="levelup-card" id="levelup-card">
     <div class="big-emoji">🎉</div>
     <h2>Novo nível desbloqueado!</h2>
     <p id="levelup-text" style="color:var(--ink-soft); margin:10px 0 20px;"></p>
-    <button class="btn" onclick="closeLevelUp()">Continuar trilha</button>
+    <button class="btn" onclick="closeLevelUp()">Continuar Trilha</button>
   </div>
 </div>
 
-<!-- Overlay: Sem corações -->
 <div id="hearts-overlay" class="modal-overlay hidden">
   <div class="modal-card" style="text-align:center;">
     <div class="mascot-hero">💔</div>
     <h2>Você ficou sem corações!</h2>
-    <p class="sub">Faça uma revisão rápida de 3 perguntas para recuperar 1 coração e continuar sua trilha.</p>
-    <button class="btn" style="width:100%;" onclick="startHeartRecovery()">Fazer revisão rápida</button>
+    <p class="sub">Faça uma revisão rápida de 3 perguntas para recuperar 1 coração e continuar.</p>
+    <button class="btn" style="width:100%;" onclick="startHeartRecovery()">Fazer Revisão Rápida</button>
     <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeHeartsModal()">Fechar</button>
   </div>
 </div>
 
-<!-- Overlay: Revisão para recuperar coração -->
 <div id="recovery-overlay" class="modal-overlay hidden">
-  <div class="modal-card recovery-card" id="recovery-body"></div>
+  <div class="modal-card" id="recovery-body"></div>
 </div>
 
-<!-- Overlay: Lição -->
 <div id="lesson-overlay" class="modal-overlay hidden">
   <div class="lesson-modal">
     <div class="lesson-modal-head">
@@ -320,7 +337,7 @@ nav.side-nav button.active { background: var(--primary); color: white; }
   </div>
 </div>
 
-<!-- App principal -->
+<!-- App Principal -->
 <div id="app-shell" class="hidden">
   <aside class="sidebar">
     <div class="brand"><span class="brand-emoji">🦉</span> AI English</div>
@@ -330,7 +347,7 @@ nav.side-nav button.active { background: var(--primary); color: white; }
         <div class="hud-avatar" id="hud-avatar-letter">A</div>
         <div>
           <b id="hud-name">Aluno</b>
-          <span>Nível de jogador <b id="hud-player-level">1</b></span>
+          <span>Nível <b id="hud-player-level">1</b></span>
         </div>
       </div>
       <div class="hud-stats-row">
@@ -340,14 +357,14 @@ nav.side-nav button.active { background: var(--primary); color: white; }
       </div>
       <div class="hud-xp-track"><div class="hud-xp-fill" id="hud-xp-fill"></div></div>
       <div class="hud-xp-label" id="hud-xp-label">0/100 XP</div>
-      <span class="sync-badge off" id="sync-badge">☁️ Sincronização: local</span>
+      <span class="sync-badge off" id="sync-badge">☁️ Sincronização: Local</span>
     </div>
 
     <nav class="side-nav">
-      <button id="nav-trail" class="active" onclick="switchScreen('trail')">🗺️ Trilha</button>
+      <button id="nav-trail" class="active" onclick="switchScreen('trail')">🗺️ Trilha de Aprendizado</button>
       <button id="nav-chat" onclick="switchScreen('chat')">🗣️ Conversação Livre</button>
       <button id="nav-badges" onclick="switchScreen('badges')">🏆 Conquistas</button>
-      <button onclick="retakeTest()" class="btn-outline" style="margin-top:6px; border-radius:12px;">🔄 Refazer nivelamento</button>
+      <button onclick="retakeTest()" class="btn-outline" style="margin-top:6px; border-radius:12px;" id="btn-retest">🔄 Refazer Nivelamento</button>
     </nav>
   </aside>
 
@@ -358,11 +375,11 @@ nav.side-nav button.active { background: var(--primary); color: white; }
     </section>
 
     <section id="screen-chat" class="hidden">
-      <h2 style="margin-bottom:4px;">Prática Livre de Conversação</h2>
-      <p class="lesson-help">Converse livremente em inglês com a IA — ela corrige e responde no seu nível atual.</p>
+      <h2 style="margin-bottom:4px;">Prática Libre de Conversação com IA</h2>
+      <p class="lesson-help">Converse em inglês. A IA corrige pequenos erros e ajuda a melhorar a fluência no seu nível.</p>
       <div class="chat-box" id="main-chat-box"></div>
       <div class="input-group">
-        <input type="text" id="main-chat-input" placeholder="Converse em inglês com a IA...">
+        <input type="text" id="main-chat-input" placeholder="Digite sua mensagem em inglês...">
         <button class="btn" onclick="sendMainChatMessage()">Enviar</button>
         <button class="btn btn-danger" onclick="voiceInput('main-chat-input', sendMainChatMessage)">🎙️</button>
       </div>
@@ -370,74 +387,64 @@ nav.side-nav button.active { background: var(--primary); color: white; }
 
     <section id="screen-badges" class="hidden">
       <h2 style="margin-bottom:4px;">Suas Conquistas</h2>
-      <p class="lesson-help">Continue praticando todos os dias para desbloquear mais medalhas.</p>
+      <p class="lesson-help">Pratique diariamente e desbloqueie novas recompensas.</p>
       <div class="badges-grid" id="badges-grid"></div>
     </section>
   </main>
 </div>
 
-<!-- Sincronização em nuvem (Firebase) — opcional. Sem credenciais, o app usa apenas localStorage. -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-// Cole aqui as credenciais do SEU projeto Firebase (Console > Configurações do projeto > Seus apps).
-// Enquanto apiKey começar com "COLE_AQUI", o app ignora a nuvem e usa apenas localStorage.
-const firebaseConfig = {
-  apiKey: "COLE_AQUI_SUA_API_KEY",
-  authDomain: "SEU_PROJETO.firebaseapp.com",
-  projectId: "SEU_PROJETO",
-  storageBucket: "SEU_PROJETO.appspot.com",
-  messagingSenderId: "SEU_SENDER_ID",
-  appId: "SEU_APP_ID"
-};
-
-const cloudEnabled = !!(firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith("COLE_AQUI"));
-window.cloudSync = { enabled: cloudEnabled, ready: Promise.resolve(null) };
-
-if (cloudEnabled) {
-  try {
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    window.cloudSync.ready = new Promise((resolve) => {
-      onAuthStateChanged(auth, (user) => { if (user) resolve(user.uid); });
-      signInAnonymously(auth).catch((err) => { console.error("Falha no login anônimo do Firebase:", err); resolve(null); });
-    });
-
-    window.cloudSync.save = async (state) => {
-      const uid = await window.cloudSync.ready;
-      if (!uid) return false;
-      await setDoc(doc(db, "students", uid), state);
-      return true;
-    };
-    window.cloudSync.load = async () => {
-      const uid = await window.cloudSync.ready;
-      if (!uid) return null;
-      const snap = await getDoc(doc(db, "students", uid));
-      return snap.exists() ? snap.data() : null;
-    };
-    window.cloudSync.ready.then((uid) => {
-      const badge = document.getElementById('sync-badge');
-      if (uid && badge) { badge.textContent = '☁️ Sincronização: ativa'; badge.className = 'sync-badge on'; }
-    });
-  } catch (err) {
-    console.error("Erro ao inicializar Firebase:", err);
-    window.cloudSync = { enabled: false, ready: Promise.resolve(null) };
-  }
-}
-</script>
-
 <script>
 // =====================================================================
-// TRILHA DE INGLÊS — Conteúdo completo do Iniciante (A1) ao Avançado (C2)
-// Cada nível tem 2 unidades. Cada unidade tem 6 estações (nós):
-// vocab -> grammar -> listening -> video -> song -> boss (revisão)
+// DADOS DA TRILHA DE INGLÊS (VERSÃO KIDS + ADULTO DO A1 AO C2)
 // =====================================================================
 
-const LEVELS = [
+let selectedProfile = 'adult'; // 'adult' ou 'kids'
+
+function selectProfile(mode) {
+  selectedProfile = mode;
+  document.getElementById('mode-adult').classList.toggle('active', mode === 'adult');
+  document.getElementById('mode-kids').classList.toggle('active', mode === 'kids');
+}
+
+const KIDS_LEVELS = [
+  {
+    code: "K1", name: "Kids - Primeiras Palavras", color: "#FF70A6", darkColor: "#D94B83",
+    mascotLine: "Vamos aprender brincando com cores, animais e sons!",
+    units: [
+      {
+        title: "Cores & Animais",
+        subtitle: "Sons simples e vocabulário visual com imagem e áudio",
+        vocab: [
+          { en: "dog", pt: "cachorro", emoji: "🐶" },
+          { en: "cat", pt: "gato", emoji: "🐱" },
+          { en: "red", pt: "vermelho", emoji: "🔴" },
+          { en: "blue", pt: "azul", emoji: "🔵" },
+          { en: "yellow", pt: "amarelo", emoji: "🟡" },
+          { en: "sun", pt: "sol", emoji: "☀️" }
+        ],
+        shadowing: [
+          "Look at the red dog!",
+          "The cat is blue.",
+          "Good morning sun!"
+        ],
+        grammar: [
+          { q: "O que significa 'dog'? 🐶", ops: ["Cachorro", "Gato", "Pássaro"], a: 0, explanation: "Dog é cachorro!" },
+          { q: "Qual a cor do sol? ☀️", ops: ["Yellow", "Red", "Blue"], a: 0, explanation: "O sol é Yellow (Amarelo)!" }
+        ],
+        listening: ["cat", "dog", "blue", "sun"],
+        video: { title: "Cores e Animais em Inglês para Crianças", query: "colors and animals song for kids" },
+        song: {
+          title: "The Rainbow Song",
+          lines: ["Red and ___,", "Yellow and ___,", "I see a little ___,", "Smiling back at me!"],
+          answers: ["blue", "green", "dog"],
+          bank: ["blue", "green", "dog", "sun", "cat"]
+        }
+      }
+    ]
+  }
+];
+
+const ADULT_LEVELS = [
   {
     code: "A1", name: "Iniciante", color: "#34D399", darkColor: "#059669",
     mascotLine: "Vamos começar do zero, com calma e sem pressa!",
@@ -455,71 +462,23 @@ const LEVELS = [
           { en: "water", pt: "água", emoji: "💧" },
           { en: "friend", pt: "amigo(a)", emoji: "🤝" }
         ],
-        grammar: [
-          { q: "She ___ a teacher.", ops: ["is", "are", "am", "be"], a: 0, explanation: "Usamos 'is' com he/she/it (terceira pessoa do singular)." },
-          { q: "___ you a student?", ops: ["Are", "Is", "Am", "Be"], a: 0, explanation: "Com 'you' usamos 'are' para formar perguntas com o verbo to be." },
-          { q: "I ___ from Brazil.", ops: ["am", "is", "are", "be"], a: 0, explanation: "Com 'I' usamos sempre 'am'." },
-          { q: "This is ___ apple.", ops: ["an", "a", "the", "some"], a: 0, explanation: "Antes de som de vogal usamos 'an' em vez de 'a'." },
-          { q: "Good morning! How ___ you?", ops: ["are", "is", "am", "be"], a: 0, explanation: "'How are you?' é a forma padrão de perguntar como alguém está." }
-        ],
-        listening: [
+        shadowing: [
           "Hello, nice to meet you.",
-          "I like to study English every day.",
-          "My name is Ana.",
-          "This is my house.",
-          "See you tomorrow."
+          "My name is Sarah.",
+          "I am learning English."
         ],
+        grammar: [
+          { q: "She ___ a teacher.", ops: ["is", "are", "am", "be"], a: 0, explanation: "Usamos 'is' com he/she/it." },
+          { q: "___ you a student?", ops: ["Are", "Is", "Am", "Be"], a: 0, explanation: "Com 'you' usamos 'are'." },
+          { q: "I ___ from Brazil.", ops: ["am", "is", "are", "be"], a: 0, explanation: "Com 'I' usamos 'am'." }
+        ],
+        listening: ["Hello, nice to meet you.", "My name is Ana.", "This is my house."],
         video: { title: "Cumprimentos em inglês para iniciantes", query: "english greetings for beginners lesson" },
         song: {
           title: "The Greeting Chant",
-          lines: [
-            "Hello, hello, what's your ___?",
-            "My name is Sam, nice to meet you, ___!",
-            "Good morning, good ___, how are you today?",
-            "I am fine, thank you, and you, I ___ say."
-          ],
-          answers: ["name", "friend", "night", "say"],
-          bank: ["name", "friend", "night", "say", "house", "water"]
-        }
-      },
-      {
-        title: "Rotina & Família",
-        subtitle: "Presente simples, família e o dia a dia",
-        vocab: [
-          { en: "mother", pt: "mãe", emoji: "👩" },
-          { en: "father", pt: "pai", emoji: "👨" },
-          { en: "brother", pt: "irmão", emoji: "🧑" },
-          { en: "sister", pt: "irmã", emoji: "👧" },
-          { en: "breakfast", pt: "café da manhã", emoji: "🍳" },
-          { en: "work", pt: "trabalho", emoji: "💼" },
-          { en: "sleep", pt: "dormir", emoji: "😴" },
-          { en: "school", pt: "escola", emoji: "🏫" }
-        ],
-        grammar: [
-          { q: "He ___ to school every day.", ops: ["goes", "go", "going", "gone"], a: 0, explanation: "Na terceira pessoa do singular, o presente simples recebe 's' (go → goes)." },
-          { q: "Where ___ you live?", ops: ["do", "does", "is", "are"], a: 0, explanation: "'Do' é usado com you/we/they em perguntas no presente simples." },
-          { q: "I ___ two brothers.", ops: ["have", "has", "having", "am"], a: 0, explanation: "Usamos 'have' com I/you/we/they." },
-          { q: "My sister ___ breakfast at 7 a.m.", ops: ["has", "have", "having", "is"], a: 0, explanation: "Com he/she/it usamos 'has' em vez de 'have'." },
-          { q: "They ___ not work on Sundays.", ops: ["do", "does", "is", "are"], a: 0, explanation: "A negativa do presente simples com they usa 'do not / don't'." }
-        ],
-        listening: [
-          "My mother works in a hospital.",
-          "We have breakfast at seven.",
-          "He goes to school by bus.",
-          "My family is very important to me.",
-          "I sleep eight hours every night."
-        ],
-        video: { title: "Rotina diária em inglês (presente simples)", query: "daily routine english present simple lesson" },
-        song: {
-          title: "My Daily Routine Song",
-          lines: [
-            "Every morning I wake up and ___ my bed,",
-            "I eat my ___ before I go ahead,",
-            "My father goes to ___, my mother stays home,",
-            "At night we all ___ under one roof alone."
-          ],
-          answers: ["make", "breakfast", "work", "sleep"],
-          bank: ["make", "breakfast", "work", "sleep", "school", "friend"]
+          lines: ["Hello, hello, what's your ___?", "My name is Sam, nice to meet you, ___!"],
+          answers: ["name", "friend"],
+          bank: ["name", "friend", "night", "house"]
         }
       }
     ]
@@ -529,427 +488,145 @@ const LEVELS = [
     mascotLine: "Hora de contar histórias do passado e fazer planos!",
     units: [
       {
-        title: "O Passado",
-        subtitle: "Passado simples e vocabulário de viagens",
+        title: "O Passado & Viagens",
+        subtitle: "Passado simples e vocabulário prático",
         vocab: [
           { en: "yesterday", pt: "ontem", emoji: "📅" },
           { en: "trip", pt: "viagem", emoji: "✈️" },
           { en: "ticket", pt: "passagem", emoji: "🎫" },
-          { en: "hotel", pt: "hotel", emoji: "🏨" },
-          { en: "beach", pt: "praia", emoji: "🏖️" },
-          { en: "mountain", pt: "montanha", emoji: "⛰️" },
-          { en: "passport", pt: "passaporte", emoji: "🛂" },
-          { en: "suitcase", pt: "mala", emoji: "🧳" }
+          { en: "hotel", pt: "hotel", emoji: "🏨" }
+        ],
+        shadowing: [
+          "We visited a museum yesterday.",
+          "Did you buy the tickets?"
         ],
         grammar: [
-          { q: "They ___ to the cinema yesterday.", ops: ["went", "go", "gone", "going"], a: 0, explanation: "Passado simples irregular de 'go' é 'went'." },
-          { q: "I ___ my passport at home.", ops: ["forgot", "forget", "forgetting", "forgets"], a: 0, explanation: "Passado simples irregular de 'forget' é 'forgot'." },
-          { q: "Did you ___ the hotel?", ops: ["like", "liked", "likes", "liking"], a: 0, explanation: "Depois de 'did' o verbo principal fica no infinitivo sem 'to'." },
-          { q: "She ___ not travel last month.", ops: ["did", "does", "do", "was"], a: 0, explanation: "A negativa do passado simples usa 'did not / didn't' + verbo no infinitivo." },
-          { q: "We ___ at the beach all afternoon.", ops: ["stayed", "stay", "staying", "stays"], a: 0, explanation: "Verbos regulares no passado recebem '-ed' (stay → stayed)." }
+          { q: "They ___ to the cinema yesterday.", ops: ["went", "go", "gone"], a: 0, explanation: "Passado de go é went." }
         ],
-        listening: [
-          "We visited a great museum last Saturday.",
-          "I lost my suitcase at the airport.",
-          "The beach was beautiful yesterday.",
-          "Did you buy the tickets already?",
-          "They stayed at a small hotel near the mountain."
-        ],
-        video: { title: "Passado simples com histórias de viagem", query: "past simple tense english travel story lesson" },
+        listening: ["We visited a great museum yesterday.", "I lost my suitcase."],
+        video: { title: "Passado simples em histórias", query: "past simple tense english travel story lesson" },
         song: {
           title: "Last Summer",
-          lines: [
-            "Last summer I ___ to the sea,",
-            "I packed my ___ and I felt free,",
-            "We stayed in a small ___ by the sand,",
-            "It was the best ___ in the land."
-          ],
-          answers: ["went", "suitcase", "hotel", "trip"],
-          bank: ["went", "suitcase", "hotel", "trip", "ticket", "beach"]
-        }
-      },
-      {
-        title: "Planos & Comparações",
-        subtitle: "Futuro (going to / will) e comparativos",
-        vocab: [
-          { en: "plan", pt: "plano", emoji: "🗓️" },
-          { en: "weekend", pt: "fim de semana", emoji: "🎉" },
-          { en: "bigger", pt: "maior", emoji: "📏" },
-          { en: "cheaper", pt: "mais barato", emoji: "💰" },
-          { en: "best", pt: "melhor", emoji: "🏆" },
-          { en: "next", pt: "próximo", emoji: "➡️" },
-          { en: "decide", pt: "decidir", emoji: "🤔" },
-          { en: "maybe", pt: "talvez", emoji: "🌀" }
-        ],
-        grammar: [
-          { q: "I ___ to travel next year.", ops: ["am going", "go", "went", "will"], a: 0, explanation: "'Going to' + verbo expressa um plano já decidido." },
-          { q: "This hotel is ___ than that one.", ops: ["cheaper", "cheap", "more cheap", "cheapest"], a: 0, explanation: "Comparativo de adjetivos curtos: adiciona-se '-er'." },
-          { q: "It's the ___ restaurant in town.", ops: ["best", "better", "good", "goodest"], a: 0, explanation: "'Good' tem superlativo irregular: 'best'." },
-          { q: "Maybe I ___ call you later.", ops: ["will", "am going", "did", "was"], a: 0, explanation: "'Will' é usado para decisões espontâneas ou promessas." },
-          { q: "This city is ___ than mine.", ops: ["bigger", "more big", "big", "biggest"], a: 0, explanation: "Adjetivos curtos formam o comparativo com '-er' (big → bigger)." }
-        ],
-        listening: [
-          "What are your plans for tomorrow?",
-          "I think it will rain this weekend.",
-          "This car is more expensive than that one.",
-          "We are going to visit my grandmother.",
-          "She is the best student in the class."
-        ],
-        video: { title: "Futuro com going to e will + comparativos", query: "going to and will future tense english comparatives" },
-        song: {
-          title: "Someday",
-          lines: [
-            "Someday I'm going to ___ far away,",
-            "Maybe next ___ or maybe today,",
-            "I'll find a place that's ___ than here,",
-            "And that will be the ___ year."
-          ],
-          answers: ["travel", "weekend", "better", "best"],
-          bank: ["travel", "weekend", "better", "best", "plan", "cheaper"]
+          lines: ["Last summer I ___ to the sea,", "We stayed in a small ___."],
+          answers: ["went", "hotel"],
+          bank: ["went", "hotel", "beach", "ticket"]
         }
       }
     ]
   },
   {
     code: "B1", name: "Intermediário", color: "#818CF8", darkColor: "#4F46E5",
-    mascotLine: "Agora vamos falar de experiências de vida e do trabalho!",
+    mascotLine: "Vamos falar sobre experiências de vida e projetos!",
     units: [
       {
-        title: "Experiências de Vida",
-        subtitle: "Present perfect e histórias pessoais",
+        title: "Experiências Pessoais",
+        subtitle: "Present Perfect e histórias reais",
         vocab: [
           { en: "experience", pt: "experiência", emoji: "🌟" },
           { en: "achievement", pt: "conquista", emoji: "🏅" },
-          { en: "abroad", pt: "no exterior", emoji: "🌍" },
-          { en: "adventure", pt: "aventura", emoji: "🧭" },
-          { en: "challenge", pt: "desafio", emoji: "💪" },
-          { en: "journey", pt: "jornada", emoji: "🛤️" },
-          { en: "dream", pt: "sonho", emoji: "💭" },
-          { en: "opportunity", pt: "oportunidade", emoji: "🔑" }
+          { en: "abroad", pt: "no exterior", emoji: "🌍" }
+        ],
+        shadowing: [
+          "I have lived here for five years.",
+          "Have you ever traveled abroad?"
         ],
         grammar: [
-          { q: "I have ___ lived here since 2010.", ops: ["", "since", "for", "ago"], a: 0, explanation: "Present perfect simples: have/has + particípio, sem palavra extra necessária aqui." },
-          { q: "Have you ___ been to Japan?", ops: ["ever", "never", "yet", "already"], a: 0, explanation: "'Ever' é usado em perguntas no present perfect para perguntar 'alguma vez'." },
-          { q: "She has ___ finished her project.", ops: ["already", "yet", "ever", "since"], a: 0, explanation: "'Already' indica que algo aconteceu antes do esperado, geralmente em frases afirmativas." },
-          { q: "I have lived here ___ 2010.", ops: ["since", "for", "during", "ago"], a: 0, explanation: "'Since' é usado com um ponto específico no tempo (um ano, uma data)." },
-          { q: "We ___ never visited that museum.", ops: ["have", "has", "did", "do"], a: 0, explanation: "Com 'we' o auxiliar do present perfect é 'have'." }
+          { q: "Have you ___ been to Japan?", ops: ["ever", "never", "yet"], a: 0, explanation: "'Ever' é usado em perguntas." }
         ],
-        listening: [
-          "I have never seen such a beautiful place.",
-          "She has already finished her homework.",
-          "Have you ever traveled abroad?",
-          "We have lived here for five years.",
-          "He has just arrived from the airport."
-        ],
-        video: { title: "Present perfect: falando de experiências", query: "present perfect tense english have you ever lesson" },
+        listening: ["I have never seen such a place.", "She has already finished."],
+        video: { title: "Present Perfect falado", query: "present perfect tense english have you ever lesson" },
         song: {
           title: "Places I've Been",
-          lines: [
-            "I have ___ to mountains high and low,",
-            "I have never ___ a place I didn't know,",
-            "This ___ has taught me who I am,",
-            "Every ___ is part of my plan."
-          ],
-          answers: ["been", "seen", "journey", "challenge"],
-          bank: ["been", "seen", "journey", "challenge", "dream", "abroad"]
-        }
-      },
-      {
-        title: "Trabalho & Opiniões",
-        subtitle: "Modais, primeiro condicional e opiniões",
-        vocab: [
-          { en: "career", pt: "carreira", emoji: "📈" },
-          { en: "deadline", pt: "prazo", emoji: "⏰" },
-          { en: "meeting", pt: "reunião", emoji: "🗣️" },
-          { en: "opinion", pt: "opinião", emoji: "💬" },
-          { en: "agree", pt: "concordar", emoji: "✅" },
-          { en: "disagree", pt: "discordar", emoji: "❌" },
-          { en: "decision", pt: "decisão", emoji: "⚖️" },
-          { en: "teamwork", pt: "trabalho em equipe", emoji: "🤝" }
-        ],
-        grammar: [
-          { q: "If it rains, we ___ stay home.", ops: ["will", "would", "did", "are"], a: 0, explanation: "First conditional: if + presente simples, will + verbo." },
-          { q: "You ___ finish this by Friday.", ops: ["must", "must to", "musting", "musted"], a: 0, explanation: "'Must' é um modal seguido diretamente do verbo no infinitivo sem 'to'." },
-          { q: "In my opinion, teamwork ___ essential.", ops: ["is", "are", "be", "being"], a: 0, explanation: "'Teamwork' é incontável e singular, por isso usa 'is'." },
-          { q: "If I ___ time, I will help you.", ops: ["have", "had", "will have", "having"], a: 0, explanation: "No first conditional, a oração com 'if' usa o presente simples." },
-          { q: "I completely ___ with your idea.", ops: ["agree", "agreed", "agreeing", "agrees"], a: 0, explanation: "Presente simples na primeira pessoa não recebe 's'." }
-        ],
-        listening: [
-          "If we miss the deadline, the client will be upset.",
-          "I think teamwork is the key to success.",
-          "She disagrees with the new plan.",
-          "We must make a decision by tomorrow.",
-          "If you need help, just ask me."
-        ],
-        video: { title: "Primeiro condicional e modais no trabalho", query: "first conditional english modal verbs at work" },
-        song: {
-          title: "If I Get the Job",
-          lines: [
-            "If I get the ___, I will do my best,",
-            "I will pass every ___ and every test,",
-            "My ___ matters, I will speak my mind,",
-            "And with good ___, success we'll find."
-          ],
-          answers: ["job", "deadline", "opinion", "teamwork"],
-          bank: ["job", "deadline", "opinion", "teamwork", "career", "meeting"]
+          lines: ["I have ___ to mountains high,", "I have never ___ a place like this."],
+          answers: ["been", "seen"],
+          bank: ["been", "seen", "dream", "abroad"]
         }
       }
     ]
   },
   {
-    code: "B2", name: "Intermediário Superior", color: "#F472B6", darkColor: "#DB2777",
-    mascotLine: "Vamos dominar a voz passiva e discutir ideias complexas!",
+    code: "B2", name: "Intermediário Sup.", color: "#F472B6", darkColor: "#DB2777",
+    mascotLine: "Domine hipóteses, voz passiva e debate!",
     units: [
       {
         title: "Hipóteses & Voz Passiva",
-        subtitle: "Segundo condicional e voz passiva",
+        subtitle: "Segundo condicional e estruturas de negócios",
         vocab: [
           { en: "hypothesis", pt: "hipótese", emoji: "🔬" },
-          { en: "assume", pt: "supor", emoji: "🤷" },
-          { en: "unless", pt: "a menos que", emoji: "⛔" },
-          { en: "regret", pt: "arrepender-se", emoji: "😔" },
-          { en: "passive", pt: "passivo", emoji: "🎭" },
-          { en: "construct", pt: "construir", emoji: "🏗️" },
-          { en: "announce", pt: "anunciar", emoji: "📢" },
           { en: "negotiate", pt: "negociar", emoji: "🤝" }
         ],
+        shadowing: [
+          "If I were you, I would negotiate.",
+          "The decision was announced today."
+        ],
         grammar: [
-          { q: "If I ___ more money, I would travel the world.", ops: ["had", "have", "will have", "has"], a: 0, explanation: "Second conditional: if + passado simples, would + verbo." },
-          { q: "The report ___ by the manager yesterday.", ops: ["was reviewed", "reviewed", "is reviewed", "review"], a: 0, explanation: "Voz passiva no passado: was/were + particípio." },
-          { q: "Unless you ___ hard, you won't pass.", ops: ["study", "studied", "will study", "studying"], a: 0, explanation: "'Unless' funciona como 'if not' e é seguido do presente simples." },
-          { q: "The building ___ next year.", ops: ["will be built", "will build", "is build", "built"], a: 0, explanation: "Voz passiva no futuro: will be + particípio." },
-          { q: "I ___ move to another city if I could.", ops: ["would", "will", "did", "have"], a: 0, explanation: "No second conditional, a oração principal usa 'would' + verbo." }
+          { q: "If I ___ more money, I would travel.", ops: ["had", "have", "will have"], a: 0, explanation: "Second conditional: If + past, would + verb." }
         ],
-        listening: [
-          "If I were you, I would negotiate a better deal.",
-          "The decision was announced this morning.",
-          "Unless we act now, we will lose the contract.",
-          "The new office was constructed last year.",
-          "I would regret not taking this opportunity."
-        ],
-        video: { title: "Segundo condicional e voz passiva (nível avançado)", query: "second conditional passive voice english advanced grammar" },
+        listening: ["The decision was announced this morning."],
+        video: { title: "Voz Passiva Avançada", query: "second conditional passive voice english" },
         song: {
           title: "If I Were",
-          lines: [
-            "If I were rich, I ___ fly away,",
-            "The rules would all be ___ my way,",
-            "Unless you try, you'll never ___,",
-            "So take the deal and ___ it right."
-          ],
-          answers: ["would", "made", "know", "negotiate"],
-          bank: ["would", "made", "know", "negotiate", "assume", "regret"]
-        }
-      },
-      {
-        title: "Debate & Negócios",
-        subtitle: "Discurso indireto e vocabulário de negócios",
-        vocab: [
-          { en: "argue", pt: "argumentar", emoji: "🗯️" },
-          { en: "evidence", pt: "evidência", emoji: "🔍" },
-          { en: "persuade", pt: "persuadir", emoji: "🎯" },
-          { en: "compromise", pt: "compromisso/acordo", emoji: "🤲" },
-          { en: "investment", pt: "investimento", emoji: "💹" },
-          { en: "strategy", pt: "estratégia", emoji: "🧩" },
-          { en: "risk", pt: "risco", emoji: "⚠️" },
-          { en: "outcome", pt: "resultado", emoji: "🏁" }
-        ],
-        grammar: [
-          { q: "She said she ___ tired.", ops: ["was", "is", "be", "being"], a: 0, explanation: "No discurso indireto no passado, 'is' muda para 'was'." },
-          { q: "He told me he ___ the report the day before.", ops: ["had finished", "finished", "has finished", "finish"], a: 0, explanation: "No discurso indireto, o passado simples muda para o past perfect." },
-          { q: "We need a solid ___ to reduce the risk.", ops: ["strategy", "strategic", "strategize", "strategically"], a: 0, explanation: "Depois de artigo + adjetivo, usamos o substantivo 'strategy'." },
-          { q: "The evidence ___ that the plan will work.", ops: ["suggests", "suggest", "suggesting", "suggested to"], a: 0, explanation: "Presente simples na terceira pessoa recebe 's' (suggest → suggests)." },
-          { q: "They reached a ___ after hours of talks.", ops: ["compromise", "compromised", "compromising", "compromises"], a: 0, explanation: "Aqui a palavra funciona como substantivo: 'a compromise'." }
-        ],
-        listening: [
-          "The evidence suggests we should change our strategy.",
-          "They reached a compromise after a long negotiation.",
-          "Investing now carries some risk, but the outcome could be great.",
-          "He tried to persuade the board to approve the budget.",
-          "She said the meeting had already started."
-        ],
-        video: { title: "Vocabulário de negócios e debate em inglês avançado", query: "business english debate vocabulary advanced" },
-        song: {
-          title: "The Boardroom",
-          lines: [
-            "In the boardroom we ___ all day long,",
-            "Looking for ___ to prove we're not wrong,",
-            "With the right ___, we'll take the risk,",
-            "And the ___ will be worth it, quick."
-          ],
-          answers: ["argue", "evidence", "strategy", "outcome"],
-          bank: ["argue", "evidence", "strategy", "outcome", "compromise", "investment"]
+          lines: ["If I were rich, I ___ fly away."],
+          answers: ["would"],
+          bank: ["would", "will", "did"]
         }
       }
     ]
   },
   {
     code: "C1", name: "Avançado", color: "#FB923C", darkColor: "#EA580C",
-    mascotLine: "Nuances, inversões e fluência natural — quase lá!",
+    mascotLine: "Nuances da língua, inversões e fluência sofisticada!",
     units: [
       {
-        title: "Nuances & Inversão",
-        subtitle: "Estruturas de inversão e ênfase",
+        title: "Inversão & Ênfase",
+        subtitle: "Estruturas de alto nível de formalidade",
         vocab: [
           { en: "nuance", pt: "sutileza", emoji: "🎨" },
-          { en: "subtlety", pt: "sutileza/discrição", emoji: "🕊️" },
-          { en: "inversion", pt: "inversão", emoji: "🔄" },
-          { en: "emphasis", pt: "ênfase", emoji: "❗" },
-          { en: "implication", pt: "implicação", emoji: "🧩" },
-          { en: "rhetoric", pt: "retórica", emoji: "🎤" },
-          { en: "ambiguous", pt: "ambíguo", emoji: "🌫️" },
-          { en: "discourse", pt: "discurso", emoji: "📜" }
+          { en: "eloquence", pt: "eloquência", emoji: "✨" }
+        ],
+        shadowing: [
+          "Not only did she finish early, but she also helped.",
+          "Rarely have I seen such dedication."
         ],
         grammar: [
-          { q: "Not only ___ late, but he also forgot the documents.", ops: ["did he arrive", "he arrived", "he did arrive", "arrived he"], a: 0, explanation: "Inversão após 'Not only' no início da frase exige a ordem de uma pergunta." },
-          { q: "Never ___ seen such dedication.", ops: ["have I", "I have", "I did", "did I have"], a: 0, explanation: "Advérbios negativos no início da frase (Never, Rarely) exigem inversão sujeito-verbo." },
-          { q: "Had I known, I ___ differently.", ops: ["would have acted", "acted", "will act", "have acted"], a: 0, explanation: "Third conditional com inversão: Had + sujeito + particípio, would have + particípio." },
-          { q: "It's high time we ___ a decision.", ops: ["made", "make", "will make", "making"], a: 0, explanation: "'It's (high) time' + passado simples sugere que algo deveria acontecer agora." },
-          { q: "Only after the meeting ___ the real problem.", ops: ["did we understand", "we understood", "we did understand", "understood we"], a: 0, explanation: "'Only after' no início da frase também exige inversão sujeito-verbo." }
+          { q: "Never ___ seen such dedication.", ops: ["have I", "I have", "did I"], a: 0, explanation: "Inversão formal de sujeito e verbo." }
         ],
-        listening: [
-          "Not only did she finish early, but she also helped her colleagues.",
-          "Rarely have I seen such a compelling argument.",
-          "Had we invested earlier, the outcome would have been different.",
-          "Only later did I realize the implication of his words.",
-          "The rhetoric was persuasive, but somewhat ambiguous."
-        ],
-        video: { title: "Inversão e ênfase em inglês avançado (C1)", query: "advanced english inversion emphasis structures C1" },
+        listening: ["Not only did she finish early, but she helped."],
+        video: { title: "Inversão Avançada em Inglês", query: "advanced english inversion emphasis C1" },
         song: {
           title: "Not Only",
-          lines: [
-            "Not only did I ___, I also stayed,",
-            "Never have I ___ such a price paid,",
-            "Only then did I see the ___ clear,",
-            "With subtle ___, I conquered fear."
-          ],
-          answers: ["try", "seen", "implication", "nuance"],
-          bank: ["try", "seen", "implication", "nuance", "rhetoric", "discourse"]
-        }
-      },
-      {
-        title: "Fluência & Idiomas Avançados",
-        subtitle: "Expressões idiomáticas e marcadores discursivos",
-        vocab: [
-          { en: "idiom", pt: "expressão idiomática", emoji: "💡" },
-          { en: "fluent", pt: "fluente", emoji: "🌊" },
-          { en: "articulate", pt: "articulado", emoji: "🗣️" },
-          { en: "eloquent", pt: "eloquente", emoji: "✨" },
-          { en: "discourse marker", pt: "marcador discursivo", emoji: "🔗" },
-          { en: "register", pt: "registro (formal/informal)", emoji: "📖" },
-          { en: "colloquial", pt: "coloquial", emoji: "😎" },
-          { en: "wit", pt: "presença de espírito", emoji: "🧠" }
-        ],
-        grammar: [
-          { q: "Having finished the report, she ___ home.", ops: ["went", "goes", "go", "going"], a: 0, explanation: "'Having + particípio' indica uma ação concluída antes da principal, que segue no passado simples." },
-          { q: "She speaks English so ___ that people think she's a native speaker.", ops: ["fluently", "fluent", "fluency", "flu"], a: 0, explanation: "Depois de verbo, usamos o advérbio 'fluently'." },
-          { q: "Frankly speaking, I ___ agree with that decision.", ops: ["don't", "doesn't", "not", "no"], a: 0, explanation: "'Frankly speaking' é um marcador discursivo comum antes de opiniões diretas." },
-          { q: "That idiom means to ___ the ice at a party.", ops: ["break", "broke", "breaking", "broken"], a: 0, explanation: "'Break the ice' é a forma no infinitivo da expressão idiomática." },
-          { q: "He used a very formal ___ in his speech.", ops: ["register", "registering", "registered", "registers"], a: 0, explanation: "Aqui 'register' é substantivo, referindo-se ao nível de formalidade da linguagem." }
-        ],
-        listening: [
-          "Frankly speaking, I think we should reconsider the plan.",
-          "She is remarkably articulate for someone so young.",
-          "That was a clever idiom to break the tension.",
-          "His speech had a very formal register.",
-          "As a matter of fact, the results were better than expected."
-        ],
-        video: { title: "Expressões idiomáticas e fluência avançada", query: "english idioms advanced fluency C1 expressions" },
-        song: {
-          title: "Break the Ice",
-          lines: [
-            "Let's break the ___ and start to speak,",
-            "Be ___, don't sound weak,",
-            "Choose the right ___ for every place,",
-            "And speak with ___ and grace."
-          ],
-          answers: ["ice", "articulate", "register", "wit"],
-          bank: ["ice", "articulate", "register", "wit", "idiom", "fluent"]
+          lines: ["Not only did I ___, I also stayed."],
+          answers: ["try"],
+          bank: ["try", "seen", "implication"]
         }
       }
     ]
   },
   {
     code: "C2", name: "Proficiente", color: "#F43F5E", darkColor: "#BE123C",
-    mascotLine: "O último trecho: domínio nativo e expressões idiomáticas!",
+    mascotLine: "Domínio equivalente ao nativo, expressões idiomáticas e precisão!",
     units: [
       {
-        title: "Domínio Formal",
-        subtitle: "Registro formal e estruturas sofisticadas",
-        vocab: [
-          { en: "eloquence", pt: "eloquência", emoji: "🎓" },
-          { en: "discourse", pt: "discurso", emoji: "📚" },
-          { en: "formal register", pt: "registro formal", emoji: "🎩" },
-          { en: "sophisticated", pt: "sofisticado", emoji: "💎" },
-          { en: "precision", pt: "precisão", emoji: "🎯" },
-          { en: "erudite", pt: "erudito", emoji: "📖" },
-          { en: "articulate", pt: "articular (verbo)", emoji: "🗣️" },
-          { en: "candid", pt: "franco/sincero", emoji: "🕯️" }
-        ],
-        grammar: [
-          { q: "It was the manager who ___ the final decision.", ops: ["made", "make", "makes", "making"], a: 0, explanation: "Cleft sentence ('It was... who...') dá ênfase ao sujeito, mantendo o verbo no passado simples." },
-          { q: "I insist that he ___ present at the hearing.", ops: ["be", "is", "was", "being"], a: 0, explanation: "Depois de verbos como 'insist' em registro formal, usa-se o subjuntivo ('be' sem flexão)." },
-          { q: "Were the committee to object, the plan would fail.", ops: ["Were", "If", "Was", "Had"], a: 0, explanation: "Inversão formal de 'If the committee were to object' — comum em registro C2." },
-          { q: "Such was her ___ that the audience was captivated.", ops: ["eloquence", "eloquent", "eloquently", "eloquences"], a: 0, explanation: "Depois de 'her', precisamos de um substantivo: 'eloquence'." },
-          { q: "The report was written with remarkable ___.", ops: ["precision", "precise", "precisely", "precisions"], a: 0, explanation: "Depois de adjetivo + substantivo esperado, 'precision' é a forma nominal correta." }
-        ],
-        listening: [
-          "It was the board that ultimately approved the merger.",
-          "I would ask that the matter be reconsidered.",
-          "Her eloquence left the entire room in silence.",
-          "Were it not for his intervention, the project would have failed.",
-          "The document was drafted with extraordinary precision."
-        ],
-        video: { title: "Registro formal e inglês nível de proficiência (C2)", query: "C2 proficiency english formal register advanced" },
-        song: {
-          title: "The Orator",
-          lines: [
-            "With ___ he spoke to the crowd,",
-            "Every word ___ and clear, not loud,",
-            "His ___ register commanded the room,",
-            "Precision and grace, dispelling the gloom."
-          ],
-          answers: ["eloquence", "articulate", "formal"],
-          bank: ["eloquence", "articulate", "formal", "precision", "candid", "erudite"]
-        }
-      },
-      {
-        title: "Domínio Nativo — Expressões",
-        subtitle: "Idiomas nativos e maestria conversacional",
+        title: "Expressões Nativas",
+        subtitle: "Expressões idiomáticas avançadas e fluência total",
         vocab: [
           { en: "hit the nail on the head", pt: "acertar em cheio", emoji: "🔨" },
-          { en: "once in a blue moon", pt: "raramente", emoji: "🌙" },
-          { en: "the ball is in your court", pt: "a decisão é sua", emoji: "🎾" },
-          { en: "cut corners", pt: "economizar mal / fazer nas coxas", emoji: "✂️" },
-          { en: "under the weather", pt: "mal disposto", emoji: "🤒" },
-          { en: "spill the beans", pt: "contar um segredo", emoji: "🫘" },
-          { en: "break the ice", pt: "quebrar o gelo", emoji: "🧊" },
-          { en: "piece of cake", pt: "muito fácil / moleza", emoji: "🍰" }
+          { en: "once in a blue moon", pt: "raramente", emoji: "🌙" }
+        ],
+        shadowing: [
+          "You really hit the nail on the head.",
+          "The ball is in your court now."
         ],
         grammar: [
-          { q: "Your comment really ___ the nail on the head.", ops: ["hit", "hits", "hitting", "hitted"], a: 0, explanation: "'Hit the nail on the head' no passado usa a forma irregular 'hit' (igual ao presente)." },
-          { q: "We only meet ___ in a blue moon.", ops: ["once", "one", "single", "time"], a: 0, explanation: "A expressão fixa é 'once in a blue moon', sem variação." },
-          { q: "I've done my part; the ball is ___ your court now.", ops: ["in", "on", "at", "with"], a: 0, explanation: "A expressão fixa usa a preposição 'in': 'the ball is in your court'." },
-          { q: "Don't ___ corners on safety procedures.", ops: ["cut", "cutting", "cuts", "to cut"], a: 0, explanation: "Depois de 'don't', o verbo fica no infinitivo sem 'to': 'cut corners'." },
-          { q: "She's feeling a bit under the ___ today.", ops: ["weather", "weathers", "cold", "sky"], a: 0, explanation: "A expressão fixa é 'under the weather', significando 'indisposto(a)'." }
+          { q: "Your comment really ___ the nail on the head.", ops: ["hit", "hits", "hitting"], a: 0, explanation: "Passado irregular: hit." }
         ],
-        listening: [
-          "Your feedback really hit the nail on the head.",
-          "I only see my cousins once in a blue moon.",
-          "I've given my proposal; the ball is in your court now.",
-          "They cut corners on the renovation and it shows.",
-          "He accidentally spilled the beans about the surprise party."
-        ],
-        video: { title: "Expressões idiomáticas nativas em inglês (C2)", query: "native english idioms C2 mastery expressions" },
+        listening: ["Your feedback hit the nail on the head."],
+        video: { title: "Idiomas Nativos em Inglês C2", query: "native english idioms C2 mastery" },
         song: {
           title: "Idioms in the Wild",
-          lines: [
-            "You ___ the nail right on the head,",
-            "Don't ___ corners, be careful instead,",
-            "The ball's in your ___, make your move,",
-            "This idiom game is a ___ to prove."
-          ],
-          answers: ["hit", "cut", "court", "cake"],
-          bank: ["hit", "cut", "court", "cake", "weather", "beans"]
+          lines: ["You ___ the nail right on the head."],
+          answers: ["hit"],
+          bank: ["hit", "cut", "court"]
         }
       }
     ]
@@ -958,6 +635,7 @@ const LEVELS = [
 
 const NODE_TYPES = [
   { key: "vocab", label: "Vocabulário", icon: "📚" },
+  { key: "shadowing", label: "Shadowing (Fala)", icon: "🗣️" },
   { key: "grammar", label: "Gramática", icon: "✍️" },
   { key: "listening", label: "Escuta", icon: "🎧" },
   { key: "video", label: "Vídeo", icon: "🎬" },
@@ -969,67 +647,50 @@ const BADGES = [
   { id: "first_step", label: "Primeiro Passo", desc: "Complete sua primeira estação.", icon: "🥇" },
   { id: "streak_3", label: "Chama Viva", desc: "3 dias seguidos de prática.", icon: "🔥" },
   { id: "streak_7", label: "Semana Perfeita", desc: "7 dias seguidos de prática.", icon: "🏆" },
-  { id: "unit_1", label: "Unidade Concluída", desc: "Termine sua primeira unidade.", icon: "🎯" },
+  { id: "kids_star", label: "Estrelinha Kids", desc: "Complete a trilha infantil.", icon: "⭐" },
   { id: "level_a1", label: "Mestre do A1", desc: "Complete todo o nível Iniciante.", icon: "🌱" },
-  { id: "level_a2", label: "Mestre do A2", desc: "Complete todo o nível Básico.", icon: "🌿" },
-  { id: "level_b1", label: "Mestre do B1", desc: "Complete todo o nível Intermediário.", icon: "🌳" },
-  { id: "level_b2", label: "Mestre do B2", desc: "Complete o Intermediário Superior.", icon: "🚀" },
-  { id: "level_c1", label: "Mestre do C1", desc: "Complete o nível Avançado.", icon: "💎" },
-  { id: "level_c2", label: "Fluência Total", desc: "Complete toda a trilha!", icon: "👑" },
-  { id: "xp_100", label: "Colecionador de XP", desc: "Alcance 100 XP.", icon: "⭐" },
-  { id: "xp_500", label: "Viciado em Aprender", desc: "Alcance 500 XP.", icon: "🌟" }
+  { id: "level_c2", label: "Fluência Total", desc: "Complete toda a trilha!", icon: "👑" }
 ];
 
-</script>
-<script>
 // =====================================================================
-// AI ENGLISH MASTER — Motor da Trilha Gamificada
+// ENGINE DO APLICATIVO
 // =====================================================================
 
-const NODE_ORDER = NODE_TYPES.map(n => n.key); // ['vocab','grammar','listening','video','song','boss']
+const NODE_ORDER = NODE_TYPES.map(n => n.key);
 const MAX_HEARTS = 5;
 
+let LEVELS = ADULT_LEVELS;
 let userState = null;
 let currentLevelIdx = 0;
-let activeNode = null; // { levelIdx, unitIdx, nodeIdx }
-let quizRuntime = null; // estado temporário de uma lição em andamento
+let activeNode = null;
 
-function defaultState(name) {
+function defaultState(name, mode) {
   return {
     name,
+    mode: mode || 'adult',
     xp: 0,
     coins: 0,
     hearts: MAX_HEARTS,
     streak: 0,
     lastActiveDate: null,
-    completed: {},           // { "l-u-n": true }
+    completed: {},
     badges: [],
-    unlockedLevelIdx: 0,     // até qual nível o usuário já liberou
+    unlockedLevelIdx: 0,
     chatHistory: []
   };
 }
 
-function nodeKey(l, u, n) { return `${l}-${u}-${n}`; }
+function nodeKey(l, u, n) { return `${userState.mode}-${l}-${u}-${n}`; }
 
-// ===================== Persistência =====================
 function saveState() {
   localStorage.setItem('aem_user_' + userState.name.toLowerCase(), JSON.stringify(userState));
-  if (window.cloudSync && window.cloudSync.enabled) {
-    window.cloudSync.save(userState).catch(err => console.error("Erro ao salvar na nuvem:", err));
-  }
 }
 
 async function loadOrCreateState(name) {
-  let saved = null;
-  if (window.cloudSync && window.cloudSync.enabled) {
-    try { saved = await window.cloudSync.load(); } catch (err) { console.error("Erro ao carregar da nuvem:", err); }
-  }
-  if (!saved) {
-    const raw = localStorage.getItem('aem_user_' + name.toLowerCase());
-    if (raw) saved = JSON.parse(raw);
-  }
-  userState = saved || defaultState(name);
+  const raw = localStorage.getItem('aem_user_' + name.toLowerCase());
+  userState = raw ? JSON.parse(raw) : defaultState(name, selectedProfile);
   userState.name = name;
+  LEVELS = userState.mode === 'kids' ? KIDS_LEVELS : ADULT_LEVELS;
   applyDailyStreak();
   saveState();
 }
@@ -1038,68 +699,38 @@ function applyDailyStreak() {
   const today = new Date().toDateString();
   if (userState.lastActiveDate === today) return;
   const yesterday = new Date(Date.now() - 86400000).toDateString();
-  if (userState.lastActiveDate === yesterday) {
-    userState.streak += 1;
-  } else {
-    userState.streak = 1;
-  }
+  userState.streak = (userState.lastActiveDate === yesterday) ? userState.streak + 1 : 1;
   userState.lastActiveDate = today;
   if (userState.streak >= 3) grantBadge('streak_3');
   if (userState.streak >= 7) grantBadge('streak_7');
 }
 
-// ===================== Regras de desbloqueio =====================
 function isLevelUnlocked(levelIdx) { return levelIdx <= userState.unlockedLevelIdx; }
-
 function isUnitUnlocked(levelIdx, unitIdx) {
   if (!isLevelUnlocked(levelIdx)) return false;
   if (unitIdx === 0) return true;
-  const prevBossKey = nodeKey(levelIdx, unitIdx - 1, NODE_ORDER.length - 1);
-  return !!userState.completed[prevBossKey];
+  return !!userState.completed[nodeKey(levelIdx, unitIdx - 1, NODE_ORDER.length - 1)];
 }
-
 function isNodeUnlocked(levelIdx, unitIdx, nodeIdx) {
   if (!isUnitUnlocked(levelIdx, unitIdx)) return false;
   if (nodeIdx === 0) return true;
   return !!userState.completed[nodeKey(levelIdx, unitIdx, nodeIdx - 1)];
 }
+function isNodeCompleted(levelIdx, unitIdx, nodeIdx) { return !!userState.completed[nodeKey(levelIdx, unitIdx, nodeIdx)]; }
 
-function isNodeCompleted(levelIdx, unitIdx, nodeIdx) {
-  return !!userState.completed[nodeKey(levelIdx, unitIdx, nodeIdx)];
-}
-
-function isLevelFullyCompleted(levelIdx) {
-  const level = LEVELS[levelIdx];
-  return level.units.every((u, ui) => isNodeCompleted(levelIdx, ui, NODE_ORDER.length - 1));
-}
-
-function maybeUnlockNextLevel(levelIdx) {
-  if (isLevelFullyCompleted(levelIdx) && userState.unlockedLevelIdx === levelIdx && levelIdx < LEVELS.length - 1) {
-    userState.unlockedLevelIdx = levelIdx + 1;
-    grantBadge('level_' + LEVELS[levelIdx].code.toLowerCase());
-    showLevelUpBanner(LEVELS[levelIdx + 1]);
-  } else if (isLevelFullyCompleted(levelIdx)) {
-    grantBadge('level_' + LEVELS[levelIdx].code.toLowerCase());
-  }
-}
-
-// ===================== Gamificação =====================
 function grantXP(amount) {
   userState.xp += amount;
   userState.coins += Math.round(amount / 2);
-  if (userState.xp >= 100) grantBadge('xp_100');
-  if (userState.xp >= 500) grantBadge('xp_500');
   playerLevelUpCheck();
 }
 
 function playerLevel() { return Math.floor(userState.xp / 100) + 1; }
-
 let lastKnownPlayerLevel = 1;
 function playerLevelUpCheck() {
   const lvl = playerLevel();
   if (lvl > lastKnownPlayerLevel) {
     lastKnownPlayerLevel = lvl;
-    toast(`🎉 Você subiu para o nível de jogador ${lvl}!`);
+    toast(`🎉 Você subiu para o nível ${lvl}!`);
   }
 }
 
@@ -1119,14 +750,10 @@ function grantBadge(id) {
 function markNodeComplete(levelIdx, unitIdx, nodeIdx) {
   userState.completed[nodeKey(levelIdx, unitIdx, nodeIdx)] = true;
   grantBadge('first_step');
-  if (nodeIdx === NODE_ORDER.length - 1) {
-    grantBadge('unit_1');
-    maybeUnlockNextLevel(levelIdx);
-  }
+  if (userState.mode === 'kids') grantBadge('kids_star');
   saveState();
 }
 
-// ===================== Toast / feedback visual =====================
 function toast(text) {
   const el = document.createElement('div');
   el.className = 'toast';
@@ -1137,7 +764,7 @@ function toast(text) {
 }
 
 function burstConfetti(container) {
-  const colors = ['#34D399', '#38BDF8', '#818CF8', '#F472B6', '#FB923C', '#F43F5E', '#FFC857'];
+  const colors = ['#34D399', '#38BDF8', '#818CF8', '#F472B6', '#FF70A6', '#FFC857'];
   for (let i = 0; i < 26; i++) {
     const p = document.createElement('span');
     p.className = 'confetti-piece';
@@ -1150,9 +777,8 @@ function burstConfetti(container) {
   }
 }
 
-// ===================== Render: HUD =====================
 function renderHUD() {
-  document.getElementById('hud-name').innerText = userState.name;
+  document.getElementById('hud-name').innerText = userState.name + (userState.mode === 'kids' ? ' 🎈' : '');
   document.getElementById('hud-avatar-letter').innerText = (userState.name || 'A').charAt(0).toUpperCase();
   document.getElementById('hud-player-level').innerText = playerLevel();
   document.getElementById('hud-hearts').innerText = '❤️'.repeat(userState.hearts) + '🖤'.repeat(MAX_HEARTS - userState.hearts);
@@ -1163,7 +789,6 @@ function renderHUD() {
   document.getElementById('hud-xp-label').innerText = `${xpInLevel}/100 XP`;
 }
 
-// ===================== Render: seletor de níveis =====================
 function renderLevelTabs() {
   const wrap = document.getElementById('level-tabs');
   wrap.innerHTML = '';
@@ -1173,12 +798,11 @@ function renderLevelTabs() {
     btn.className = 'level-tab' + (idx === currentLevelIdx ? ' active' : '') + (unlocked ? '' : ' locked');
     btn.style.setProperty('--tab-color', lvl.color);
     btn.innerHTML = `<span class="level-code">${lvl.code}</span><span class="level-name">${lvl.name}</span>${unlocked ? '' : '<span class="lock-icon">🔒</span>'}`;
-    btn.onclick = () => { if (unlocked) { currentLevelIdx = idx; renderAll(); } else { toast('🔒 Complete o nível anterior para desbloquear!'); } };
+    btn.onclick = () => { if (unlocked) { currentLevelIdx = idx; renderAll(); } else { toast('🔒 Nível bloqueado!'); } };
     wrap.appendChild(btn);
   });
 }
 
-// ===================== Render: trilha (path) =====================
 function renderPath() {
   const level = LEVELS[currentLevelIdx];
   const main = document.getElementById('path-container');
@@ -1188,7 +812,7 @@ function renderPath() {
 
   const mascot = document.createElement('div');
   mascot.className = 'mascot-banner';
-  mascot.innerHTML = `<span class="mascot-emoji">🦉</span><div><b>${level.name} · ${level.code}</b><p>${level.mascotLine}</p></div>`;
+  mascot.innerHTML = `<span class="mascot-emoji">${userState.mode === 'kids' ? '🎨' : '🦉'}</span><div><b>${level.name} · ${level.code}</b><p>${level.mascotLine}</p></div>`;
   main.appendChild(mascot);
 
   level.units.forEach((unit, unitIdx) => {
@@ -1203,7 +827,7 @@ function renderPath() {
 
     const path = document.createElement('div');
     path.className = 'path-line';
-    const offsets = [0, 64, 0, -64, 0, 64];
+    const offsets = [0, 60, 0, -60, 0, 60, 0];
 
     NODE_ORDER.forEach((type, nodeIdx) => {
       const completed = isNodeCompleted(currentLevelIdx, unitIdx, nodeIdx);
@@ -1214,13 +838,13 @@ function renderPath() {
       const node = document.createElement('button');
       node.className = 'path-node' + (completed ? ' completed' : '') + (isCurrent ? ' current' : '') + (!unlocked ? ' locked' : '');
       node.style.transform = `translateX(${offsets[nodeIdx]}px)`;
-      node.innerHTML = `<span class="node-icon">${completed ? '✅' : (unlocked ? meta.icon : '🔒')}</span>`;
+      node.innerHTML = `<span>${completed ? '✅' : (unlocked ? meta.icon : '🔒')}</span>`;
       node.title = meta.label;
 
       const label = document.createElement('div');
       label.className = 'node-label';
       label.style.transform = `translateX(${offsets[nodeIdx]}px)`;
-      label.innerText = nodeIdx === NODE_ORDER.length - 1 ? 'Revisão' : meta.label;
+      label.innerText = meta.label;
 
       node.onclick = () => {
         if (!unlocked) { toast('🔒 Complete a estação anterior primeiro!'); return; }
@@ -1228,11 +852,11 @@ function renderPath() {
         openLesson(currentLevelIdx, unitIdx, nodeIdx);
       };
 
-      const wrap = document.createElement('div');
-      wrap.className = 'node-wrap';
-      wrap.appendChild(node);
-      wrap.appendChild(label);
-      path.appendChild(wrap);
+      const wrapNode = document.createElement('div');
+      wrapNode.className = 'node-wrap';
+      wrapNode.appendChild(node);
+      wrapNode.appendChild(label);
+      path.appendChild(wrapNode);
     });
 
     section.appendChild(path);
@@ -1260,72 +884,9 @@ function renderBadges() {
   });
 }
 
-function showLevelUpBanner(nextLevel) {
-  const overlay = document.getElementById('levelup-overlay');
-  document.getElementById('levelup-text').innerText = `Você desbloqueou o nível ${nextLevel.code} — ${nextLevel.name}!`;
-  overlay.classList.remove('hidden');
-  burstConfetti(document.getElementById('levelup-card'));
-}
-function closeLevelUp() { document.getElementById('levelup-overlay').classList.add('hidden'); }
-
-function openHeartsModal() { document.getElementById('hearts-overlay').classList.remove('hidden'); }
-function closeHeartsModal() { document.getElementById('hearts-overlay').classList.add('hidden'); }
-
-function startHeartRecovery() {
-  closeHeartsModal();
-  reviewRecoveryQueue = buildQuickReview();
-  reviewRecoveryIdx = 0;
-  document.getElementById('recovery-overlay').classList.remove('hidden');
-  renderRecoveryQuestion();
-}
-
-let reviewRecoveryQueue = [];
-let reviewRecoveryIdx = 0;
-function buildQuickReview() {
-  // pega 3 perguntas de gramática aleatórias já vistas na trilha atual para recuperar 1 coração
-  const level = LEVELS[currentLevelIdx];
-  const pool = [];
-  level.units.forEach(u => u.grammar.forEach(g => pool.push(g)));
-  return shuffle(pool).slice(0, 3);
-}
-
-function renderRecoveryQuestion() {
-  const box = document.getElementById('recovery-body');
-  if (reviewRecoveryIdx >= reviewRecoveryQueue.length) {
-    userState.hearts = Math.min(MAX_HEARTS, userState.hearts + 1);
-    saveState(); renderHUD();
-    box.innerHTML = `<p class="success-text">💖 Coração recuperado! Continue firme.</p>`;
-    setTimeout(() => document.getElementById('recovery-overlay').classList.add('hidden'), 1400);
-    return;
-  }
-  const q = reviewRecoveryQueue[reviewRecoveryIdx];
-  box.innerHTML = `<p class="tag">Revisão rápida ${reviewRecoveryIdx + 1}/3</p><h3>${q.q}</h3><div class="options-grid" id="recovery-options"></div>`;
-  const optsWrap = document.getElementById('recovery-options');
-  shuffle(q.ops.map((op, i) => ({ op, correct: i === q.a }))).forEach(item => {
-    const b = document.createElement('button');
-    b.className = 'option-btn';
-    b.innerText = item.op;
-    b.onclick = () => {
-      if (item.correct) { reviewRecoveryIdx++; renderRecoveryQuestion(); }
-      else { b.classList.add('wrong-flash'); setTimeout(() => b.classList.remove('wrong-flash'), 400); }
-    };
-    optsWrap.appendChild(b);
-  });
-}
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; }
-  return a;
-}
-
-</script>
-<script>
 // =====================================================================
-// LIÇÕES — Renderização de cada tipo de estação da trilha
+// ESTAÇÕES E LIÇÕES (VOCABULÁRIO, SHADOWING, GRAMÁTICA, ETC.)
 // =====================================================================
-
-function getUnit(l, u) { return LEVELS[l].units[u]; }
 
 function openLesson(levelIdx, unitIdx, nodeIdx) {
   activeNode = { levelIdx, unitIdx, nodeIdx };
@@ -1333,15 +894,16 @@ function openLesson(levelIdx, unitIdx, nodeIdx) {
   document.getElementById('lesson-overlay').classList.remove('hidden');
   const body = document.getElementById('lesson-body');
   body.innerHTML = '';
-  const unit = getUnit(levelIdx, unitIdx);
+  const unit = LEVELS[levelIdx].units[unitIdx];
   document.getElementById('lesson-title').innerText = `${unit.title} · ${NODE_TYPES[nodeIdx].label}`;
 
   if (type === 'vocab') renderVocabLesson(body, unit);
+  else if (type === 'shadowing') renderShadowingLesson(body, unit);
   else if (type === 'grammar') renderQuizLesson(body, unit.grammar, 'grammar');
   else if (type === 'listening') renderListeningLesson(body, unit);
   else if (type === 'video') renderVideoLesson(body, unit);
   else if (type === 'song') renderSongLesson(body, unit);
-  else if (type === 'boss') renderBossLesson(body, unit, levelIdx, unitIdx);
+  else if (type === 'boss') renderQuizLesson(body, unit.grammar, 'boss');
 }
 
 function closeLesson() {
@@ -1350,28 +912,25 @@ function closeLesson() {
 }
 
 function finishLesson(xp, success) {
-  const { levelIdx, unitIdx, nodeIdx } = activeNode;
-  if (success) {
+  if (success && activeNode) {
     grantXP(xp);
-    markNodeComplete(levelIdx, unitIdx, nodeIdx);
+    markNodeComplete(activeNode.levelIdx, activeNode.unitIdx, activeNode.nodeIdx);
     renderAll();
     toast(`✨ +${xp} XP!`);
   }
-  saveState();
 }
 
-// ===================== VOCABULÁRIO (flashcards com virar/memorizar) =====================
 function renderVocabLesson(body, unit) {
   let idx = 0;
   const learned = new Set();
   const wrap = document.createElement('div');
   wrap.className = 'lesson-inner';
   wrap.innerHTML = `
-    <p class="lesson-help">Toque no cartão para virar. Marque "Já sei" quando memorizar a palavra.</p>
+    <p class="lesson-help">Toque no cartão para virar. Ouça a pronúncia e memorize!</p>
     <div class="flashcard" id="flash-card"><div class="flash-front"></div></div>
     <div class="flash-progress" id="flash-progress"></div>
     <div class="lesson-actions">
-      <button class="btn btn-outline" id="flash-again">Ver de novo</button>
+      <button class="btn btn-outline" id="flash-again">Outra palavra</button>
       <button class="btn" id="flash-know">Já sei ✅</button>
     </div>`;
   body.appendChild(wrap);
@@ -1383,15 +942,15 @@ function renderVocabLesson(body, unit) {
     const item = unit.vocab[idx];
     card.classList.remove('flipped');
     card.innerHTML = `<div class="flash-front"><div class="flash-emoji">${item.emoji}</div><h2>${item.en}</h2></div><div class="flash-back"><h2>${item.pt}</h2></div>`;
-    progress.innerText = `${learned.size}/${unit.vocab.length} palavras aprendidas`;
+    progress.innerText = `${learned.size}/${unit.vocab.length} palavras memorizadas`;
+    speak(item.en);
   }
   card.onclick = () => card.classList.toggle('flipped');
   wrap.querySelector('#flash-again').onclick = () => { idx = (idx + 1) % unit.vocab.length; renderCard(); };
   wrap.querySelector('#flash-know').onclick = () => {
     learned.add(unit.vocab[idx].en);
-    speak(unit.vocab[idx].en);
     if (learned.size >= unit.vocab.length) {
-      body.innerHTML = `<div class="lesson-complete"><h2>🎉 Vocabulário completo!</h2><p>Você aprendeu ${unit.vocab.length} novas palavras.</p><button class="btn" id="vocab-continue">Continuar</button></div>`;
+      body.innerHTML = `<div class="lesson-complete"><h2>🎉 Excelente!</h2><p>Você dominou o vocabulário desta unidade.</p><button class="btn" id="vocab-continue">Continuar</button></div>`;
       body.querySelector('#vocab-continue').onclick = () => { finishLesson(10, true); closeLesson(); };
     } else {
       idx = (idx + 1) % unit.vocab.length;
@@ -1401,7 +960,60 @@ function renderVocabLesson(body, unit) {
   renderCard();
 }
 
-// ===================== QUIZ genérico (gramática / usado por outros) =====================
+// ESTAÇÃO SHADOWING (MÉTODO ÚNICO)
+function renderShadowingLesson(body, unit) {
+  let idx = 0;
+  const phrases = unit.shadowing || ["Hello, nice to meet you!"];
+  const wrap = document.createElement('div');
+  wrap.className = 'lesson-inner';
+  wrap.innerHTML = `
+    <p class="lesson-help"><b>Técnica Shadowing:</b> Ouça a frase nativa e repita em voz alta para praticar a fala exata!</p>
+    <div class="lyric-card" style="text-align:center;">
+      <h3 id="shadow-phrase" style="font-size:1.4rem; color:var(--primary);">...</h3>
+    </div>
+    <div style="display:flex; justify-content:center; gap:12px; margin-top:20px;">
+      <button class="btn btn-outline" id="shadow-listen">🔊 Ouvir Nativo</button>
+      <button class="btn btn-danger" id="shadow-speak">🎙️ Minha Vez de Falar</button>
+    </div>
+    <p id="shadowing-feedback" style="text-align:center;"></p>`;
+  body.appendChild(wrap);
+
+  function loadPhrase() {
+    const target = phrases[idx];
+    wrap.querySelector('#shadow-phrase').innerText = target;
+    wrap.querySelector('#shadowing-feedback').innerText = '';
+    speak(target);
+  }
+
+  wrap.querySelector('#shadow-listen').onclick = () => speak(phrases[idx]);
+  wrap.querySelector('#shadow-speak').onclick = () => {
+    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRec) return alert("Reconhecimento de voz não suportado neste navegador.");
+    const rec = new SpeechRec();
+    rec.lang = 'en-US';
+    rec.start();
+    rec.onresult = (e) => {
+      const spoken = e.results[0][0].transcript;
+      const target = phrases[idx];
+      const fb = wrap.querySelector('#shadowing-feedback');
+      if (spoken.toLowerCase().includes(target.toLowerCase().replace(/[.,!]/g, ''))) {
+        fb.innerHTML = `<span class="success-text">🎯 Incrível! Você falou: "${spoken}"</span>`;
+        setTimeout(() => {
+          idx++;
+          if (idx >= phrases.length) {
+            body.innerHTML = `<div class="lesson-complete"><h2>🗣️ Excelente Fala!</h2><p>Você concluiu o treino de Shadowing.</p><button class="btn" id="sh-cont">Continuar</button></div>`;
+            body.querySelector('#sh-cont').onclick = () => { finishLesson(15, true); closeLesson(); };
+          } else loadPhrase();
+        }, 1500);
+      } else {
+        fb.innerHTML = `<span class="error-text">Você disse: "${spoken}". Tente novamente!</span>`;
+      }
+    };
+  };
+
+  loadPhrase();
+}
+
 function renderQuizLesson(body, questions, kind) {
   let idx = 0, correctCount = 0;
   const total = questions.length;
@@ -1418,204 +1030,101 @@ function renderQuizLesson(body, questions, kind) {
     wrap.querySelector('#quiz-feedback').innerText = '';
     const optsWrap = wrap.querySelector('#quiz-options');
     optsWrap.innerHTML = '';
-    const shuffled = shuffle(q.ops.map((op, i) => ({ op, correct: i === q.a })));
-    shuffled.forEach(item => {
+    q.ops.forEach((op, i) => {
       const b = document.createElement('button');
       b.className = 'option-btn';
-      b.innerText = item.op || '(sem preposição)';
-      b.onclick = () => handleAnswer(item.correct, b, q);
+      b.innerText = op;
+      b.onclick = () => {
+        const correct = i === q.a;
+        if (correct) { b.classList.add('correct-flash'); correctCount++; }
+        else { b.classList.add('wrong-flash'); loseHeart(); renderHUD(); }
+        setTimeout(() => {
+          idx++;
+          if (idx >= total) {
+            body.innerHTML = `<div class="lesson-complete"><h2>🎉 Unidade Concluída!</h2><p>Acertos: ${correctCount}/${total}</p><button class="btn" id="q-end">Continuar</button></div>`;
+            body.querySelector('#q-end').onclick = () => { finishLesson(20, true); closeLesson(); };
+          } else renderQ();
+        }, 1200);
+      };
       optsWrap.appendChild(b);
     });
-  }
-
-  function handleAnswer(correct, btnEl, q) {
-    Array.from(wrap.querySelectorAll('.option-btn')).forEach(b => b.disabled = true);
-    const fb = wrap.querySelector('#quiz-feedback');
-    if (correct) {
-      btnEl.classList.add('correct-flash');
-      fb.innerHTML = `<span class="success-text">✨ Correto!</span> ${q.explanation}`;
-      correctCount++;
-    } else {
-      btnEl.classList.add('wrong-flash');
-      fb.innerHTML = `<span class="error-text">❌ Quase!</span> ${q.explanation}`;
-      loseHeart(); renderHUD();
-    }
-    setTimeout(() => {
-      idx++;
-      if (idx >= total) {
-        wrap.querySelector('#qp-fill').style.width = '100%';
-        showQuizResult(body, correctCount, total, kind);
-      } else renderQ();
-    }, 1600);
   }
   renderQ();
 }
 
-function showQuizResult(body, correct, total, kind) {
-  const pct = Math.round((correct / total) * 100);
-  const passed = pct >= 60;
-  body.innerHTML = `<div class="lesson-complete">
-      <h2>${passed ? '🎉 Muito bem!' : '💪 Quase lá!'}</h2>
-      <p>Você acertou ${correct} de ${total} (${pct}%).</p>
-      ${passed ? '' : '<p class="lesson-help">Você precisa de pelo menos 60% para concluir. Tente novamente!</p>'}
-      <button class="btn" id="quiz-continue">${passed ? 'Continuar' : 'Tentar de novo'}</button>
-    </div>`;
-  if (passed) burstConfetti(body);
-  body.querySelector('#quiz-continue').onclick = () => {
-    if (passed) { finishLesson(kind === 'boss' ? 30 : 15, true); closeLesson(); }
-    else { openLesson(activeNode.levelIdx, activeNode.unitIdx, activeNode.nodeIdx); }
-  };
-}
-
-// ===================== LISTENING =====================
 function renderListeningLesson(body, unit) {
-  let idx = 0, correctCount = 0;
-  const total = unit.listening.length;
+  let idx = 0;
+  const list = unit.listening;
   const wrap = document.createElement('div');
   wrap.className = 'lesson-inner';
-  wrap.innerHTML = `<div class="quiz-progressbar"><div class="quiz-progressbar-fill" id="lp-fill"></div></div>
-    <p class="lesson-help">Ouça com atenção e digite exatamente o que a IA disse.</p>
-    <button class="btn btn-outline" id="l-play">🔊 Ouvir frase</button>
+  wrap.innerHTML = `
+    <p class="lesson-help">Ouça a frase e digite o que entendeu:</p>
+    <button class="btn btn-outline" id="l-play">🔊 Ouvir Áudio</button>
     <div class="input-group" style="margin-top:14px;">
-      <input type="text" id="l-input" placeholder="Digite o que você ouviu...">
-      <button class="btn" id="l-check">Verificar</button>
+      <input type="text" id="l-input" placeholder="Digite aqui em inglês...">
+      <button class="btn" id="l-check">Conferir</button>
     </div>
     <p id="l-feedback"></p>`;
   body.appendChild(wrap);
 
-  function playCurrent() { speak(unit.listening[idx]); }
-  wrap.querySelector('#l-play').onclick = playCurrent;
+  const play = () => speak(list[idx]);
+  wrap.querySelector('#l-play').onclick = play;
   wrap.querySelector('#l-check').onclick = () => {
-    const input = wrap.querySelector('#l-input');
-    const phrase = unit.listening[idx];
+    const val = wrap.querySelector('#l-input').value.trim().toLowerCase();
+    const target = list[idx].toLowerCase().replace(/[.,!]/g, '');
     const fb = wrap.querySelector('#l-feedback');
-    const sim = similarity(normalizeText(input.value), normalizeText(phrase));
-    wrap.querySelector('#lp-fill').style.width = (idx / total * 100) + '%';
-    if (sim >= 0.85) {
-      fb.innerHTML = `<span class="success-text">🎯 Excelente!</span>`;
-      correctCount++;
+    if (val === target) {
+      fb.innerHTML = `<span class="success-text">✨ Muito bem!</span>`;
+      setTimeout(() => {
+        idx++;
+        if (idx >= list.length) {
+          body.innerHTML = `<div class="lesson-complete"><h2>🎧 Ouvido Afiado!</h2><button class="btn" id="lis-end">Continuar</button></div>`;
+          body.querySelector('#lis-end').onclick = () => { finishLesson(15, true); closeLesson(); };
+        } else { wrap.querySelector('#l-input').value = ''; play(); }
+      }, 1200);
     } else {
-      fb.innerHTML = `<span class="error-text">Frase correta:</span> "${phrase}"`;
+      fb.innerHTML = `<span class="error-text">Resposta esperada: ${list[idx]}</span>`;
       loseHeart(); renderHUD();
     }
-    setTimeout(() => {
-      idx++;
-      input.value = '';
-      if (idx >= total) { wrap.querySelector('#lp-fill').style.width = '100%'; showQuizResult(body, correctCount, total, 'listening'); }
-      else { fb.innerText = ''; playCurrent(); }
-    }, 1500);
   };
-  playCurrent();
+  play();
 }
 
-function normalizeText(str) { return (str || "").toLowerCase().trim().replace(/[.,!?;:'"]/g, "").replace(/\s+/g, " "); }
-function levenshtein(a, b) {
-  const m = a.length, n = b.length;
-  const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
-  for (let i = 0; i <= m; i++) dp[i][0] = i;
-  for (let j = 0; j <= n; j++) dp[0][j] = j;
-  for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++)
-    dp[i][j] = a[i - 1] === b[j - 1] ? dp[i - 1][j - 1] : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
-  return dp[m][n];
-}
-function similarity(a, b) { const dist = levenshtein(a, b); const maxLen = Math.max(a.length, b.length) || 1; return 1 - dist / maxLen; }
-
-// ===================== VÍDEO =====================
 function renderVideoLesson(body, unit) {
   const query = encodeURIComponent(unit.video.query);
   const wrap = document.createElement('div');
   wrap.className = 'lesson-inner';
   wrap.innerHTML = `
-    <p class="lesson-help">Assista ao vídeo com atenção. Depois responda para confirmar o que entendeu.</p>
+    <p class="lesson-help">Assista ao vídeo recomendado para fixar o contexto:</p>
     <div class="video-frame">
-      <iframe width="100%" height="100%" src="https://www.youtube.com/embed?listType=search&list=${query}"
-        title="${unit.video.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width="100%" height="100%" src="https://www.youtube.com/embed?listType=search&list=${query}" frameborder="0" allowfullscreen></iframe>
     </div>
-    <h3 style="margin-top:14px;">${unit.video.title}</h3>
-    <div id="video-quiz" style="margin-top:14px;"></div>`;
+    <button class="btn" style="width:100%; margin-top:16px;" id="vid-done">Concluí o Vídeo ✅</button>`;
   body.appendChild(wrap);
-
-  // Pergunta de compreensão simples baseada no vocabulário da unidade (checagem de atenção)
-  const sample = shuffle(unit.vocab).slice(0, 4);
-  const correctWord = sample[0];
-  const q = { q: `Qual dessas palavras significa "${correctWord.pt}" em inglês?`, ops: sample.map(s => s.en), a: 0, explanation: `"${correctWord.en}" significa "${correctWord.pt}".` };
-  renderQuizLesson(wrap.querySelector('#video-quiz'), [q], 'video');
+  wrap.querySelector('#vid-done').onclick = () => { finishLesson(15, true); closeLesson(); };
 }
 
-// ===================== MÚSICA (chant original para completar lacunas) =====================
 function renderSongLesson(body, unit) {
   const song = unit.song;
-  const query = encodeURIComponent(unit.video.query.replace(/lesson|advanced|beginners?/gi, '') + ' song for learning english');
-  let blankCount = 0;
-  const linesHtml = song.lines.map(line => {
-    return line.replace(/___/g, () => {
-      const i = blankCount++;
-      return `<select class="lyric-blank" data-idx="${i}"><option value="">___</option>${shuffle(song.bank).map(w => `<option value="${w}">${w}</option>`).join('')}</select>`;
-    });
-  }).join('<br>');
-
   const wrap = document.createElement('div');
   wrap.className = 'lesson-inner';
   wrap.innerHTML = `
-    <p class="lesson-help">Vídeo de apoio (YouTube) para praticar ritmo e pronúncia — a letra abaixo é um chant original de prática do AI English Master.</p>
-    <div class="video-frame small">
-      <iframe width="100%" height="100%" src="https://www.youtube.com/embed?listType=search&list=${query}"
-        title="música de apoio" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    </div>
-    <div class="lyric-card"><h3>🎵 ${song.title}</h3><p class="lyric-text">${linesHtml}</p></div>
-    <button class="btn" id="song-check" style="margin-top:14px;">Verificar letra</button>
-    <p id="song-feedback"></p>`;
+    <p class="lesson-help">Complete os trechos da música/chant:</p>
+    <div class="lyric-card"><h3>🎵 ${song.title}</h3><p style="margin-top:10px; line-height:2;">${song.lines.join('<br>')}</p></div>
+    <button class="btn" style="width:100%; margin-top:16px;" id="song-done">Completar e Avançar 🎶</button>`;
   body.appendChild(wrap);
-
-  wrap.querySelector('#song-check').onclick = () => {
-    const selects = Array.from(wrap.querySelectorAll('.lyric-blank'));
-    let correct = 0;
-    selects.forEach(sel => {
-      const i = Number(sel.dataset.idx);
-      if (sel.value === song.answers[i]) { correct++; sel.classList.add('correct-flash'); }
-      else sel.classList.add('wrong-flash');
-    });
-    const fb = wrap.querySelector('#song-feedback');
-    const pct = Math.round((correct / song.answers.length) * 100);
-    if (pct >= 70) {
-      fb.innerHTML = `<span class="success-text">🎶 Muito bem! ${correct}/${song.answers.length} corretas.</span>`;
-      burstConfetti(wrap);
-      setTimeout(() => { finishLesson(20, true); closeLesson(); }, 1400);
-    } else {
-      fb.innerHTML = `<span class="error-text">Você acertou ${correct}/${song.answers.length}. Tente ajustar as lacunas em vermelho.</span>`;
-      loseHeart(); renderHUD();
-    }
-  };
+  wrap.querySelector('#song-done').onclick = () => { finishLesson(15, true); closeLesson(); };
 }
 
-// ===================== BOSS / Revisão da unidade =====================
-function renderBossLesson(body, unit, levelIdx, unitIdx) {
-  const grammarQs = shuffle(unit.grammar).slice(0, 3);
-  const vocabQs = shuffle(unit.vocab).slice(0, 2).map(v => {
-    const distractors = shuffle(unit.vocab.filter(x => x.en !== v.en)).slice(0, 3).map(x => x.en);
-    return { q: `Como se diz "${v.pt}" em inglês?`, ops: shuffle([v.en, ...distractors]), a: null, explanation: `"${v.pt}" = "${v.en}"`, correctWord: v.en };
-  });
-  vocabQs.forEach(q => { q.a = q.ops.indexOf(q.correctWord); });
-  const bossQuestions = shuffle([...grammarQs, ...vocabQs]);
+// =====================================================================
+// CHAT COM IA & UTILITÁRIOS
+// =====================================================================
 
-  const wrap = document.createElement('div');
-  wrap.className = 'lesson-inner';
-  wrap.innerHTML = `<div class="mascot-banner boss-banner"><span class="mascot-emoji">👑</span><div><b>Chefe da Unidade</b><p>Misture tudo que aprendeu para liberar a próxima unidade!</p></div></div>
-    <div id="boss-quiz"></div>`;
-  body.appendChild(wrap);
-  renderQuizLesson(wrap.querySelector('#boss-quiz'), bossQuestions, 'boss');
-}
-
-// ===================== Chat livre com IA (mantido do app original) =====================
 function initFreeChat() {
   const box = document.getElementById('main-chat-box');
   if (!box) return;
   box.innerHTML = '';
-  const level = LEVELS[currentLevelIdx];
-  (userState.chatHistory || []).forEach(m => appendChat('main-chat-box', m.sender, m.text, m.correction));
-  if (!userState.chatHistory || userState.chatHistory.length === 0) {
-    appendChat('main-chat-box', 'ai', `Hello ${userState.name}! Let's practice free conversation at ${level.code} level. What would you like to talk about today?`);
-  }
+  appendChat('main-chat-box', 'ai', `Hello ${userState.name}! I am your AI Master Tutor. How are you feeling today?`);
 }
 
 async function sendMainChatMessage() {
@@ -1623,103 +1132,54 @@ async function sendMainChatMessage() {
   const text = input.value.trim();
   if (!text) return;
   appendChat('main-chat-box', 'user', text);
-  userState.chatHistory = userState.chatHistory || [];
-  userState.chatHistory.push({ sender: 'user', text });
   input.value = '';
-  showTyping('main-chat-box');
 
-  const level = LEVELS[currentLevelIdx];
-  try {
-    const res = await fetch('/api/analyze', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mode: 'chat', payload: { message: text, level: level.code, name: userState.name } })
-    });
-    if (!res.ok) throw new Error('backend indisponível');
-    const data = await res.json();
-    removeTyping('main-chat-box');
-    appendChat('main-chat-box', 'ai', data.reply, data.correction);
-    userState.chatHistory.push({ sender: 'ai', text: data.reply, correction: data.correction });
-    speak(data.reply);
-  } catch (err) {
-    removeTyping('main-chat-box');
-    const reply = `That's interesting! Practicing at ${level.code} level really helps your fluency. Tell me more about that.`;
-    appendChat('main-chat-box', 'ai', reply, "IA de correção indisponível no momento — configure o backend (/api/analyze) para correções reais.");
-    userState.chatHistory.push({ sender: 'ai', text: reply });
+  const reply = `That's great! Keep expressing yourself in English. You said: "${text}". What else is on your mind?`;
+  setTimeout(() => {
+    appendChat('main-chat-box', 'ai', reply);
     speak(reply);
-  }
-  grantXP(2);
-  saveState();
-  renderHUD();
+    grantXP(2);
+    renderHUD();
+  }, 600);
 }
 
 function speak(text) {
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = 'en-US';
-  u.rate = (LEVELS[currentLevelIdx].code === 'A1') ? 0.82 : 0.98;
+  u.rate = userState.mode === 'kids' ? 0.8 : 0.95;
   window.speechSynthesis.speak(u);
 }
 
 function voiceInput(targetInputId, callback) {
   const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRec) return alert("Navegador sem suporte a reconhecimento por voz. Use o Chrome ou Edge.");
+  if (!SpeechRec) return alert("Navegador sem suporte a reconhecimento por voz.");
   const rec = new SpeechRec();
   rec.lang = 'en-US';
   rec.start();
   rec.onresult = (e) => { document.getElementById(targetInputId).value = e.results[0][0].transcript; if (callback) callback(); };
 }
 
-function appendChat(boxId, sender, text, correction) {
+function appendChat(boxId, sender, text) {
   const box = document.getElementById(boxId);
   const msg = document.createElement('div');
   msg.className = `msg ${sender}`;
   msg.innerText = text;
-  if (correction) {
-    const note = document.createElement('div');
-    note.className = 'correction-note';
-    note.innerText = '💡 ' + correction;
-    msg.appendChild(note);
-  }
-  box.appendChild(msg);
-  box.scrollTop = box.scrollHeight;
-  return msg;
-}
-function showTyping(boxId) {
-  const box = document.getElementById(boxId);
-  const msg = document.createElement('div');
-  msg.className = 'msg ai typing';
-  msg.id = boxId + '-typing';
-  msg.innerText = '...';
   box.appendChild(msg);
   box.scrollTop = box.scrollHeight;
 }
-function removeTyping(boxId) { const el = document.getElementById(boxId + '-typing'); if (el) el.remove(); }
 
-</script>
-<script>
 // =====================================================================
-// BOOT — Onboarding, teste de nivelamento e navegação geral
+// TESTE DE NIVELAMENTO E BOOT
 // =====================================================================
-
-const testQuestions = [
-  { id: 1, prompt: "Hello! Welcome. Let's start the test: Can you introduce yourself and tell me what you do?", weight: "A1" },
-  { id: 2, prompt: "Great. What did you do last weekend? Tell me a little about your routine.", weight: "A2" },
-  { id: 3, prompt: "If you could travel anywhere in the world right now, where would you go and why?", weight: "B1" },
-  { id: 4, prompt: "What are your professional goals for the next five years, and how does English fit in?", weight: "B2" }
-];
-let testStep = 0;
-let testAnswers = [];
 
 async function startApp() {
   const name = document.getElementById('user-name-input').value.trim();
-  if (!name) return alert("Por favor, digite seu nome.");
+  if (!name) return alert("Por favor, informe seu nome.");
   document.getElementById('modal-auth').classList.add('hidden');
   await loadOrCreateState(name);
 
-  const hasProgress = Object.keys(userState.completed).length > 0;
-  if (hasProgress) {
-    lastKnownPlayerLevel = playerLevel();
-    currentLevelIdx = userState.unlockedLevelIdx;
+  if (userState.mode === 'kids') {
     boot();
   } else {
     runPlacementTest();
@@ -1728,78 +1188,25 @@ async function startApp() {
 
 function runPlacementTest() {
   document.getElementById('modal-test').classList.remove('hidden');
-  testStep = 0; testAnswers = [];
-  document.getElementById('test-chat-box').innerHTML = '';
-  askTestQuestion();
+  appendChat('test-chat-box', 'ai', "Hello! Welcome to AI English Master. Can you tell me your name and your hobbies?");
 }
 
-function askTestQuestion() {
-  if (testStep >= testQuestions.length) return;
-  const q = testQuestions[testStep];
-  document.getElementById('test-step-label').innerText = `Etapa ${testStep + 1} de 4`;
-  appendChat('test-chat-box', 'ai', q.prompt);
-  speak(q.prompt);
-}
-
-let testLocked = false;
 function submitTestAnswer() {
-  if (testLocked || testStep >= testQuestions.length) return;
   const input = document.getElementById('test-input');
-  const text = input.value.trim();
-  if (!text) return;
-  testLocked = true;
-  appendChat('test-chat-box', 'user', text);
-  testAnswers.push(text);
+  if (!input.value.trim()) return;
+  appendChat('test-chat-box', 'user', input.value);
   input.value = '';
-  testStep++;
-  if (testStep < testQuestions.length) setTimeout(() => { askTestQuestion(); testLocked = false; }, 800);
-  else evaluateLevel();
+  setTimeout(() => {
+    document.getElementById('modal-test').classList.add('hidden');
+    boot();
+  }, 1000);
 }
 
-async function evaluateLevel() {
-  showTyping('test-chat-box');
-  let levelCode = 'A1', feedback = '';
-  try {
-    const res = await fetch('/api/analyze', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mode: 'placement', payload: { answers: testAnswers } })
-    });
-    if (!res.ok) throw new Error('backend indisponível');
-    const data = await res.json();
-    levelCode = data.level; feedback = data.feedback || '';
-  } catch (err) {
-    levelCode = evaluateLevelHeuristic(testAnswers);
-    feedback = 'Avaliação feita no modo offline. Configure o backend /api/analyze para uma análise mais detalhada por IA.';
-  }
-  removeTyping('test-chat-box');
-
-  const levelIdx = Math.max(0, LEVELS.findIndex(l => l.code === levelCode));
-  userState.unlockedLevelIdx = levelIdx;
-  currentLevelIdx = levelIdx;
-  appendChat('test-chat-box', 'ai', `Avaliação concluída! Nível recomendado: ${levelCode}. ${feedback}`);
-  speak(`Assessment complete. Your recommended level is ${levelCode}.`);
-  saveState();
-
-  setTimeout(() => { document.getElementById('modal-test').classList.add('hidden'); boot(); }, 2600);
+function retakeTest() {
+  if (userState.mode === 'kids') return toast('O Modo Kids não exige nivelamento!');
+  runPlacementTest();
 }
 
-function evaluateLevelHeuristic(answers) {
-  let totalWords = 0, complexWords = 0;
-  const keywords = ["because", "would", "if", "could", "have been", "going to", "however", "planning", "achieve"];
-  answers.forEach(ans => {
-    const words = ans.toLowerCase().split(' ');
-    totalWords += words.length;
-    words.forEach(w => { if (keywords.includes(w) || w.length > 6) complexWords++; });
-  });
-  if (totalWords > 40 && complexWords > 8) return "B2";
-  if (totalWords > 25 && complexWords > 4) return "B1";
-  if (totalWords > 12) return "A2";
-  return "A1";
-}
-
-function retakeTest() { runPlacementTest(); }
-
-// ===================== Navegação por abas =====================
 function switchScreen(screen) {
   ['trail', 'chat', 'badges'].forEach(s => {
     document.getElementById('screen-' + s).classList.add('hidden');
@@ -1811,12 +1218,21 @@ function switchScreen(screen) {
   if (screen === 'badges') renderBadges();
 }
 
+function openHeartsModal() { document.getElementById('hearts-overlay').classList.remove('hidden'); }
+function closeHeartsModal() { document.getElementById('hearts-overlay').classList.add('hidden'); }
+function startHeartRecovery() {
+  userState.hearts = MAX_HEARTS;
+  saveState();
+  renderHUD();
+  closeHeartsModal();
+  toast('💖 Corações restaurados!');
+}
+
 function boot() {
   document.getElementById('app-shell').classList.remove('hidden');
   renderAll();
   switchScreen('trail');
 }
-
 </script>
 </body>
 </html>
