@@ -375,7 +375,7 @@ nav.side-nav button.active { background: var(--primary); color: white; }
     </section>
 
     <section id="screen-chat" class="hidden">
-      <h2 style="margin-bottom:4px;">Prática Libre de Conversação com IA</h2>
+      <h2 style="margin-bottom:4px;">Prática Livre de Conversação com IA</h2>
       <p class="lesson-help">Converse em inglês. A IA corrige pequenos erros e ajuda a melhorar a fluência no seu nível.</p>
       <div class="chat-box" id="main-chat-box"></div>
       <div class="input-group">
@@ -398,7 +398,7 @@ nav.side-nav button.active { background: var(--primary); color: white; }
 // DADOS DA TRILHA DE INGLÊS (VERSÃO KIDS + ADULTO DO A1 AO C2)
 // =====================================================================
 
-let selectedProfile = 'adult'; // 'adult' ou 'kids'
+let selectedProfile = 'adult';
 
 function selectProfile(mode) {
   selectedProfile = mode;
@@ -960,7 +960,7 @@ function renderVocabLesson(body, unit) {
   renderCard();
 }
 
-// ESTAÇÃO SHADOWING (MÉTODO ÚNICO)
+// ESTAÇÃO SHADOWING
 function renderShadowingLesson(body, unit) {
   let idx = 0;
   const phrases = unit.shadowing || ["Hello, nice to meet you!"];
@@ -1117,8 +1117,54 @@ function renderSongLesson(body, unit) {
 }
 
 // =====================================================================
-// CHAT COM IA & UTILITÁRIOS
+// CHAT COM IA & MOTOR DE ÁUDIO OTIMIZADO
 // =====================================================================
+
+let voicesLoaded = false;
+let englishVoice = null;
+
+function loadVoices() {
+  if (!('speechSynthesis' in window)) return;
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length > 0) {
+    englishVoice = voices.find(v => v.lang === 'en-US' && v.name.includes('Google')) ||
+                   voices.find(v => v.lang.startsWith('en-US')) ||
+                   voices.find(v => v.lang.startsWith('en')) || null;
+    voicesLoaded = true;
+  }
+}
+
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+}
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) {
+    toast("⚠️ Seu navegador não suporta síntese de voz.");
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  if (!voicesLoaded) loadVoices();
+  if (englishVoice) utterance.voice = englishVoice;
+  
+  utterance.lang = 'en-US';
+  utterance.pitch = userState && userState.mode === 'kids' ? 1.2 : 1.0;
+  utterance.rate = userState && userState.mode === 'kids' ? 0.8 : 0.92;
+
+  setTimeout(() => {
+    window.speechSynthesis.speak(utterance);
+  }, 50);
+}
+
+document.addEventListener('click', () => {
+  if (window.speechSynthesis && window.speechSynthesis.speaking === false) {
+    if (!voicesLoaded) loadVoices();
+  }
+}, { once: true });
 
 function initFreeChat() {
   const box = document.getElementById('main-chat-box');
@@ -1141,14 +1187,6 @@ async function sendMainChatMessage() {
     grantXP(2);
     renderHUD();
   }, 600);
-}
-
-function speak(text) {
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-US';
-  u.rate = userState.mode === 'kids' ? 0.8 : 0.95;
-  window.speechSynthesis.speak(u);
 }
 
 function voiceInput(targetInputId, callback) {
