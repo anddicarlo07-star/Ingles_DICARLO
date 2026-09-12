@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI English Master - Online Platform</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --text: #f8fafc;
+            --text-sub: #94a3b8;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+
+        /* Fullscreen Modals */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.98); z-index: 1000;
+            display: flex; align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-card { background: var(--card); padding: 30px; border-radius: 16px; width: 100%; max-width: 550px; border: 1px solid #334155; }
+
+        /* Layout */
+        aside { width: 300px; background: var(--card); padding: 20px; display: flex; flex-direction: column; gap: 15px; border-right: 1px solid #334155; }
+        main { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
+        .card { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid #334155; }
+        .hidden { display: none !important; }
+
+        /* UI Elements */
+        .progress-bar { background: #334155; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 5px; }
+        .progress-fill { background: var(--accent); height: 100%; width: 0%; transition: width 0.4s ease; }
+        nav button { width: 100%; padding: 12px; margin-bottom: 8px; background: transparent; border: 1px solid #334155; color: var(--text); border-radius: 8px; cursor: pointer; text-align: left; transition: 0.2s; }
+        nav button.active, nav button:hover { background: var(--accent); border-color: var(--accent); }
+        .btn { background: var(--accent); color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn:hover { background: var(--accent-hover); }
+        .btn-outline { background: transparent; border: 1px solid #334155; }
+        .btn-danger { background: var(--danger); }
+
+        /* Chat & Quiz Controls */
+        .chat-box { height: 350px; overflow-y: auto; border: 1px solid #334155; padding: 15px; border-radius: 8px; display: flex; flex-direction: column; gap: 12px; background: #0b1120; margin-bottom: 12px; }
+        .msg { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 0.95rem; line-height: 1.4; }
+        .msg.ai { background: #334155; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .msg.user { background: var(--accent); align-self: flex-end; border-bottom-right-radius: 2px; }
+        .msg.typing { opacity: 0.6; font-style: italic; }
+        .correction-note { margin-top: 8px; font-size: 0.8rem; color: var(--warning); background: rgba(245, 158, 11, 0.12); padding: 6px 10px; border-radius: 6px; line-height: 1.3; }
+        .input-group { display: flex; gap: 10px; }
+        .input-group input { flex: 1; padding: 12px; background: #0b1120; border: 1px solid #334155; color: white; border-radius: 8px; outline: none; }
+
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .option-btn { background: #0b1120; border: 1px solid #334155; color: white; padding: 14px; border-radius: 8px; cursor: pointer; text-align: left; }
+        .option-btn:hover { border-color: var(--accent); background: #1e293b; }
+
+        .tag { background: rgba(99, 102, 241, 0.2); color: #818cf8; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+
+        .sync-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 10px; display: inline-block; margin-top: 8px; }
+        .sync-badge.on { background: rgba(34, 197, 94, 0.15); color: var(--success); }
+        .sync-badge.off { background: rgba(148, 163, 184, 0.15); color: var(--text-sub); }
+
+        /* Responsivo */
+        @media (max-width: 820px) {
+            body { flex-direction: column; height: auto; min-height: 100vh; overflow-y: auto; }
+            aside { width: 100%; border-right: none; border-bottom: 1px solid #334155; }
+            main { padding: 16px; }
+            .options-grid { grid-template-columns: 1fr; }
+            .chat-box { height: 280px; }
+            .modal-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Modal 1: Boas-vindas -->
+    <div id="modal-auth" class="modal-overlay">
+        <div class="modal-card" style="text-align: center;">
+            <h2>Welcome to AI English Master</h2>
+            <p style="color: var(--text-sub); margin: 10px 0 20px 0;">Plataforma de aprendizado guiada por Inteligência Artificial.</p>
+            <input type="text" id="user-name-input" placeholder="Digite seu nome para iniciar" style="width: 100%; padding: 12px; background: #0b1120; border: 1px solid #334155; color: white; border-radius: 8px; margin-bottom: 15px;">
+            <button class="btn" style="width: 100%;" onclick="startApp()">Começar Avaliação de Nível</button>
+        </div>
+    </div>
+
+    <!-- Modal 2: Teste de Nivelamento Automático -->
+    <div id="modal-test" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <span class="tag">Teste de Conversação IA</span>
+                <span style="font-size: 0.85rem; color: var(--text-sub);" id="test-step-label">Etapa 1 de 4</span>
+            </div>
+
+            <div class="chat-box" id="test-chat-box"></div>
+
+            <div class="input-group">
+                <input type="text" id="test-input" placeholder="Responda em inglês...">
+                <button class="btn" onclick="submitTestAnswer()">Enviar</button>
+                <button class="btn btn-danger" onclick="voiceInput('test-input', submitTestAnswer)">🎙️</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interface Principal -->
+    <aside>
+        <h2>AI English</h2>
+        <div class="card" style="padding: 15px;">
+            <h3 id="profile-name">Aluno</h3>
+            <p style="font-size: 0.85rem; color: var(--text-sub); margin-top: 5px;">Nível Recomendado: <b id="profile-level" style="color:var(--accent)">-</b></p>
+
+            <p style="font-size: 0.8rem; margin-top: 12px;">Fluência Estimada: <b id="profile-fluency">0%</b></p>
+            <div class="progress-bar"><div class="progress-fill" id="fluency-bar"></div></div>
+            <span class="sync-badge off" id="sync-badge">☁️ Sincronização: local</span>
+        </div>
+
+        <nav>
+            <button id="nav-grammar" class="active" onclick="switchTab('grammar')">📖 Trilha Gramatical</button>
+            <button id="nav-listening" onclick="switchTab('listening')">🎧 Treino de Escuta</button>
+            <button id="nav-conversation" onclick="switchTab('conversation')">🗣️ Conversação IA</button>
+            <button onclick="retakeTest()" class="btn-outline" style="margin-top: 10px; width:100%;">🔄 Refazer Nivelamento</button>
+        </nav>
+    </aside>
+
+    <main>
+        <!-- Módulo Gramática -->
+        <section id="sec-grammar" class="card">
+            <h2>Exercícios Adaptativos</h2>
+            <p style="color: var(--text-sub); font-size: 0.9rem;" id="grammar-subtitle">Exercícios ajustados ao seu nível.</p>
+            <div style="margin-top: 20px;">
+                <h3 id="g-question">Carregando...</h3>
+                <div class="options-grid" id="g-options"></div>
+            </div>
+            <p id="g-feedback" style="margin-top: 15px; font-weight: bold;"></p>
+        </section>
+
+        <!-- Módulo Listening -->
+        <section id="sec-listening" class="card hidden">
+            <h2>Compreensão Auditiva</h2>
+            <p style="color: var(--text-sub); font-size: 0.9rem;">Escute a frase nativa e digite o texto correspondente.</p>
+            <div style="margin: 20px 0;">
+                <button class="btn" onclick="playAudioPrompt()">🔊 Ouvir Frase</button>
+            </div>
+            <div class="input-group">
+                <input type="text" id="l-input" placeholder="Digite o que você ouviu...">
+                <button class="btn" onclick="checkListening()">Verificar</button>
+            </div>
+            <p id="l-feedback" style="margin-top: 15px; font-weight: bold;"></p>
+        </section>
+
+        <!-- Módulo Conversação -->
+        <section id="sec-conversation" class="card hidden">
+            <h2>Prática Livre de Conversação</h2>
+            <div class="chat-box" id="main-chat-box"></div>
+            <div class="input-group">
+                <input type="text" id="main-chat-input" placeholder="Converse em inglês com a IA...">
+                <button class="btn" onclick="sendMainChatMessage()">Enviar</button>
+                <button class="btn btn-danger" onclick="voiceInput('main-chat-input', sendMainChatMessage)">🎙️</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Módulo de sincronização em nuvem (Firebase) — opcional.
+         Sem credenciais preenchidas, o app funciona 100% com localStorage. -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // Cole aqui as credenciais do SEU projeto Firebase (Console > Configurações do projeto > Seus apps).
+        // Enquanto apiKey começar com "COLE_AQUI", o app ignora a nuvem e usa apenas localStorage.
+        const firebaseConfig = {
+            apiKey: "COLE_AQUI_SUA_API_KEY",
+            authDomain: "SEU_PROJETO.firebaseapp.com",
+            projectId: "SEU_PROJETO",
+            storageBucket: "SEU_PROJETO.appspot.com",
+            messagingSenderId: "SEU_SENDER_ID",
+            appId: "SEU_APP_ID"
+        };
+
+        const cloudEnabled = !!(firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith("COLE_AQUI"));
+        window.cloudSync = { enabled: cloudEnabled, ready: Promise.resolve(null) };
+
+        if (cloudEnabled) {
+            try {
+                const app = initializeApp(firebaseConfig);
+                const auth = getAuth(app);
+                const db = getFirestore(app);
+
+                window.cloudSync.ready = new Promise((resolve) => {
+                    onAuthStateChanged(auth, (user) => { if (user) resolve(user.uid); });
+                    signInAnonymously(auth).catch((err) => {
+                        console.error("Falha no login anônimo do Firebase:", err);
+                        resolve(null);
+                    });
+                });
+
+                window.cloudSync.save = async (state) => {
+                    const uid = await window.cloudSync.ready;
+                    if (!uid) return false;
+                    await setDoc(doc(db, "students", uid), state);
+                    return true;
+                };
+
+                window.cloudSync.load = async () => {
+                    const uid = await window.cloudSync.ready;
+                    if (!uid) return null;
+                    const snap = await getDoc(doc(db, "students", uid));
+                    return snap.exists() ? snap.data() : null;
+                };
+
+                window.cloudSync.ready.then((uid) => {
+                    const badge = document.getElementById('sync-badge');
+                    if (uid && badge) {
+                        badge.textContent = '☁️ Sincronização: ativa';
+                        badge.className = 'sync-badge on';
+                    }
+                });
+            } catch (err) {
+                console.error("Erro ao inicializar Firebase:", err);
+                window.cloudSync = { enabled: false, ready: Promise.resolve(null) };
+            }
+        }
+    </script>
+
+    <script>
+        // ===================== Dados =====================
+        const testQuestions = [
+            { id: 1, prompt: "Hello! Welcome. Let's start the test: Can you introduce yourself and tell me what you do?", weight: "A1" },
+            { id: 2, prompt: "Great. What did you do last weekend? Tell me a little about your routine.", weight: "A2" },
+            { id: 3, prompt: "If you could travel anywhere in the world right now, where would you go and why?", weight: "B1" },
+            { id: 4, prompt: "What are your professional goals for the next five years, and how does English fit in?", weight: "B2" }
+        ];
+
+        const contentDB = {
+            A1: {
+                grammar: [
+                    { q: "She ___ a teacher.", ops: ["is", "are", "am", "be"], a: 0, explanation: "Use 'is' com he/she/it (terceira pessoa do singular)." },
+                    { q: "Where ___ you live?", ops: ["do", "does", "is", "are"], a: 0, explanation: "'Do' é usado com you/we/they em perguntas no presente simples." },
+                    { q: "I ___ two brothers.", ops: ["have", "has", "having", "am"], a: 0, explanation: "Use 'have' com I/you/we/they." },
+                    { q: "This is ___ apple.", ops: ["an", "a", "the", "some"], a: 0, explanation: "Antes de palavra iniciada por som de vogal usamos 'an'." },
+                    { q: "He ___ to school every day.", ops: ["goes", "go", "going", "gone"], a: 0, explanation: "Na terceira pessoa do singular, o presente simples recebe 's' (go → goes)." }
+                ],
+                listening: ["Hello, nice to meet you.", "I like to study English every day.", "My name is Ana.", "This is my house.", "See you tomorrow."]
+            },
+            A2: {
+                grammar: [
+                    { q: "They ___ to Cinema yesterday.", ops: ["went", "go", "gone", "going"], a: 0, explanation: "Passado simples irregular de 'go' é 'went'." },
+                    { q: "He is ___ than me.", ops: ["taller", "more tall", "tallest", "tall"], a: 0, explanation: "Comparativo de adjetivos curtos: adiciona-se '-er'." },
+                    { q: "We ___ watching a movie right now.", ops: ["are", "is", "am", "were"], a: 0, explanation: "Presente contínuo com 'we' usa o verbo auxiliar 'are'." },
+                    { q: "I ___ my homework already.", ops: ["have finished", "finish", "finished", "has finished"], a: 0, explanation: "Present perfect (have + particípio) indica ação concluída sem tempo específico." },
+                    { q: "There ___ some milk in the fridge.", ops: ["is", "are", "be", "was"], a: 0, explanation: "'Milk' é substantivo incontável, por isso usa 'is'." }
+                ],
+                listening: ["We visited a great museum last Saturday.", "What are your plans for tomorrow?", "I need to buy some groceries.", "Can you help me with this, please?", "The weather is really nice today."]
+            },
+            B1: {
+                grammar: [
+                    { q: "If it rains, we ___ home.", ops: ["will stay", "stayed", "would stay", "staying"], a: 0, explanation: "First conditional: if + presente, will + verbo." },
+                    { q: "I have lived here ___ 2010.", ops: ["since", "for", "during", "ago"], a: 0, explanation: "'Since' é usado com um ponto específico no tempo." },
+                    { q: "She said she ___ tired.", ops: ["was", "is", "be", "being"], a: 0, explanation: "No discurso indireto no passado, 'is' muda para 'was'." },
+                    { q: "By next year, I ___ here for a decade.", ops: ["will have worked", "will work", "worked", "have worked"], a: 0, explanation: "Future perfect indica ação que estará concluída antes de um ponto futuro." },
+                    { q: "I wish I ___ more time.", ops: ["had", "have", "has", "having"], a: 0, explanation: "'Wish' + passado simples expressa desejo sobre o presente." }
+                ],
+                listening: ["If I had enough money, I would buy a house.", "She has been working here for three years.", "I'm looking forward to seeing you.", "He apologized for being late.", "Could you tell me how to get to the station?"]
+            },
+            B2: {
+                grammar: [
+                    { q: "Had I known, I ___ differently.", ops: ["would have acted", "acted", "will act", "have acted"], a: 0, explanation: "Third conditional: had + particípio, would have + particípio." },
+                    { q: "The report ___ by the manager before the meeting.", ops: ["had been reviewed", "reviewed", "has reviewed", "review"], a: 0, explanation: "Voz passiva no passado perfeito: had been + particípio." },
+                    { q: "Not only ___ late, but he also forgot the documents.", ops: ["did he arrive", "he arrived", "he did arrive", "arrived he"], a: 0, explanation: "Inversão após 'Not only' no início da frase exige a ordem de uma pergunta." },
+                    { q: "It's high time we ___ a decision.", ops: ["made", "make", "will make", "making"], a: 0, explanation: "'It's (high) time' + passado simples sugere que algo deveria acontecer agora." },
+                    { q: "She would rather ___ tomorrow than today.", ops: ["go", "went", "going", "to go"], a: 0, explanation: "'Would rather' é seguido de infinitivo sem 'to'." }
+                ],
+                listening: ["Despite the weather, the event was a complete success.", "The proposal was rejected due to budget constraints.", "I'd rather you didn't mention this to anyone.", "The negotiations have reached a critical point.", "He's been putting off this decision for weeks."]
+            }
+        };
+
+        let userState = { name: "", level: "A1", score: 0, testStep: 0, answers: [], fluency: 10, grammarIdx: 0, listeningIdx: 0 };
+
+        // ===================== Fluxo inicial =====================
+        async function startApp() {
+            const name = document.getElementById('user-name-input').value.trim();
+            if (!name) return alert("Por favor, digite seu nome.");
+
+            userState.name = name;
+            document.getElementById('profile-name').innerText = name;
+            document.getElementById('modal-auth').classList.add('hidden');
+
+            let saved = null;
+            if (window.cloudSync && window.cloudSync.enabled) {
+                try { saved = await window.cloudSync.load(); } catch (err) { console.error("Erro ao carregar da nuvem:", err); }
+            }
+            if (!saved) {
+                const local = localStorage.getItem('ai_user_' + name.toLowerCase());
+                if (local) saved = JSON.parse(local);
+            }
+
+            if (saved) {
+                userState = saved;
+                updateUI();
+                loadGrammar();
+                initMainChat();
+            } else {
+                runPlacementTest();
+            }
+        }
+
+        // ===================== Teste de nivelamento =====================
+        function runPlacementTest() {
+            document.getElementById('modal-test').classList.remove('hidden');
+            userState.testStep = 0;
+            userState.answers = [];
+            document.getElementById('test-chat-box').innerHTML = '';
+            askTestQuestion();
+        }
+
+        function askTestQuestion() {
+            const q = testQuestions[userState.testStep];
+            document.getElementById('test-step-label').innerText = `Etapa ${userState.testStep + 1} de 4`;
+            appendChat('test-chat-box', 'ai', q.prompt);
+            speak(q.prompt);
+        }
+
+        function submitTestAnswer() {
+            const input = document.getElementById('test-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            appendChat('test-chat-box', 'user', text);
+            userState.answers.push(text);
+            input.value = '';
+
+            userState.testStep++;
+            if (userState.testStep < testQuestions.length) {
+                setTimeout(askTestQuestion, 800);
+            } else {
+                evaluateLevel();
+            }
+        }
+
+        // Avaliação real via IA (backend /api/analyze), com fallback heurístico offline.
+        async function evaluateLevel() {
+            showTyping('test-chat-box');
+            try {
+                const res = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mode: 'placement', payload: { answers: userState.answers } })
+                });
+                if (!res.ok) throw new Error('backend indisponível');
+                const data = await res.json();
+                removeTyping('test-chat-box');
+
+                userState.level = data.level;
+                userState.fluency = data.fluency;
+                appendChat('test-chat-box', 'ai', `Avaliação concluída! Nível: ${data.level}. ${data.feedback || ''}`);
+                speak(`Assessment complete. Your recommended level is ${data.level}.`);
+            } catch (err) {
+                removeTyping('test-chat-box');
+                const result = evaluateLevelHeuristic(userState.answers);
+                userState.level = result.level;
+                userState.fluency = result.fluency;
+                appendChat('test-chat-box', 'ai', `Avaliação concluída (modo offline)! Nível: ${result.level}. Configure o backend /api/analyze para uma análise mais detalhada feita por IA.`);
+                speak(`Assessment complete. Your recommended level is ${result.level}.`);
+            }
+
+            saveState();
+            setTimeout(() => {
+                document.getElementById('modal-test').classList.add('hidden');
+                updateUI();
+                loadGrammar();
+                initMainChat();
+            }, 3000);
+        }
+
+        // Fallback local — heurística simples de contagem de palavras/vocabulário.
+        function evaluateLevelHeuristic(answers) {
+            let totalWords = 0;
+            let complexWords = 0;
+            const keywords = ["because", "would", "if", "could", "have been", "going to", "however", "planning", "achieve"];
+
+            answers.forEach(ans => {
+                const words = ans.toLowerCase().split(' ');
+                totalWords += words.length;
+                words.forEach(w => { if (keywords.includes(w) || w.length > 6) complexWords++; });
+            });
+
+            let level = "A1", fluency = 20;
+            if (totalWords > 40 && complexWords > 8) { level = "B2"; fluency = 75; }
+            else if (totalWords > 25 && complexWords > 4) { level = "B1"; fluency = 55; }
+            else if (totalWords > 12) { level = "A2"; fluency = 35; }
+
+            return { level, fluency };
+        }
+
+        function retakeTest() {
+            runPlacementTest();
+        }
+
+        // ===================== UI geral =====================
+        function updateUI() {
+            document.getElementById('profile-level').innerText = userState.level;
+            document.getElementById('profile-fluency').innerText = userState.fluency + "%";
+            document.getElementById('fluency-bar').style.width = userState.fluency + "%";
+            document.getElementById('grammar-subtitle').innerText = `Exercícios ajustados ao nível ${userState.level}.`;
+        }
+
+        function saveState() {
+            localStorage.setItem('ai_user_' + userState.name.toLowerCase(), JSON.stringify(userState));
+            if (window.cloudSync && window.cloudSync.enabled) {
+                window.cloudSync.save(userState).catch(err => console.error("Erro ao salvar na nuvem:", err));
+            }
+        }
+
+        function switchTab(tab) {
+            ['grammar', 'listening', 'conversation'].forEach(t => {
+                document.getElementById('sec-' + t).classList.add('hidden');
+                document.getElementById('nav-' + t).classList.remove('active');
+            });
+            document.getElementById('sec-' + tab).classList.remove('hidden');
+            document.getElementById('nav-' + tab).classList.add('active');
+            if (tab === 'listening') playAudioPrompt();
+        }
+
+        // ===================== Módulo Gramática =====================
+        function loadGrammar() {
+            const list = contentDB[userState.level].grammar;
+            const q = list[userState.grammarIdx % list.length];
+            document.getElementById('g-question').innerText = q.q;
+            const container = document.getElementById('g-options');
+            container.innerHTML = '';
+            document.getElementById('g-feedback').innerText = '';
+
+            q.ops.forEach((op, i) => {
+                const b = document.createElement('button');
+                b.className = 'option-btn';
+                b.innerText = op;
+                b.onclick = () => {
+                    const fb = document.getElementById('g-feedback');
+                    if (i === q.a) {
+                        fb.innerText = "✨ Correto! " + q.explanation;
+                        fb.style.color = "var(--success)";
+                        userState.fluency = Math.min(100, userState.fluency + 2);
+                    } else {
+                        fb.innerText = "❌ Não foi dessa vez. " + q.explanation;
+                        fb.style.color = "var(--danger)";
+                    }
+                    userState.grammarIdx++;
+                    saveState();
+                    updateUI();
+                    setTimeout(loadGrammar, 1800);
+                };
+                container.appendChild(b);
+            });
+        }
+
+        // ===================== Módulo Listening =====================
+        function playAudioPrompt() {
+            const list = contentDB[userState.level].listening;
+            const phrase = list[userState.listeningIdx % list.length];
+            speak(phrase);
+        }
+
+        function checkListening() {
+            const input = document.getElementById('l-input');
+            const list = contentDB[userState.level].listening;
+            const phrase = list[userState.listeningIdx % list.length];
+            const fb = document.getElementById('l-feedback');
+            const sim = similarity(normalizeText(input.value), normalizeText(phrase));
+
+            if (sim >= 0.92) {
+                fb.innerText = "🎯 Excelente! Áudio compreendido.";
+                fb.style.color = "var(--success)";
+                userState.listeningIdx++;
+                userState.fluency = Math.min(100, userState.fluency + 3);
+                saveState();
+                updateUI();
+                input.value = '';
+            } else if (sim >= 0.75) {
+                fb.innerText = `🔸 Quase lá! Frase correta: "${phrase}"`;
+                fb.style.color = "var(--warning)";
+            } else {
+                fb.innerText = `❌ Frase correta: "${phrase}"`;
+                fb.style.color = "var(--danger)";
+            }
+        }
+
+        // Comparação tolerante a pequenos erros de digitação/pontuação.
+        function normalizeText(str) {
+            return (str || "").toLowerCase().trim().replace(/[.,!?;:'"]/g, "").replace(/\s+/g, " ");
+        }
+
+        function levenshtein(a, b) {
+            const m = a.length, n = b.length;
+            const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+            for (let i = 0; i <= m; i++) dp[i][0] = i;
+            for (let j = 0; j <= n; j++) dp[0][j] = j;
+            for (let i = 1; i <= m; i++) {
+                for (let j = 1; j <= n; j++) {
+                    dp[i][j] = a[i - 1] === b[j - 1] ? dp[i - 1][j - 1] : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+                }
+            }
+            return dp[m][n];
+        }
+
+        function similarity(a, b) {
+            const dist = levenshtein(a, b);
+            const maxLen = Math.max(a.length, b.length) || 1;
+            return 1 - dist / maxLen;
+        }
+
+        // ===================== Chat Principal =====================
+        function initMainChat() {
+            const box = document.getElementById('main-chat-box');
+            box.innerHTML = '';
+            appendChat('main-chat-box', 'ai', `Hello ${userState.name}! We are currently training at level ${userState.level}. What would you like to discuss today?`);
+        }
+
+        // Conversa real via IA (backend /api/analyze), com correção gramatical e fallback offline.
+        async function sendMainChatMessage() {
+            const input = document.getElementById('main-chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            appendChat('main-chat-box', 'user', text);
+            input.value = '';
+            showTyping('main-chat-box');
+
+            try {
+                const res = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mode: 'chat', payload: { message: text, level: userState.level, name: userState.name } })
+                });
+                if (!res.ok) throw new Error('backend indisponível');
+                const data = await res.json();
+                removeTyping('main-chat-box');
+                appendChat('main-chat-box', 'ai', data.reply, data.correction);
+                speak(data.reply);
+            } catch (err) {
+                removeTyping('main-chat-box');
+                const reply = `That is very interesting! Speaking in ${userState.level} level helps your fluency. Tell me more about that.`;
+                appendChat('main-chat-box', 'ai', reply, "IA de correção indisponível no momento — usando resposta padrão. Configure o backend (/api/analyze) para correções reais.");
+                speak(reply);
+            }
+
+            userState.fluency = Math.min(100, userState.fluency + 1);
+            saveState();
+            updateUI();
+        }
+
+        // ===================== Voz e utilitários de chat =====================
+        function speak(text) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = 'en-US';
+            u.rate = userState.level === 'A1' ? 0.8 : 0.95;
+            window.speechSynthesis.speak(u);
+        }
+
+        function voiceInput(targetInputId, callback) {
+            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRec) return alert("Navegador sem suporte a reconhecimento por voz. Use o Chrome ou Edge.");
+            const rec = new SpeechRec();
+            rec.lang = 'en-US';
+            rec.start();
+            rec.onresult = (e) => {
+                document.getElementById(targetInputId).value = e.results[0][0].transcript;
+                if (callback) callback();
+            };
+        }
+
+        function appendChat(boxId, sender, text, correction) {
+            const box = document.getElementById(boxId);
+            const msg = document.createElement('div');
+            msg.className = `msg ${sender}`;
+            msg.innerText = text;
+            if (correction) {
+                const note = document.createElement('div');
+                note.className = 'correction-note';
+                note.innerText = '💡 ' + correction;
+                msg.appendChild(note);
+            }
+            box.appendChild(msg);
+            box.scrollTop = box.scrollHeight;
+            return msg;
+        }
+
+        function showTyping(boxId) {
+            const box = document.getElementById(boxId);
+            const msg = document.createElement('div');
+            msg.className = 'msg ai typing';
+            msg.id = boxId + '-typing';
+            msg.innerText = '...';
+            box.appendChild(msg);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function removeTyping(boxId) {
+            const el = document.getElementById(boxId + '-typing');
+            if (el) el.remove();
+        }
+    </script>
+</body>
+</html>
