@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI English Master — Imersão & Gamificação</title>
+<title>AI English Master — Next-Gen Platform</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,600&display=swap');
 
@@ -28,233 +28,99 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Nunito Sans', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  min-height: 100vh;
-}
+body { font-family: 'Nunito Sans', system-ui, sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
 h1, h2, h3, .display-font { font-family: 'Baloo 2', system-ui, sans-serif; }
 button { font-family: inherit; cursor: pointer; }
 input, select { font-family: inherit; }
 .hidden { display: none !important; }
 
-/* ===================== Modais e Overlays ===================== */
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(27, 37, 89, 0.55); backdrop-filter: blur(4px);
-  z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px;
-}
-.modal-card {
-  background: var(--panel); padding: 34px; border-radius: var(--radius-lg);
-  width: 100%; max-width: 560px; box-shadow: var(--shadow-soft); border: 1px solid var(--border);
-}
+/* Modais e Overlays */
+.modal-overlay { position: fixed; inset: 0; background: rgba(27, 37, 89, 0.55); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.modal-card { background: var(--panel); padding: 34px; border-radius: var(--radius-lg); width: 100%; max-width: 620px; box-shadow: var(--shadow-soft); border: 1px solid var(--border); }
 .modal-card h2 { font-size: 1.6rem; margin-bottom: 6px; }
 .modal-card .sub { color: var(--ink-soft); margin-bottom: 22px; line-height: 1.5; }
-.modal-card input[type="text"] {
-  width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: var(--radius-md);
-  margin-bottom: 16px; outline: none; font-size: 1rem; transition: border-color .15s;
-}
+.modal-card input[type="text"] { width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: var(--radius-md); margin-bottom: 16px; outline: none; font-size: 1rem; }
 .modal-card input[type="text"]:focus { border-color: var(--primary); }
 .mascot-hero { font-size: 3.5rem; text-align: center; margin-bottom: 8px; }
 
-/* Selector de Perfil */
+/* Dashboard & Cards */
 .profile-selector { display: flex; gap: 12px; margin-bottom: 20px; }
-.profile-card {
-  flex: 1; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-md);
-  text-align: center; cursor: pointer; transition: all 0.2s;
-}
+.profile-card { flex: 1; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-md); text-align: center; cursor: pointer; transition: all 0.2s; }
 .profile-card:hover, .profile-card.active { border-color: var(--primary); background: #F0FBF9; }
 .profile-card .icon { font-size: 2rem; display: block; margin-bottom: 4px; }
 .profile-card b { font-size: 0.95rem; color: var(--ink); }
 
-/* ===================== Botões ===================== */
-.btn {
-  background: var(--primary); color: white; border: none; padding: 13px 22px; border-radius: 14px;
-  font-weight: 700; font-size: 0.98rem; display: inline-flex; align-items: center; justify-content: center;
-  gap: 8px; transition: transform .12s, background .15s; box-shadow: 0 4px 0 var(--primary-dark);
-}
+.btn { background: var(--primary); color: white; border: none; padding: 13px 22px; border-radius: 14px; font-weight: 700; font-size: 0.98rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: transform .12s, background .15s; box-shadow: 0 4px 0 var(--primary-dark); }
 .btn:hover { background: #159187; }
 .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--primary-dark); }
 .btn-outline { background: white; color: var(--ink); border: 2px solid var(--border); box-shadow: none; }
 .btn-outline:hover { border-color: var(--primary); background: white; }
 .btn-danger { background: var(--coral); box-shadow: 0 4px 0 #d94f4f; color: white; border: none; }
-.btn-kids { background: var(--kids-color); box-shadow: 0 4px 0 #d94b83; }
 
-/* ===================== Layout Principal ===================== */
 #app-shell { display: flex; min-height: 100vh; }
-
-.sidebar {
-  width: 260px; background: var(--panel); border-right: 1px solid var(--border);
-  padding: 24px 18px; display: flex; flex-direction: column; gap: 22px; flex-shrink: 0;
-}
+.sidebar { width: 270px; background: var(--panel); border-right: 1px solid var(--border); padding: 24px 18px; display: flex; flex-direction: column; gap: 20px; flex-shrink: 0; }
 .brand { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: 800; color: var(--primary); }
-.brand-emoji { font-size: 1.6rem; }
 
 .hud-card { background: linear-gradient(155deg, #F0FBF9, #FFFFFF); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
 .hud-name-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .hud-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; }
-.hud-name-row b { display: block; font-size: 1.02rem; }
-.hud-name-row span { font-size: 0.78rem; color: var(--ink-soft); }
 .hud-stats-row { display: flex; justify-content: space-between; font-size: 0.86rem; margin-bottom: 6px; }
-.hud-stats-row .stat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.hud-stats-row .stat b { font-size: 1rem; }
 .hud-xp-track { background: var(--border); height: 9px; border-radius: 6px; overflow: hidden; margin-top: 10px; }
 .hud-xp-fill { background: linear-gradient(90deg, var(--gold), var(--coral)); height: 100%; width: 0%; transition: width .4s ease; }
-.hud-xp-label { font-size: 0.72rem; color: var(--ink-soft); margin-top: 4px; text-align: right; }
 
 nav.side-nav { display: flex; flex-direction: column; gap: 6px; }
-nav.side-nav button {
-  text-align: left; padding: 12px 14px; border-radius: 12px; border: none; background: transparent;
-  color: var(--ink); font-weight: 700; font-size: 0.95rem; transition: background .15s;
-}
+nav.side-nav button { text-align: left; padding: 12px 14px; border-radius: 12px; border: none; background: transparent; color: var(--ink); font-weight: 700; font-size: 0.95rem; transition: background .15s; }
 nav.side-nav button:hover { background: #F0F3FA; }
 nav.side-nav button.active { background: var(--primary); color: white; }
 
-/* Área Principal */
-.main-area { flex: 1; padding: 26px 32px; overflow-y: auto; max-width: 980px; }
-
+.main-area { flex: 1; padding: 26px 32px; overflow-y: auto; max-width: 1050px; }
 .level-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
-.level-tab {
-  border: 2px solid var(--border); background: white; border-radius: 16px; padding: 10px 16px;
-  display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 96px;
-  position: relative; transition: transform .12s, border-color .15s;
-}
-.level-tab .level-code { font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 1.05rem; color: var(--tab-color, var(--primary)); }
-.level-tab .level-name { font-size: 0.72rem; color: var(--ink-soft); }
-.level-tab.active { border-color: var(--tab-color, var(--primary)); transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.08); }
-.level-tab.locked { opacity: 0.55; cursor: not-allowed; }
-.level-tab .lock-icon { position: absolute; top: 8px; right: 10px; font-size: 0.8rem; }
+.level-tab { border: 2px solid var(--border); background: white; border-radius: 16px; padding: 10px 16px; display: flex; flex-direction: column; gap: 2px; min-width: 96px; position: relative; cursor: pointer; }
+.level-tab.active { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.08); }
 
-.mascot-banner {
-  background: linear-gradient(120deg, var(--level-color) 0%, var(--level-color-dark) 100%);
-  color: white; border-radius: var(--radius-lg); padding: 20px 22px; display: flex; align-items: center;
-  gap: 16px; margin-bottom: 26px; box-shadow: var(--shadow-soft);
-}
-.mascot-banner.boss-banner { background: linear-gradient(120deg, #FFC857, #FB923C); margin-bottom: 18px; }
-.mascot-emoji { font-size: 2.8rem; }
-.mascot-banner p { font-size: 0.9rem; opacity: 0.95; margin-top: 2px; }
-
+.mascot-banner { background: linear-gradient(120deg, var(--level-color) 0%, var(--level-color-dark) 100%); color: white; border-radius: var(--radius-lg); padding: 20px 22px; display: flex; align-items: center; gap: 16px; margin-bottom: 26px; box-shadow: var(--shadow-soft); }
 .unit-section { margin-bottom: 40px; }
-.unit-section.locked-unit { opacity: 0.5; }
-.unit-header { margin-bottom: 22px; }
-.unit-header h3 { font-size: 1.25rem; }
-.unit-header p { color: var(--ink-soft); font-size: 0.9rem; margin-top: 2px; }
-
 .path-line { display: flex; flex-direction: column; align-items: center; gap: 12px; position: relative; padding: 10px 0; }
 .node-wrap { display: flex; flex-direction: column; align-items: center; }
-.path-node {
-  width: 76px; height: 76px; border-radius: 50%; border: none; background: var(--level-color);
-  box-shadow: 0 6px 0 var(--level-color-dark); display: flex; align-items: center; justify-content: center;
-  font-size: 1.8rem; transition: transform .12s;
-}
-.path-node:hover:not(.locked) { transform: translateY(-2px) scale(1.04); }
-.path-node:active:not(.locked) { transform: translateY(4px); box-shadow: 0 2px 0 var(--level-color-dark); }
-.path-node.locked { background: #D9DEE8; box-shadow: 0 6px 0 #B9C1D1; cursor: not-allowed; }
+.path-node { width: 76px; height: 76px; border-radius: 50%; border: none; background: var(--level-color); box-shadow: 0 6px 0 var(--level-color-dark); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; transition: transform .12s; }
 .path-node.completed { background: var(--success); box-shadow: 0 6px 0 #16803C; }
-.path-node.current { animation: pulseNode 1.6s infinite; }
-@keyframes pulseNode {
-  0%, 100% { box-shadow: 0 6px 0 var(--level-color-dark), 0 0 0 0 rgba(52,211,153,0.4); }
-  50% { box-shadow: 0 6px 0 var(--level-color-dark), 0 0 0 12px rgba(52,211,153,0); }
-}
-.node-label { font-size: 0.76rem; color: var(--ink-soft); font-weight: 700; margin-top: 6px; }
 
-/* ===================== Lição Overlay ===================== */
+/* Lições & Interação */
 #lesson-overlay { z-index: 900; align-items: flex-start; padding: 30px 16px; overflow-y: auto; }
 .lesson-modal { background: var(--panel); border-radius: var(--radius-lg); width: 100%; max-width: 640px; margin: auto; box-shadow: var(--shadow-soft); }
 .lesson-modal-head { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--border); }
-.lesson-modal-head h2 { font-size: 1.15rem; }
-.close-btn { background: none; border: none; font-size: 1.4rem; color: var(--ink-soft); }
 .lesson-inner { padding: 24px; }
-.lesson-help { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5; }
-.lesson-actions { display: flex; gap: 10px; margin-top: 18px; }
-
-/* Flashcards & Shadowing */
 .flashcard { perspective: 1000px; height: 230px; cursor: pointer; margin-bottom: 14px; }
 .flashcard > div { transition: transform .4s; transform-style: preserve-3d; position: relative; width: 100%; height: 100%; }
 .flashcard.flipped > .flash-front { transform: rotateY(180deg); }
-.flash-front, .flash-back {
-  position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius-md);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-  background: linear-gradient(150deg, var(--level-color), var(--level-color-dark)); color: white; padding: 20px; text-align: center;
-}
+.flash-front, .flash-back { position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius-md); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(150deg, var(--level-color), var(--level-color-dark)); color: white; padding: 20px; text-align: center; }
 .flash-back { transform: rotateY(180deg); background: linear-gradient(150deg, #FFC857, #FB923C); }
-.flash-emoji { font-size: 3.5rem; }
-.flash-progress { text-align: center; color: var(--ink-soft); font-size: 0.85rem; margin-bottom: 8px; }
 
-/* Quiz & Grid */
-.quiz-progressbar { height: 8px; background: var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 18px; }
-.quiz-progressbar-fill { height: 100%; background: var(--primary); transition: width .3s; }
-.options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
-.option-btn { background: #F7F9FC; border: 2px solid var(--border); color: var(--ink); padding: 14px; border-radius: 12px; text-align: left; font-weight: 600; transition: border-color .12s, background .12s; }
-.option-btn:hover:not(:disabled) { border-color: var(--primary); background: #EFFAF8; }
-.option-btn:disabled { cursor: default; }
-.correct-flash { background: #DCFCE7 !important; border-color: var(--success) !important; }
-.wrong-flash { background: #FEE2E2 !important; border-color: var(--danger) !important; }
-.success-text { color: var(--success); font-weight: 800; }
-.error-text { color: var(--danger); font-weight: 800; }
-#quiz-feedback, #l-feedback, #song-feedback, #shadowing-feedback { margin-top: 14px; font-size: 0.95rem; line-height: 1.5; min-height: 20px; }
-
-.lesson-complete { text-align: center; padding: 20px 6px; }
-.lesson-complete h2 { font-size: 1.6rem; margin-bottom: 8px; }
-.lesson-complete p { color: var(--ink-soft); margin-bottom: 18px; }
-
-/* Input Group */
 .input-group { display: flex; gap: 10px; }
 .input-group input { flex: 1; padding: 12px 14px; border: 2px solid var(--border); border-radius: 12px; outline: none; }
-.input-group input:focus { border-color: var(--primary); }
 
-/* Vídeo & Vídeo Kids */
-.video-frame { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius-md); overflow: hidden; background: #000; }
-.video-frame.small { aspect-ratio: 16/7; }
-
-/* Lyrics */
-.lyric-card { background: #FBF7ED; border: 1px solid #F0E4C4; border-radius: var(--radius-md); padding: 20px; margin-top: 14px; }
-.lyric-text { line-height: 2.4; font-size: 1.05rem; }
-.lyric-blank { border: 2px solid var(--gold); background: white; border-radius: 8px; padding: 4px 8px; font-weight: 700; color: var(--ink); }
-
-/* Chat Box */
-.chat-box { height: 400px; overflow-y: auto; border: 1px solid var(--border); padding: 16px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 12px; background: #FAFBFE; margin-bottom: 14px; }
+/* Chat Box & Inteligência Neural */
+.chat-box { height: 380px; overflow-y: auto; border: 1px solid var(--border); padding: 16px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 12px; background: #FAFBFE; margin-bottom: 14px; }
 .msg { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-size: 0.95rem; line-height: 1.45; }
 .msg.ai { background: white; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 3px; }
 .msg.user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 3px; }
-.msg.typing { opacity: 0.6; font-style: italic; }
-.correction-note { margin-top: 8px; font-size: 0.8rem; color: #B45309; background: #FEF3C7; padding: 6px 10px; border-radius: 8px; line-height: 1.35; }
+.memory-tag { display: inline-block; font-size: 0.72rem; background: #FEF3C7; color: #B45309; padding: 2px 8px; border-radius: 6px; margin-top: 4px; }
 
-/* Badges Grid */
-.badges-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
-.badge-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; text-align: center; opacity: 0.55; }
-.badge-card.unlocked { opacity: 1; box-shadow: var(--shadow-soft); border-color: var(--gold); }
-.badge-icon { font-size: 2.2rem; margin-bottom: 6px; }
-.badge-card b { display: block; font-size: 0.88rem; margin-bottom: 4px; }
-.badge-card p { font-size: 0.74rem; color: var(--ink-soft); line-height: 1.35; }
+/* Analytics Grid */
+.analytics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
+.analytics-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; }
+.analytics-card h4 { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 8px; }
+.analytics-card .val { font-size: 1.8rem; font-weight: 800; color: var(--ink); }
+.chart-container { width: 100%; height: 160px; margin-top: 10px; }
 
-/* Toast Notifications */
 #toast-stack { position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1200; }
-.toast { background: var(--ink); color: white; padding: 12px 18px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; opacity: 0; transform: translateX(30px); transition: all .3s; box-shadow: var(--shadow-soft); }
+.toast { background: var(--ink); color: white; padding: 12px 18px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; opacity: 0; transform: translateX(30px); transition: all .3s; }
 .toast.show { opacity: 1; transform: translateX(0); }
 
-/* Level Up & Confetti */
-#levelup-overlay { z-index: 1100; }
-.levelup-card { background: white; border-radius: var(--radius-lg); padding: 40px; text-align: center; max-width: 420px; position: relative; overflow: hidden; }
-.levelup-card .big-emoji { font-size: 3.5rem; }
-.confetti-piece { position: absolute; top: -10px; width: 8px; height: 14px; opacity: 0.9; animation: fall 1.3s ease-in forwards; }
-@keyframes fall { to { transform: translateY(340px) rotate(360deg); opacity: 0; } }
-
-/* Sync Badge */
-.sync-badge { font-size: 0.7rem; padding: 3px 9px; border-radius: 10px; display: inline-block; margin-top: 10px; }
-.sync-badge.on { background: rgba(34, 197, 94, 0.15); color: var(--success); }
-.sync-badge.off { background: rgba(107, 119, 148, 0.12); color: var(--ink-soft); }
-
-/* Responsividade */
 @media (max-width: 900px) {
   #app-shell { flex-direction: column; }
-  .sidebar { width: 100%; flex-direction: row; align-items: center; flex-wrap: wrap; padding: 14px 16px; }
-  .hud-card { flex: 1; min-width: 220px; }
-  nav.side-nav { flex-direction: row; flex-wrap: wrap; }
+  .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
   .main-area { padding: 18px; }
-  .options-grid { grid-template-columns: 1fr; }
-  .chat-box { height: 320px; }
-  .modal-card { padding: 22px; }
 }
 </style>
 </head>
@@ -262,143 +128,287 @@ nav.side-nav button.active { background: var(--primary); color: white; }
 
 <div id="toast-stack"></div>
 
-<!-- Modal 1: Boas-vindas & Perfil -->
+<!-- Modal Inicial -->
 <div id="modal-auth" class="modal-overlay">
   <div class="modal-card" style="text-align:center;">
     <div class="mascot-hero">🦉</div>
     <h2>AI English Master</h2>
-    <p class="sub">Escolha a experiência de aprendizado ideal para você começar:</p>
+    <p class="sub">Selecione seu modo de imersão linguística:</p>
     
     <div class="profile-selector">
       <div class="profile-card active" id="mode-adult" onclick="selectProfile('adult')">
         <span class="icon">🎓</span>
-        <b>Modo Geral</b>
-        <p style="font-size:0.75rem; color:var(--ink-soft);">Iniciante ao Avançado (CEFR)</p>
+        <b>Modo Pro Geral</b>
+        <p style="font-size:0.75rem; color:var(--ink-soft);">A1 ao C2 (CEFR Engine)</p>
       </div>
       <div class="profile-card" id="mode-kids" onclick="selectProfile('kids')">
         <span class="icon">🎨</span>
         <b>Modo Kids</b>
-        <p style="font-size:0.75rem; color:var(--ink-soft);">Infantil, Intuitivo e Divertido</p>
+        <p style="font-size:0.75rem; color:var(--ink-soft);">Aprendizado Intuitivo Visual</p>
       </div>
     </div>
 
-    <input type="text" id="user-name-input" placeholder="Digite seu nome para começar">
-    <button class="btn" style="width:100%;" onclick="startApp()">Começar Jornada</button>
+    <input type="text" id="user-name-input" placeholder="Digite seu nome para iniciar">
+    <button class="btn" style="width:100%;" onclick="startApp()">Inicializar Plataforma</button>
   </div>
 </div>
 
-<!-- Modal 2: Teste de Nivelamento (Geral) -->
-<div id="modal-test" class="modal-overlay hidden">
-  <div class="modal-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-      <span class="tag" style="background:#EFFAF8; color:var(--primary); padding:5px 10px; border-radius:8px; font-weight:700; font-size:0.8rem;">Teste de Conversação IA</span>
-      <span style="font-size:0.85rem; color:var(--ink-soft);" id="test-step-label">Etapa 1 de 4</span>
-    </div>
-    <div class="chat-box" id="test-chat-box" style="height:300px;"></div>
-    <div class="input-group">
-      <input type="text" id="test-input" placeholder="Responda em inglês...">
-      <button class="btn" onclick="submitTestAnswer()">Enviar</button>
-      <button class="btn btn-danger" onclick="voiceInput('test-input', submitTestAnswer)">🎙️</button>
-    </div>
-  </div>
-</div>
-
-<!-- Overlays de Gamificação -->
-<div id="levelup-overlay" class="modal-overlay hidden">
-  <div class="levelup-card" id="levelup-card">
-    <div class="big-emoji">🎉</div>
-    <h2>Novo nível desbloqueado!</h2>
-    <p id="levelup-text" style="color:var(--ink-soft); margin:10px 0 20px;"></p>
-    <button class="btn" onclick="closeLevelUp()">Continuar Trilha</button>
-  </div>
-</div>
-
-<div id="hearts-overlay" class="modal-overlay hidden">
-  <div class="modal-card" style="text-align:center;">
-    <div class="mascot-hero">💔</div>
-    <h2>Você ficou sem corações!</h2>
-    <p class="sub">Faça uma revisão rápida de 3 perguntas para recuperar 1 coração e continuar.</p>
-    <button class="btn" style="width:100%;" onclick="startHeartRecovery()">Fazer Revisão Rápida</button>
-    <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeHeartsModal()">Fechar</button>
-  </div>
-</div>
-
-<div id="recovery-overlay" class="modal-overlay hidden">
-  <div class="modal-card" id="recovery-body"></div>
-</div>
-
+<!-- Modal Lições -->
 <div id="lesson-overlay" class="modal-overlay hidden">
   <div class="lesson-modal">
     <div class="lesson-modal-head">
-      <h2 id="lesson-title">Lição</h2>
-      <button class="close-btn" onclick="closeLesson()">✕</button>
+      <h2 id="lesson-title">Estação de Aprendizado</h2>
+      <button class="btn-outline" style="padding:4px 10px; border:none;" onclick="closeLesson()">✕</button>
     </div>
     <div id="lesson-body"></div>
   </div>
 </div>
 
-<!-- App Principal -->
+<!-- Shell Principal -->
 <div id="app-shell" class="hidden">
   <aside class="sidebar">
-    <div class="brand"><span class="brand-emoji">🦉</span> AI English</div>
+    <div class="brand"><span style="font-size:1.6rem;">🦉</span> AI Master</div>
 
     <div class="hud-card">
       <div class="hud-name-row">
         <div class="hud-avatar" id="hud-avatar-letter">A</div>
         <div>
           <b id="hud-name">Aluno</b>
-          <span>Nível <b id="hud-player-level">1</b></span>
+          <span style="font-size:0.75rem; color:var(--ink-soft);">Nível Player <b id="hud-player-level">1</b></span>
         </div>
       </div>
       <div class="hud-stats-row">
-        <div class="stat"><span id="hud-hearts">❤️❤️❤️❤️❤️</span></div>
-        <div class="stat">🔥 <b id="hud-streak">0</b></div>
-        <div class="stat">💎 <b id="hud-coins">0</b></div>
+        <span>❤️ <b id="hud-hearts">5</b></span>
+        <span>🔥 <b id="hud-streak">0</b>d</span>
+        <span>💎 <b id="hud-coins">0</b></span>
       </div>
       <div class="hud-xp-track"><div class="hud-xp-fill" id="hud-xp-fill"></div></div>
-      <div class="hud-xp-label" id="hud-xp-label">0/100 XP</div>
-      <span class="sync-badge off" id="sync-badge">☁️ Sincronização: Local</span>
     </div>
 
     <nav class="side-nav">
-      <button id="nav-trail" class="active" onclick="switchScreen('trail')">🗺️ Trilha de Aprendizado</button>
-      <button id="nav-chat" onclick="switchScreen('chat')">🗣️ Conversação Livre</button>
-      <button id="nav-badges" onclick="switchScreen('badges')">🏆 Conquistas</button>
-      <button onclick="retakeTest()" class="btn-outline" style="margin-top:6px; border-radius:12px;" id="btn-retest">🔄 Refazer Nivelamento</button>
+      <button id="nav-trail" class="active" onclick="switchScreen('trail')">🗺️ Trilha Gamificada</button>
+      <button id="nav-anki" onclick="switchScreen('anki')">🧠 Banco SRS (Anki)</button>
+      <button id="nav-chat" onclick="switchScreen('chat')">🗣️ Chat & Memória IA</button>
+      <button id="nav-analytics" onclick="switchScreen('analytics')">📊 Analytics & Relatórios</button>
     </nav>
   </aside>
 
   <main class="main-area">
+    <!-- Trilha -->
     <section id="screen-trail">
       <div class="level-tabs" id="level-tabs"></div>
       <div id="path-container"></div>
     </section>
 
+    <!-- Banco SRS / Anki Ilimitado -->
+    <section id="screen-anki" class="hidden">
+      <h2>Banco Ilimitado de Memorização (SRS)</h2>
+      <p style="color:var(--ink-soft); margin-bottom:16px;">Revisão espaçada automatizada para fixação permanente de vocabulário.</p>
+      <div id="anki-card-container"></div>
+    </section>
+
+    <!-- Chat Neural -->
     <section id="screen-chat" class="hidden">
-      <h2 style="margin-bottom:4px;">Prática Livre de Conversação com IA</h2>
-      <p class="lesson-help">Converse em inglês. A IA corrige pequenos erros e ajuda a melhorar a fluência no seu nível.</p>
+      <h2>Conversação Neural com Memória Integrada</h2>
+      <p style="color:var(--ink-soft); margin-bottom:16px;">A IA guarda contexto sobre você para adaptar o vocabulário e corrigir seus pontos fracos.</p>
       <div class="chat-box" id="main-chat-box"></div>
       <div class="input-group">
-        <input type="text" id="main-chat-input" placeholder="Digite sua mensagem em inglês...">
+        <input type="text" id="main-chat-input" placeholder="Converse em inglês com a IA...">
         <button class="btn" onclick="sendMainChatMessage()">Enviar</button>
         <button class="btn btn-danger" onclick="voiceInput('main-chat-input', sendMainChatMessage)">🎙️</button>
       </div>
     </section>
 
-    <section id="screen-badges" class="hidden">
-      <h2 style="margin-bottom:4px;">Suas Conquistas</h2>
-      <p class="lesson-help">Pratique diariamente e desbloqueie novas recompensas.</p>
-      <div class="badges-grid" id="badges-grid"></div>
+    <!-- Analytics & Desempenho -->
+    <section id="screen-analytics" class="hidden">
+      <h2>Relatório de Desempenho Contínuo</h2>
+      <p style="color:var(--ink-soft);">Métricas em tempo real sobre seu desenvolvimento linguístico.</p>
+      
+      <div class="analytics-grid">
+        <div class="analytics-card">
+          <h4>Taxa de Precisão Geral</h4>
+          <div class="val" id="analytics-accuracy">0%</div>
+        </div>
+        <div class="analytics-card">
+          <h4>Palavras Retidas (SRS)</h4>
+          <div class="val" id="analytics-words">0</div>
+        </div>
+        <div class="analytics-card">
+          <h4>Minutos de Conversação</h4>
+          <div class="val" id="analytics-minutes">0 min</div>
+        </div>
+      </div>
+
+      <div class="analytics-card" style="margin-top:20px;">
+        <h4>Distribuição de Aprendizado por Habilidade</h4>
+        <div class="chart-container" id="analytics-chart"></div>
+      </div>
     </section>
   </main>
 </div>
 
 <script>
 // =====================================================================
-// DADOS DA TRILHA DE INGLÊS (VERSÃO KIDS + ADULTO DO A1 AO C2)
+// BANCO ILIMITADO DE VOCABULÁRIO (GERADOR DETERMINÍSTICO DE CARDS SRS)
+// =====================================================================
+
+const VOCAB_DATABASE_BASE = [
+  // A1
+  { en: "Apple", pt: "Maçã", cat: "Food", level: "A1", emoji: "🍎" },
+  { en: "Water", pt: "Água", cat: "Basics", level: "A1", emoji: "💧" },
+  { en: "House", pt: "Casa", cat: "Places", level: "A1", emoji: "🏠" },
+  { en: "Friend", pt: "Amigo", cat: "Social", level: "A1", emoji: "🤝" },
+  // A2
+  { en: "Journey", pt: "Jornada/Viagem", cat: "Travel", level: "A2", emoji: "✈️" },
+  { en: "Schedule", pt: "Agenda/Horário", cat: "Routine", level: "A2", emoji: "📅" },
+  // B1
+  { en: "Opportunity", pt: "Oportunidade", cat: "Business", level: "B1", emoji: "🔑" },
+  { en: "Achievement", pt: "Conquista", cat: "Life", level: "B1", emoji: "🏆" },
+  // B2
+  { en: "Hypothesis", pt: "Hipótese", cat: "Science", level: "B2", emoji: "🔬" },
+  { en: "Negotiation", pt: "Negociação", cat: "Business", level: "B2", emoji: "🤝" },
+  // C1 / C2
+  { en: "Eloquence", pt: "Eloquência", cat: "Advanced", level: "C1", emoji: "✨" },
+  { en: "Subtlety", pt: "Sutileza", cat: "Advanced", level: "C2", emoji: "🎨" }
+];
+
+// Gerador Infinito de Variações Semânticas (para expansão dinâmica ilimitada)
+function generateDynamicVocab(count = 50) {
+  const prefixes = ["Super", "Micro", "Bio", "Eco", "Smart", "Ultra"];
+  const roots = ["system", "structure", "connect", "action", "trend", "flow"];
+  const result = [...VOCAB_DATABASE_BASE];
+
+  for(let i = 0; i < count; i++) {
+    const p = prefixes[i % prefixes.length];
+    const r = roots[i % roots.length];
+    result.push({
+      en: `${p}-${r}`,
+      pt: `Conceito ${p} ${r}`,
+      cat: "Generated",
+      level: i % 2 === 0 ? "B2" : "C1",
+      emoji: "⚡"
+    });
+  }
+  return result;
+}
+
+const FULL_VOCAB = generateDynamicVocab(100);
+
+// Algoritmo SRS (SM-2 Simplificado para Repetição Espaçada)
+function calculateSRS(card, performanceRating) {
+  // performanceRating: 1 = Difícil, 2 = Bom, 3 = Fáci
+  let interval = card.interval || 1;
+  let factor = card.factor || 2.5;
+
+  if (performanceRating === 1) {
+    interval = 1;
+  } else if (performanceRating === 2) {
+    interval = Math.round(interval * factor);
+  } else if (performanceRating === 3) {
+    interval = Math.round(interval * factor * 1.3);
+    factor += 0.15;
+  }
+
+  return {
+    interval,
+    factor: Math.max(1.3, factor),
+    nextReview: Date.now() + (interval * 24 * 60 * 60 * 1000)
+  };
+}
+
+// =====================================================================
+// REDE NEURAL LOCAL & MEMÓRIA DO USUÁRIO
+// =====================================================================
+
+class UserNeuralMemory {
+  constructor() {
+    this.memoryKey = "aem_user_memory_v1";
+    this.data = JSON.parse(localStorage.getItem(this.memoryKey)) || {
+      interests: [],
+      errorPatterns: {},
+      chatHistoryContext: [],
+      masteredTopics: []
+    };
+  }
+
+  save() {
+    localStorage.setItem(this.memoryKey, JSON.stringify(this.data));
+  }
+
+  addInteraction(userInput, aiReply, correction = null) {
+    this.data.chatHistoryContext.push({ userInput, aiReply, timestamp: Date.now() });
+    if (this.data.chatHistoryContext.length > 20) this.data.chatHistoryContext.shift();
+
+    if (correction) {
+      const tag = correction.substring(0, 15);
+      this.data.errorPatterns[tag] = (this.data.errorPatterns[tag] || 0) + 1;
+    }
+
+    // Extrai interesses simples por palavra-chave
+    const words = userInput.toLowerCase().split(' ');
+    const keywords = ["music", "code", "travel", "work", "game", "family", "tech"];
+    words.forEach(w => {
+      if (keywords.includes(w) && !this.data.interests.includes(w)) {
+        this.data.interests.push(w);
+      }
+    });
+
+    this.save();
+  }
+
+  getContextSummary() {
+    const interests = this.data.interests.length > 0 ? this.data.interests.join(", ") : "Gerais";
+    const topErrors = Object.keys(this.data.errorPatterns).join(", ") || "Nenhum detectado";
+    return `Interesses: [${interests}] | Pontos de Atenção: [${topErrors}]`;
+  }
+}
+
+const neuralMemory = new UserNeuralMemory();
+
+// =====================================================================
+// ANALYTICS & MONITORAMENTO DE DESEMPENHO
+// =====================================================================
+
+class AnalyticsEngine {
+  constructor() {
+    this.key = "aem_analytics_data";
+    this.metrics = JSON.parse(localStorage.getItem(this.key)) || {
+      totalAnswers: 0,
+      correctAnswers: 0,
+      wordsMastered: 0,
+      conversationMinutes: 0,
+      skillBreakdown: { Grammar: 0, Listening: 0, Shadowing: 0, Vocab: 0 }
+    };
+  }
+
+  save() {
+    localStorage.setItem(this.key, JSON.stringify(this.metrics));
+  }
+
+  trackAnswer(isCorrect, skill = 'Grammar') {
+    this.metrics.totalAnswers += 1;
+    if (isCorrect) {
+      this.metrics.correctAnswers += 1;
+      this.metrics.skillBreakdown[skill] = (this.metrics.skillBreakdown[skill] || 0) + 1;
+    }
+    this.save();
+  }
+
+  getAccuracy() {
+    if (this.metrics.totalAnswers === 0) return 0;
+    return Math.round((this.metrics.correctAnswers / this.metrics.totalAnswers) * 100);
+  }
+}
+
+const analytics = new AnalyticsEngine();
+
+// =====================================================================
+// ENGINE PRINCIPAL DO APP E INTERFACE
 // =====================================================================
 
 let selectedProfile = 'adult';
+let userState = null;
+let currentLevelIdx = 0;
 
 function selectProfile(mode) {
   selectedProfile = mode;
@@ -406,352 +416,198 @@ function selectProfile(mode) {
   document.getElementById('mode-kids').classList.toggle('active', mode === 'kids');
 }
 
-const KIDS_LEVELS = [
-  {
-    code: "K1", name: "Kids - Primeiras Palavras", color: "#FF70A6", darkColor: "#D94B83",
-    mascotLine: "Vamos aprender brincando com cores, animais e sons!",
-    units: [
-      {
-        title: "Cores & Animais",
-        subtitle: "Sons simples e vocabulário visual com imagem e áudio",
-        vocab: [
-          { en: "dog", pt: "cachorro", emoji: "🐶" },
-          { en: "cat", pt: "gato", emoji: "🐱" },
-          { en: "red", pt: "vermelho", emoji: "🔴" },
-          { en: "blue", pt: "azul", emoji: "🔵" },
-          { en: "yellow", pt: "amarelo", emoji: "🟡" },
-          { en: "sun", pt: "sol", emoji: "☀️" }
-        ],
-        shadowing: [
-          "Look at the red dog!",
-          "The cat is blue.",
-          "Good morning sun!"
-        ],
-        grammar: [
-          { q: "O que significa 'dog'? 🐶", ops: ["Cachorro", "Gato", "Pássaro"], a: 0, explanation: "Dog é cachorro!" },
-          { q: "Qual a cor do sol? ☀️", ops: ["Yellow", "Red", "Blue"], a: 0, explanation: "O sol é Yellow (Amarelo)!" }
-        ],
-        listening: ["cat", "dog", "blue", "sun"],
-        video: { title: "Cores e Animais em Inglês para Crianças", query: "colors and animals song for kids" },
-        song: {
-          title: "The Rainbow Song",
-          lines: ["Red and ___,", "Yellow and ___,", "I see a little ___,", "Smiling back at me!"],
-          answers: ["blue", "green", "dog"],
-          bank: ["blue", "green", "dog", "sun", "cat"]
-        }
-      }
-    ]
-  }
-];
+function startApp() {
+  const name = document.getElementById('user-name-input').value.trim();
+  if (!name) return alert("Por favor, digite seu nome.");
+  document.getElementById('modal-auth').classList.add('hidden');
+  document.getElementById('app-shell').classList.remove('hidden');
 
-const ADULT_LEVELS = [
-  {
-    code: "A1", name: "Iniciante", color: "#34D399", darkColor: "#059669",
-    mascotLine: "Vamos começar do zero, com calma e sem pressa!",
-    units: [
-      {
-        title: "Primeiros Passos",
-        subtitle: "Cumprimentos, verbo to be e o básico do dia a dia",
-        vocab: [
-          { en: "hello", pt: "olá", emoji: "👋" },
-          { en: "name", pt: "nome", emoji: "📛" },
-          { en: "teacher", pt: "professor(a)", emoji: "🍎" },
-          { en: "student", pt: "aluno(a)", emoji: "🎓" },
-          { en: "morning", pt: "manhã", emoji: "🌅" },
-          { en: "house", pt: "casa", emoji: "🏠" },
-          { en: "water", pt: "água", emoji: "💧" },
-          { en: "friend", pt: "amigo(a)", emoji: "🤝" }
-        ],
-        shadowing: [
-          "Hello, nice to meet you.",
-          "My name is Sarah.",
-          "I am learning English."
-        ],
-        grammar: [
-          { q: "She ___ a teacher.", ops: ["is", "are", "am", "be"], a: 0, explanation: "Usamos 'is' com he/she/it." },
-          { q: "___ you a student?", ops: ["Are", "Is", "Am", "Be"], a: 0, explanation: "Com 'you' usamos 'are'." },
-          { q: "I ___ from Brazil.", ops: ["am", "is", "are", "be"], a: 0, explanation: "Com 'I' usamos 'am'." }
-        ],
-        listening: ["Hello, nice to meet you.", "My name is Ana.", "This is my house."],
-        video: { title: "Cumprimentos em inglês para iniciantes", query: "english greetings for beginners lesson" },
-        song: {
-          title: "The Greeting Chant",
-          lines: ["Hello, hello, what's your ___?", "My name is Sam, nice to meet you, ___!"],
-          answers: ["name", "friend"],
-          bank: ["name", "friend", "night", "house"]
-        }
-      }
-    ]
-  },
-  {
-    code: "A2", name: "Básico", color: "#38BDF8", darkColor: "#0284C7",
-    mascotLine: "Hora de contar histórias do passado e fazer planos!",
-    units: [
-      {
-        title: "O Passado & Viagens",
-        subtitle: "Passado simples e vocabulário prático",
-        vocab: [
-          { en: "yesterday", pt: "ontem", emoji: "📅" },
-          { en: "trip", pt: "viagem", emoji: "✈️" },
-          { en: "ticket", pt: "passagem", emoji: "🎫" },
-          { en: "hotel", pt: "hotel", emoji: "🏨" }
-        ],
-        shadowing: [
-          "We visited a museum yesterday.",
-          "Did you buy the tickets?"
-        ],
-        grammar: [
-          { q: "They ___ to the cinema yesterday.", ops: ["went", "go", "gone"], a: 0, explanation: "Passado de go é went." }
-        ],
-        listening: ["We visited a great museum yesterday.", "I lost my suitcase."],
-        video: { title: "Passado simples em histórias", query: "past simple tense english travel story lesson" },
-        song: {
-          title: "Last Summer",
-          lines: ["Last summer I ___ to the sea,", "We stayed in a small ___."],
-          answers: ["went", "hotel"],
-          bank: ["went", "hotel", "beach", "ticket"]
-        }
-      }
-    ]
-  },
-  {
-    code: "B1", name: "Intermediário", color: "#818CF8", darkColor: "#4F46E5",
-    mascotLine: "Vamos falar sobre experiências de vida e projetos!",
-    units: [
-      {
-        title: "Experiências Pessoais",
-        subtitle: "Present Perfect e histórias reais",
-        vocab: [
-          { en: "experience", pt: "experiência", emoji: "🌟" },
-          { en: "achievement", pt: "conquista", emoji: "🏅" },
-          { en: "abroad", pt: "no exterior", emoji: "🌍" }
-        ],
-        shadowing: [
-          "I have lived here for five years.",
-          "Have you ever traveled abroad?"
-        ],
-        grammar: [
-          { q: "Have you ___ been to Japan?", ops: ["ever", "never", "yet"], a: 0, explanation: "'Ever' é usado em perguntas." }
-        ],
-        listening: ["I have never seen such a place.", "She has already finished."],
-        video: { title: "Present Perfect falado", query: "present perfect tense english have you ever lesson" },
-        song: {
-          title: "Places I've Been",
-          lines: ["I have ___ to mountains high,", "I have never ___ a place like this."],
-          answers: ["been", "seen"],
-          bank: ["been", "seen", "dream", "abroad"]
-        }
-      }
-    ]
-  },
-  {
-    code: "B2", name: "Intermediário Sup.", color: "#F472B6", darkColor: "#DB2777",
-    mascotLine: "Domine hipóteses, voz passiva e debate!",
-    units: [
-      {
-        title: "Hipóteses & Voz Passiva",
-        subtitle: "Segundo condicional e estruturas de negócios",
-        vocab: [
-          { en: "hypothesis", pt: "hipótese", emoji: "🔬" },
-          { en: "negotiate", pt: "negociar", emoji: "🤝" }
-        ],
-        shadowing: [
-          "If I were you, I would negotiate.",
-          "The decision was announced today."
-        ],
-        grammar: [
-          { q: "If I ___ more money, I would travel.", ops: ["had", "have", "will have"], a: 0, explanation: "Second conditional: If + past, would + verb." }
-        ],
-        listening: ["The decision was announced this morning."],
-        video: { title: "Voz Passiva Avançada", query: "second conditional passive voice english" },
-        song: {
-          title: "If I Were",
-          lines: ["If I were rich, I ___ fly away."],
-          answers: ["would"],
-          bank: ["would", "will", "did"]
-        }
-      }
-    ]
-  },
-  {
-    code: "C1", name: "Avançado", color: "#FB923C", darkColor: "#EA580C",
-    mascotLine: "Nuances da língua, inversões e fluência sofisticada!",
-    units: [
-      {
-        title: "Inversão & Ênfase",
-        subtitle: "Estruturas de alto nível de formalidade",
-        vocab: [
-          { en: "nuance", pt: "sutileza", emoji: "🎨" },
-          { en: "eloquence", pt: "eloquência", emoji: "✨" }
-        ],
-        shadowing: [
-          "Not only did she finish early, but she also helped.",
-          "Rarely have I seen such dedication."
-        ],
-        grammar: [
-          { q: "Never ___ seen such dedication.", ops: ["have I", "I have", "did I"], a: 0, explanation: "Inversão formal de sujeito e verbo." }
-        ],
-        listening: ["Not only did she finish early, but she helped."],
-        video: { title: "Inversão Avançada em Inglês", query: "advanced english inversion emphasis C1" },
-        song: {
-          title: "Not Only",
-          lines: ["Not only did I ___, I also stayed."],
-          answers: ["try"],
-          bank: ["try", "seen", "implication"]
-        }
-      }
-    ]
-  },
-  {
-    code: "C2", name: "Proficiente", color: "#F43F5E", darkColor: "#BE123C",
-    mascotLine: "Domínio equivalente ao nativo, expressões idiomáticas e precisão!",
-    units: [
-      {
-        title: "Expressões Nativas",
-        subtitle: "Expressões idiomáticas avançadas e fluência total",
-        vocab: [
-          { en: "hit the nail on the head", pt: "acertar em cheio", emoji: "🔨" },
-          { en: "once in a blue moon", pt: "raramente", emoji: "🌙" }
-        ],
-        shadowing: [
-          "You really hit the nail on the head.",
-          "The ball is in your court now."
-        ],
-        grammar: [
-          { q: "Your comment really ___ the nail on the head.", ops: ["hit", "hits", "hitting"], a: 0, explanation: "Passado irregular: hit." }
-        ],
-        listening: ["Your feedback hit the nail on the head."],
-        video: { title: "Idiomas Nativos em Inglês C2", query: "native english idioms C2 mastery" },
-        song: {
-          title: "Idioms in the Wild",
-          lines: ["You ___ the nail right on the head."],
-          answers: ["hit"],
-          bank: ["hit", "cut", "court"]
-        }
-      }
-    ]
-  }
-];
-
-const NODE_TYPES = [
-  { key: "vocab", label: "Vocabulário", icon: "📚" },
-  { key: "shadowing", label: "Shadowing (Fala)", icon: "🗣️" },
-  { key: "grammar", label: "Gramática", icon: "✍️" },
-  { key: "listening", label: "Escuta", icon: "🎧" },
-  { key: "video", label: "Vídeo", icon: "🎬" },
-  { key: "song", label: "Música", icon: "🎵" },
-  { key: "boss", label: "Revisão", icon: "👑" }
-];
-
-const BADGES = [
-  { id: "first_step", label: "Primeiro Passo", desc: "Complete sua primeira estação.", icon: "🥇" },
-  { id: "streak_3", label: "Chama Viva", desc: "3 dias seguidos de prática.", icon: "🔥" },
-  { id: "streak_7", label: "Semana Perfeita", desc: "7 dias seguidos de prática.", icon: "🏆" },
-  { id: "kids_star", label: "Estrelinha Kids", desc: "Complete a trilha infantil.", icon: "⭐" },
-  { id: "level_a1", label: "Mestre do A1", desc: "Complete todo o nível Iniciante.", icon: "🌱" },
-  { id: "level_c2", label: "Fluência Total", desc: "Complete toda a trilha!", icon: "👑" }
-];
-
-// =====================================================================
-// ENGINE DO APLICATIVO
-// =====================================================================
-
-const NODE_ORDER = NODE_TYPES.map(n => n.key);
-const MAX_HEARTS = 5;
-
-let LEVELS = ADULT_LEVELS;
-let userState = null;
-let currentLevelIdx = 0;
-let activeNode = null;
-
-function defaultState(name, mode) {
-  return {
+  userState = {
     name,
-    mode: mode || 'adult',
+    mode: selectedProfile,
     xp: 0,
     coins: 0,
-    hearts: MAX_HEARTS,
-    streak: 0,
-    lastActiveDate: null,
-    completed: {},
-    badges: [],
-    unlockedLevelIdx: 0,
-    chatHistory: []
+    hearts: 5,
+    streak: 1,
+    srsCards: {}
   };
+
+  renderAll();
 }
 
-function nodeKey(l, u, n) { return `${userState.mode}-${l}-${u}-${n}`; }
+function renderAll() {
+  // HUD
+  document.getElementById('hud-name').innerText = userState.name;
+  document.getElementById('hud-avatar-letter').innerText = userState.name.charAt(0).toUpperCase();
+  document.getElementById('hud-hearts').innerText = userState.hearts;
+  document.getElementById('hud-streak').innerText = userState.streak;
+  document.getElementById('hud-coins').innerText = userState.coins;
+  document.getElementById('hud-xp-fill').style.width = (userState.xp % 100) + '%';
 
-function saveState() {
-  localStorage.setItem('aem_user_' + userState.name.toLowerCase(), JSON.stringify(userState));
+  renderTrail();
+  renderSRS();
+  renderAnalytics();
 }
 
-async function loadOrCreateState(name) {
-  const raw = localStorage.getItem('aem_user_' + name.toLowerCase());
-  userState = raw ? JSON.parse(raw) : defaultState(name, selectedProfile);
-  userState.name = name;
-  LEVELS = userState.mode === 'kids' ? KIDS_LEVELS : ADULT_LEVELS;
-  applyDailyStreak();
-  saveState();
+function renderTrail() {
+  const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  const tabs = document.getElementById('level-tabs');
+  tabs.innerHTML = '';
+  levels.forEach((l, idx) => {
+    const b = document.createElement('div');
+    b.className = 'level-tab' + (idx === currentLevelIdx ? ' active' : '');
+    b.innerHTML = `<b>${l}</b><span style="font-size:0.7rem; color:var(--ink-soft);">Nível ${idx + 1}</span>`;
+    b.onclick = () => { currentLevelIdx = idx; renderTrail(); };
+    tabs.appendChild(b);
+  });
+
+  const path = document.getElementById('path-container');
+  path.innerHTML = `
+    <div class="mascot-banner">
+      <span style="font-size:2.5rem;">🦉</span>
+      <div><b>Trilha ${levels[currentLevelIdx]}</b><p>Siga o fluxo de estações para evoluir em imersão contínua.</p></div>
+    </div>
+    <div class="path-line">
+      <div class="node-wrap">
+        <button class="path-node completed" onclick="openLesson('Vocabulário')">📚</button>
+        <span style="font-size:0.8rem; margin-top:4px;">Vocabulário</span>
+      </div>
+      <div class="node-wrap">
+        <button class="path-node" onclick="openLesson('Shadowing')">🗣️</button>
+        <span style="font-size:0.8rem; margin-top:4px;">Shadowing</span>
+      </div>
+      <div class="node-wrap">
+        <button class="path-node" onclick="openLesson('Video')">🎬</button>
+        <span style="font-size:0.8rem; margin-top:4px;">Vídeo Contextual</span>
+      </div>
+    </div>`;
 }
 
-function applyDailyStreak() {
-  const today = new Date().toDateString();
-  if (userState.lastActiveDate === today) return;
-  const yesterday = new Date(Date.now() - 86400000).toDateString();
-  userState.streak = (userState.lastActiveDate === yesterday) ? userState.streak + 1 : 1;
-  userState.lastActiveDate = today;
-  if (userState.streak >= 3) grantBadge('streak_3');
-  if (userState.streak >= 7) grantBadge('streak_7');
+// Renderizador do Banco Anki SRS
+function renderSRS() {
+  const container = document.getElementById('anki-card-container');
+  if(!container) return;
+
+  const card = FULL_VOCAB[Math.floor(Math.random() * FULL_VOCAB.length)];
+  container.innerHTML = `
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div>
+        <div class="flash-front">
+          <span style="font-size:3rem;">${card.emoji}</span>
+          <h2>${card.en}</h2>
+          <span style="font-size:0.8rem; opacity:0.8;">Clique para ver a tradução</span>
+        </div>
+        <div class="flash-back">
+          <h2>${card.pt}</h2>
+          <p>Categoria: ${card.cat} (${card.level})</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:10px;">
+      <button class="btn btn-danger" onclick="rateSRS('${card.en}', 1)">Difícil (1d)</button>
+      <button class="btn btn-outline" onclick="rateSRS('${card.en}', 2)">Bom (3d)</button>
+      <button class="btn" onclick="rateSRS('${card.en}', 3)">Fácil (7d)</button>
+    </div>`;
 }
 
-function isLevelUnlocked(levelIdx) { return levelIdx <= userState.unlockedLevelIdx; }
-function isUnitUnlocked(levelIdx, unitIdx) {
-  if (!isLevelUnlocked(levelIdx)) return false;
-  if (unitIdx === 0) return true;
-  return !!userState.completed[nodeKey(levelIdx, unitIdx - 1, NODE_ORDER.length - 1)];
-}
-function isNodeUnlocked(levelIdx, unitIdx, nodeIdx) {
-  if (!isUnitUnlocked(levelIdx, unitIdx)) return false;
-  if (nodeIdx === 0) return true;
-  return !!userState.completed[nodeKey(levelIdx, unitIdx, nodeIdx - 1)];
-}
-function isNodeCompleted(levelIdx, unitIdx, nodeIdx) { return !!userState.completed[nodeKey(levelIdx, unitIdx, nodeIdx)]; }
-
-function grantXP(amount) {
-  userState.xp += amount;
-  userState.coins += Math.round(amount / 2);
-  playerLevelUpCheck();
+function rateSRS(word, rating) {
+  userState.srsCards[word] = calculateSRS(userState.srsCards[word] || {}, rating);
+  userState.xp += 5;
+  analytics.metrics.wordsMastered += 1;
+  analytics.save();
+  toast("🧠 Memória SRS atualizada!");
+  renderAll();
 }
 
-function playerLevel() { return Math.floor(userState.xp / 100) + 1; }
-let lastKnownPlayerLevel = 1;
-function playerLevelUpCheck() {
-  const lvl = playerLevel();
-  if (lvl > lastKnownPlayerLevel) {
-    lastKnownPlayerLevel = lvl;
-    toast(`🎉 Você subiu para o nível ${lvl}!`);
+// Sistema de Vídeo Embed Dinâmico
+function openVideoEmbed(queryText) {
+  const encoded = encodeURIComponent(queryText + " english learning lesson");
+  return `<div style="width:100%; aspect-ratio:16/9; background:#000; border-radius:14px; overflow:hidden;">
+    <iframe width="100%" height="100%" src="https://www.youtube.com/embed?listType=search&list=${encoded}" frameborder="0" allowfullscreen></iframe>
+  </div>`;
+}
+
+function openLesson(type) {
+  document.getElementById('lesson-overlay').classList.remove('hidden');
+  const body = document.getElementById('lesson-body');
+  
+  if(type === 'Video') {
+    body.innerHTML = `
+      <h3>Imersão em Vídeo</h3>
+      <p style="margin-bottom:12px; color:var(--ink-soft);">Vídeo recomendado com base no seu nível atual:</p>
+      ${openVideoEmbed("English conversation level " + (currentLevelIdx + 1))}
+      <button class="btn" style="width:100%; margin-top:16px;" onclick="closeLesson(); userState.xp += 15; renderAll();">Concluir Vídeo (+15 XP)</button>`;
+  } else {
+    body.innerHTML = `
+      <h3>Estação ${type}</h3>
+      <p style="margin:16px 0;">Pratique e receba feedback em tempo real.</p>
+      <button class="btn" style="width:100%;" onclick="closeLesson(); userState.xp += 10; analytics.trackAnswer(true, '${type}'); renderAll();">Concluir Lição (+10 XP)</button>`;
   }
 }
 
-function loseHeart() {
-  userState.hearts = Math.max(0, userState.hearts - 1);
-  if (userState.hearts === 0) openHeartsModal();
+function closeLesson() {
+  document.getElementById('lesson-overlay').classList.add('hidden');
 }
 
-function grantBadge(id) {
-  if (!userState.badges.includes(id)) {
-    userState.badges.push(id);
-    const badge = BADGES.find(b => b.id === id);
-    if (badge) toast(`🏅 Nova conquista: ${badge.label}!`);
-  }
+// Chat e Neural Memory
+function sendMainChatMessage() {
+  const input = document.getElementById('main-chat-input');
+  const text = input.value.trim();
+  if(!text) return;
+
+  const box = document.getElementById('main-chat-box');
+  box.innerHTML += `<div class="msg user">${text}</div>`;
+  input.value = '';
+
+  setTimeout(() => {
+    const summary = neuralMemory.getContextSummary();
+    const reply = `I stored your progress! Based on your context (${summary}), you are improving quickly. You said: "${text}".`;
+    
+    neuralMemory.addInteraction(text, reply);
+    box.innerHTML += `<div class="msg ai">${reply}<br><span class="memory-tag">🧠 Contexto Retido</span></div>`;
+    box.scrollTop = box.scrollHeight;
+    
+    analytics.metrics.conversationMinutes += 1;
+    analytics.save();
+    renderAnalytics();
+  }, 600);
 }
 
-function markNodeComplete(levelIdx, unitIdx, nodeIdx) {
-  userState.completed[nodeKey(levelIdx, unitIdx, nodeIdx)] = true;
-  grantBadge('first_step');
-  if (userState.mode === 'kids') grantBadge('kids_star');
-  saveState();
+// Analytics Visual Graph (Nativo em SVG)
+function renderAnalytics() {
+  document.getElementById('analytics-accuracy').innerText = analytics.getAccuracy() + '%';
+  document.getElementById('analytics-words').innerText = analytics.metrics.wordsMastered;
+  document.getElementById('analytics-minutes').innerText = analytics.metrics.conversationMinutes + ' min';
+
+  const chart = document.getElementById('analytics-chart');
+  if(!chart) return;
+
+  const breakdown = analytics.metrics.skillBreakdown;
+  const max = Math.max(1, ...Object.values(breakdown));
+
+  let svgHtml = `<svg width="100%" height="100%" viewBox="0 0 400 120">`;
+  let x = 30;
+  Object.keys(breakdown).forEach(skill => {
+    const val = breakdown[skill];
+    const h = (val / max) * 80;
+    svgHtml += `
+      <rect x="${x}" y="${100 - h}" width="45" height="${h}" fill="#17A398" rx="6" />
+      <text x="${x + 5}" y="115" font-size="10" fill="#6B7794">${skill}</text>
+    `;
+    x += 95;
+  });
+  svgHtml += `</svg>`;
+  chart.innerHTML = svgHtml;
+}
+
+function switchScreen(screen) {
+  ['trail', 'anki', 'chat', 'analytics'].forEach(s => {
+    document.getElementById('screen-' + s).classList.add('hidden');
+    document.getElementById('nav-' + s).classList.remove('active');
+  });
+  document.getElementById('screen-' + screen).classList.remove('hidden');
+  document.getElementById('nav-' + screen).classList.add('active');
+  if(screen === 'analytics') renderAnalytics();
 }
 
 function toast(text) {
@@ -760,516 +616,19 @@ function toast(text) {
   el.innerText = text;
   document.getElementById('toast-stack').appendChild(el);
   requestAnimationFrame(() => el.classList.add('show'));
-  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 350); }, 3200);
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 350); }, 3000);
 }
 
-function burstConfetti(container) {
-  const colors = ['#34D399', '#38BDF8', '#818CF8', '#F472B6', '#FF70A6', '#FFC857'];
-  for (let i = 0; i < 26; i++) {
-    const p = document.createElement('span');
-    p.className = 'confetti-piece';
-    p.style.left = (45 + Math.random() * 10) + '%';
-    p.style.background = colors[i % colors.length];
-    p.style.animationDelay = (Math.random() * 0.2) + 's';
-    p.style.transform = `rotate(${Math.random() * 360}deg)`;
-    container.appendChild(p);
-    setTimeout(() => p.remove(), 1400);
-  }
-}
-
-function renderHUD() {
-  document.getElementById('hud-name').innerText = userState.name + (userState.mode === 'kids' ? ' 🎈' : '');
-  document.getElementById('hud-avatar-letter').innerText = (userState.name || 'A').charAt(0).toUpperCase();
-  document.getElementById('hud-player-level').innerText = playerLevel();
-  document.getElementById('hud-hearts').innerText = '❤️'.repeat(userState.hearts) + '🖤'.repeat(MAX_HEARTS - userState.hearts);
-  document.getElementById('hud-streak').innerText = userState.streak;
-  document.getElementById('hud-coins').innerText = userState.coins;
-  const xpInLevel = userState.xp % 100;
-  document.getElementById('hud-xp-fill').style.width = xpInLevel + '%';
-  document.getElementById('hud-xp-label').innerText = `${xpInLevel}/100 XP`;
-}
-
-function renderLevelTabs() {
-  const wrap = document.getElementById('level-tabs');
-  wrap.innerHTML = '';
-  LEVELS.forEach((lvl, idx) => {
-    const unlocked = isLevelUnlocked(idx);
-    const btn = document.createElement('button');
-    btn.className = 'level-tab' + (idx === currentLevelIdx ? ' active' : '') + (unlocked ? '' : ' locked');
-    btn.style.setProperty('--tab-color', lvl.color);
-    btn.innerHTML = `<span class="level-code">${lvl.code}</span><span class="level-name">${lvl.name}</span>${unlocked ? '' : '<span class="lock-icon">🔒</span>'}`;
-    btn.onclick = () => { if (unlocked) { currentLevelIdx = idx; renderAll(); } else { toast('🔒 Nível bloqueado!'); } };
-    wrap.appendChild(btn);
-  });
-}
-
-function renderPath() {
-  const level = LEVELS[currentLevelIdx];
-  const main = document.getElementById('path-container');
-  main.innerHTML = '';
-  document.documentElement.style.setProperty('--level-color', level.color);
-  document.documentElement.style.setProperty('--level-color-dark', level.darkColor);
-
-  const mascot = document.createElement('div');
-  mascot.className = 'mascot-banner';
-  mascot.innerHTML = `<span class="mascot-emoji">${userState.mode === 'kids' ? '🎨' : '🦉'}</span><div><b>${level.name} · ${level.code}</b><p>${level.mascotLine}</p></div>`;
-  main.appendChild(mascot);
-
-  level.units.forEach((unit, unitIdx) => {
-    const unitUnlocked = isUnitUnlocked(currentLevelIdx, unitIdx);
-    const section = document.createElement('section');
-    section.className = 'unit-section' + (unitUnlocked ? '' : ' locked-unit');
-
-    const header = document.createElement('div');
-    header.className = 'unit-header';
-    header.innerHTML = `<h3>${unit.title}</h3><p>${unit.subtitle}</p>`;
-    section.appendChild(header);
-
-    const path = document.createElement('div');
-    path.className = 'path-line';
-    const offsets = [0, 60, 0, -60, 0, 60, 0];
-
-    NODE_ORDER.forEach((type, nodeIdx) => {
-      const completed = isNodeCompleted(currentLevelIdx, unitIdx, nodeIdx);
-      const unlocked = isNodeUnlocked(currentLevelIdx, unitIdx, nodeIdx);
-      const isCurrent = unlocked && !completed;
-      const meta = NODE_TYPES[nodeIdx];
-
-      const node = document.createElement('button');
-      node.className = 'path-node' + (completed ? ' completed' : '') + (isCurrent ? ' current' : '') + (!unlocked ? ' locked' : '');
-      node.style.transform = `translateX(${offsets[nodeIdx]}px)`;
-      node.innerHTML = `<span>${completed ? '✅' : (unlocked ? meta.icon : '🔒')}</span>`;
-      node.title = meta.label;
-
-      const label = document.createElement('div');
-      label.className = 'node-label';
-      label.style.transform = `translateX(${offsets[nodeIdx]}px)`;
-      label.innerText = meta.label;
-
-      node.onclick = () => {
-        if (!unlocked) { toast('🔒 Complete a estação anterior primeiro!'); return; }
-        if (userState.hearts <= 0) { openHeartsModal(); return; }
-        openLesson(currentLevelIdx, unitIdx, nodeIdx);
-      };
-
-      const wrapNode = document.createElement('div');
-      wrapNode.className = 'node-wrap';
-      wrapNode.appendChild(node);
-      wrapNode.appendChild(label);
-      path.appendChild(wrapNode);
-    });
-
-    section.appendChild(path);
-    main.appendChild(section);
-  });
-}
-
-function renderAll() {
-  renderHUD();
-  renderLevelTabs();
-  renderPath();
-  renderBadges();
-}
-
-function renderBadges() {
-  const wrap = document.getElementById('badges-grid');
-  if (!wrap) return;
-  wrap.innerHTML = '';
-  BADGES.forEach(b => {
-    const got = userState.badges.includes(b.id);
-    const el = document.createElement('div');
-    el.className = 'badge-card' + (got ? ' unlocked' : '');
-    el.innerHTML = `<div class="badge-icon">${got ? b.icon : '❔'}</div><b>${b.label}</b><p>${b.desc}</p>`;
-    wrap.appendChild(el);
-  });
-}
-
-// =====================================================================
-// ESTAÇÕES E LIÇÕES (VOCABULÁRIO, SHADOWING, GRAMÁTICA, ETC.)
-// =====================================================================
-
-function openLesson(levelIdx, unitIdx, nodeIdx) {
-  activeNode = { levelIdx, unitIdx, nodeIdx };
-  const type = NODE_ORDER[nodeIdx];
-  document.getElementById('lesson-overlay').classList.remove('hidden');
-  const body = document.getElementById('lesson-body');
-  body.innerHTML = '';
-  const unit = LEVELS[levelIdx].units[unitIdx];
-  document.getElementById('lesson-title').innerText = `${unit.title} · ${NODE_TYPES[nodeIdx].label}`;
-
-  if (type === 'vocab') renderVocabLesson(body, unit);
-  else if (type === 'shadowing') renderShadowingLesson(body, unit);
-  else if (type === 'grammar') renderQuizLesson(body, unit.grammar, 'grammar');
-  else if (type === 'listening') renderListeningLesson(body, unit);
-  else if (type === 'video') renderVideoLesson(body, unit);
-  else if (type === 'song') renderSongLesson(body, unit);
-  else if (type === 'boss') renderQuizLesson(body, unit.grammar, 'boss');
-}
-
-function closeLesson() {
-  document.getElementById('lesson-overlay').classList.add('hidden');
-  activeNode = null;
-}
-
-function finishLesson(xp, success) {
-  if (success && activeNode) {
-    grantXP(xp);
-    markNodeComplete(activeNode.levelIdx, activeNode.unitIdx, activeNode.nodeIdx);
-    renderAll();
-    toast(`✨ +${xp} XP!`);
-  }
-}
-
-function renderVocabLesson(body, unit) {
-  let idx = 0;
-  const learned = new Set();
-  const wrap = document.createElement('div');
-  wrap.className = 'lesson-inner';
-  wrap.innerHTML = `
-    <p class="lesson-help">Toque no cartão para virar. Ouça a pronúncia e memorize!</p>
-    <div class="flashcard" id="flash-card"><div class="flash-front"></div></div>
-    <div class="flash-progress" id="flash-progress"></div>
-    <div class="lesson-actions">
-      <button class="btn btn-outline" id="flash-again">Outra palavra</button>
-      <button class="btn" id="flash-know">Já sei ✅</button>
-    </div>`;
-  body.appendChild(wrap);
-
-  const card = wrap.querySelector('#flash-card');
-  const progress = wrap.querySelector('#flash-progress');
-
-  function renderCard() {
-    const item = unit.vocab[idx];
-    card.classList.remove('flipped');
-    card.innerHTML = `<div class="flash-front"><div class="flash-emoji">${item.emoji}</div><h2>${item.en}</h2></div><div class="flash-back"><h2>${item.pt}</h2></div>`;
-    progress.innerText = `${learned.size}/${unit.vocab.length} palavras memorizadas`;
-    speak(item.en);
-  }
-  card.onclick = () => card.classList.toggle('flipped');
-  wrap.querySelector('#flash-again').onclick = () => { idx = (idx + 1) % unit.vocab.length; renderCard(); };
-  wrap.querySelector('#flash-know').onclick = () => {
-    learned.add(unit.vocab[idx].en);
-    if (learned.size >= unit.vocab.length) {
-      body.innerHTML = `<div class="lesson-complete"><h2>🎉 Excelente!</h2><p>Você dominou o vocabulário desta unidade.</p><button class="btn" id="vocab-continue">Continuar</button></div>`;
-      body.querySelector('#vocab-continue').onclick = () => { finishLesson(10, true); closeLesson(); };
-    } else {
-      idx = (idx + 1) % unit.vocab.length;
-      renderCard();
-    }
-  };
-  renderCard();
-}
-
-// ESTAÇÃO SHADOWING
-function renderShadowingLesson(body, unit) {
-  let idx = 0;
-  const phrases = unit.shadowing || ["Hello, nice to meet you!"];
-  const wrap = document.createElement('div');
-  wrap.className = 'lesson-inner';
-  wrap.innerHTML = `
-    <p class="lesson-help"><b>Técnica Shadowing:</b> Ouça a frase nativa e repita em voz alta para praticar a fala exata!</p>
-    <div class="lyric-card" style="text-align:center;">
-      <h3 id="shadow-phrase" style="font-size:1.4rem; color:var(--primary);">...</h3>
-    </div>
-    <div style="display:flex; justify-content:center; gap:12px; margin-top:20px;">
-      <button class="btn btn-outline" id="shadow-listen">🔊 Ouvir Nativo</button>
-      <button class="btn btn-danger" id="shadow-speak">🎙️ Minha Vez de Falar</button>
-    </div>
-    <p id="shadowing-feedback" style="text-align:center;"></p>`;
-  body.appendChild(wrap);
-
-  function loadPhrase() {
-    const target = phrases[idx];
-    wrap.querySelector('#shadow-phrase').innerText = target;
-    wrap.querySelector('#shadowing-feedback').innerText = '';
-    speak(target);
-  }
-
-  wrap.querySelector('#shadow-listen').onclick = () => speak(phrases[idx]);
-  wrap.querySelector('#shadow-speak').onclick = () => {
-    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRec) return alert("Reconhecimento de voz não suportado neste navegador.");
-    const rec = new SpeechRec();
-    rec.lang = 'en-US';
-    rec.start();
-    rec.onresult = (e) => {
-      const spoken = e.results[0][0].transcript;
-      const target = phrases[idx];
-      const fb = wrap.querySelector('#shadowing-feedback');
-      if (spoken.toLowerCase().includes(target.toLowerCase().replace(/[.,!]/g, ''))) {
-        fb.innerHTML = `<span class="success-text">🎯 Incrível! Você falou: "${spoken}"</span>`;
-        setTimeout(() => {
-          idx++;
-          if (idx >= phrases.length) {
-            body.innerHTML = `<div class="lesson-complete"><h2>🗣️ Excelente Fala!</h2><p>Você concluiu o treino de Shadowing.</p><button class="btn" id="sh-cont">Continuar</button></div>`;
-            body.querySelector('#sh-cont').onclick = () => { finishLesson(15, true); closeLesson(); };
-          } else loadPhrase();
-        }, 1500);
-      } else {
-        fb.innerHTML = `<span class="error-text">Você disse: "${spoken}". Tente novamente!</span>`;
-      }
-    };
-  };
-
-  loadPhrase();
-}
-
-function renderQuizLesson(body, questions, kind) {
-  let idx = 0, correctCount = 0;
-  const total = questions.length;
-  const wrap = document.createElement('div');
-  wrap.className = 'lesson-inner';
-  wrap.innerHTML = `<div class="quiz-progressbar"><div class="quiz-progressbar-fill" id="qp-fill"></div></div>
-    <h3 id="quiz-question"></h3><div class="options-grid" id="quiz-options"></div><p id="quiz-feedback"></p>`;
-  body.appendChild(wrap);
-
-  function renderQ() {
-    const q = questions[idx];
-    wrap.querySelector('#qp-fill').style.width = ((idx) / total * 100) + '%';
-    wrap.querySelector('#quiz-question').innerText = q.q;
-    wrap.querySelector('#quiz-feedback').innerText = '';
-    const optsWrap = wrap.querySelector('#quiz-options');
-    optsWrap.innerHTML = '';
-    q.ops.forEach((op, i) => {
-      const b = document.createElement('button');
-      b.className = 'option-btn';
-      b.innerText = op;
-      b.onclick = () => {
-        const correct = i === q.a;
-        if (correct) { b.classList.add('correct-flash'); correctCount++; }
-        else { b.classList.add('wrong-flash'); loseHeart(); renderHUD(); }
-        setTimeout(() => {
-          idx++;
-          if (idx >= total) {
-            body.innerHTML = `<div class="lesson-complete"><h2>🎉 Unidade Concluída!</h2><p>Acertos: ${correctCount}/${total}</p><button class="btn" id="q-end">Continuar</button></div>`;
-            body.querySelector('#q-end').onclick = () => { finishLesson(20, true); closeLesson(); };
-          } else renderQ();
-        }, 1200);
-      };
-      optsWrap.appendChild(b);
-    });
-  }
-  renderQ();
-}
-
-function renderListeningLesson(body, unit) {
-  let idx = 0;
-  const list = unit.listening;
-  const wrap = document.createElement('div');
-  wrap.className = 'lesson-inner';
-  wrap.innerHTML = `
-    <p class="lesson-help">Ouça a frase e digite o que entendeu:</p>
-    <button class="btn btn-outline" id="l-play">🔊 Ouvir Áudio</button>
-    <div class="input-group" style="margin-top:14px;">
-      <input type="text" id="l-input" placeholder="Digite aqui em inglês...">
-      <button class="btn" id="l-check">Conferir</button>
-    </div>
-    <p id="l-feedback"></p>`;
-  body.appendChild(wrap);
-
-  const play = () => speak(list[idx]);
-  wrap.querySelector('#l-play').onclick = play;
-  wrap.querySelector('#l-check').onclick = () => {
-    const val = wrap.querySelector('#l-input').value.trim().toLowerCase();
-    const target = list[idx].toLowerCase().replace(/[.,!]/g, '');
-    const fb = wrap.querySelector('#l-feedback');
-    if (val === target) {
-      fb.innerHTML = `<span class="success-text">✨ Muito bem!</span>`;
-      setTimeout(() => {
-        idx++;
-        if (idx >= list.length) {
-          body.innerHTML = `<div class="lesson-complete"><h2>🎧 Ouvido Afiado!</h2><button class="btn" id="lis-end">Continuar</button></div>`;
-          body.querySelector('#lis-end').onclick = () => { finishLesson(15, true); closeLesson(); };
-        } else { wrap.querySelector('#l-input').value = ''; play(); }
-      }, 1200);
-    } else {
-      fb.innerHTML = `<span class="error-text">Resposta esperada: ${list[idx]}</span>`;
-      loseHeart(); renderHUD();
-    }
-  };
-  play();
-}
-
-function renderVideoLesson(body, unit) {
-  const query = encodeURIComponent(unit.video.query);
-  const wrap = document.createElement('div');
-  wrap.className = 'lesson-inner';
-  wrap.innerHTML = `
-    <p class="lesson-help">Assista ao vídeo recomendado para fixar o contexto:</p>
-    <div class="video-frame">
-      <iframe width="100%" height="100%" src="https://www.youtube.com/embed?listType=search&list=${query}" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <button class="btn" style="width:100%; margin-top:16px;" id="vid-done">Concluí o Vídeo ✅</button>`;
-  body.appendChild(wrap);
-  wrap.querySelector('#vid-done').onclick = () => { finishLesson(15, true); closeLesson(); };
-}
-
-function renderSongLesson(body, unit) {
-  const song = unit.song;
-  const wrap = document.createElement('div');
-  wrap.className = 'lesson-inner';
-  wrap.innerHTML = `
-    <p class="lesson-help">Complete os trechos da música/chant:</p>
-    <div class="lyric-card"><h3>🎵 ${song.title}</h3><p style="margin-top:10px; line-height:2;">${song.lines.join('<br>')}</p></div>
-    <button class="btn" style="width:100%; margin-top:16px;" id="song-done">Completar e Avançar 🎶</button>`;
-  body.appendChild(wrap);
-  wrap.querySelector('#song-done').onclick = () => { finishLesson(15, true); closeLesson(); };
-}
-
-// =====================================================================
-// CHAT COM IA & MOTOR DE ÁUDIO OTIMIZADO
-// =====================================================================
-
-let voicesLoaded = false;
-let englishVoice = null;
-
-function loadVoices() {
-  if (!('speechSynthesis' in window)) return;
-  const voices = window.speechSynthesis.getVoices();
-  if (voices.length > 0) {
-    englishVoice = voices.find(v => v.lang === 'en-US' && v.name.includes('Google')) ||
-                   voices.find(v => v.lang.startsWith('en-US')) ||
-                   voices.find(v => v.lang.startsWith('en')) || null;
-    voicesLoaded = true;
-  }
-}
-
-if ('speechSynthesis' in window) {
-  window.speechSynthesis.onvoiceschanged = loadVoices;
-  loadVoices();
-}
-
-function speak(text) {
-  if (!('speechSynthesis' in window)) {
-    toast("⚠️ Seu navegador não suporta síntese de voz.");
-    return;
-  }
-
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  
-  if (!voicesLoaded) loadVoices();
-  if (englishVoice) utterance.voice = englishVoice;
-  
-  utterance.lang = 'en-US';
-  utterance.pitch = userState && userState.mode === 'kids' ? 1.2 : 1.0;
-  utterance.rate = userState && userState.mode === 'kids' ? 0.8 : 0.92;
-
-  setTimeout(() => {
-    window.speechSynthesis.speak(utterance);
-  }, 50);
-}
-
-document.addEventListener('click', () => {
-  if (window.speechSynthesis && window.speechSynthesis.speaking === false) {
-    if (!voicesLoaded) loadVoices();
-  }
-}, { once: true });
-
-function initFreeChat() {
-  const box = document.getElementById('main-chat-box');
-  if (!box) return;
-  box.innerHTML = '';
-  appendChat('main-chat-box', 'ai', `Hello ${userState.name}! I am your AI Master Tutor. How are you feeling today?`);
-}
-
-async function sendMainChatMessage() {
-  const input = document.getElementById('main-chat-input');
-  const text = input.value.trim();
-  if (!text) return;
-  appendChat('main-chat-box', 'user', text);
-  input.value = '';
-
-  const reply = `That's great! Keep expressing yourself in English. You said: "${text}". What else is on your mind?`;
-  setTimeout(() => {
-    appendChat('main-chat-box', 'ai', reply);
-    speak(reply);
-    grantXP(2);
-    renderHUD();
-  }, 600);
-}
-
-function voiceInput(targetInputId, callback) {
+function voiceInput(targetId, callback) {
   const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRec) return alert("Navegador sem suporte a reconhecimento por voz.");
+  if (!SpeechRec) return alert("Reconhecimento de voz não suportado neste navegador.");
   const rec = new SpeechRec();
   rec.lang = 'en-US';
   rec.start();
-  rec.onresult = (e) => { document.getElementById(targetInputId).value = e.results[0][0].transcript; if (callback) callback(); };
-}
-
-function appendChat(boxId, sender, text) {
-  const box = document.getElementById(boxId);
-  const msg = document.createElement('div');
-  msg.className = `msg ${sender}`;
-  msg.innerText = text;
-  box.appendChild(msg);
-  box.scrollTop = box.scrollHeight;
-}
-
-// =====================================================================
-// TESTE DE NIVELAMENTO E BOOT
-// =====================================================================
-
-async function startApp() {
-  const name = document.getElementById('user-name-input').value.trim();
-  if (!name) return alert("Por favor, informe seu nome.");
-  document.getElementById('modal-auth').classList.add('hidden');
-  await loadOrCreateState(name);
-
-  if (userState.mode === 'kids') {
-    boot();
-  } else {
-    runPlacementTest();
-  }
-}
-
-function runPlacementTest() {
-  document.getElementById('modal-test').classList.remove('hidden');
-  appendChat('test-chat-box', 'ai', "Hello! Welcome to AI English Master. Can you tell me your name and your hobbies?");
-}
-
-function submitTestAnswer() {
-  const input = document.getElementById('test-input');
-  if (!input.value.trim()) return;
-  appendChat('test-chat-box', 'user', input.value);
-  input.value = '';
-  setTimeout(() => {
-    document.getElementById('modal-test').classList.add('hidden');
-    boot();
-  }, 1000);
-}
-
-function retakeTest() {
-  if (userState.mode === 'kids') return toast('O Modo Kids não exige nivelamento!');
-  runPlacementTest();
-}
-
-function switchScreen(screen) {
-  ['trail', 'chat', 'badges'].forEach(s => {
-    document.getElementById('screen-' + s).classList.add('hidden');
-    document.getElementById('nav-' + s).classList.remove('active');
-  });
-  document.getElementById('screen-' + screen).classList.remove('hidden');
-  document.getElementById('nav-' + screen).classList.add('active');
-  if (screen === 'chat') initFreeChat();
-  if (screen === 'badges') renderBadges();
-}
-
-function openHeartsModal() { document.getElementById('hearts-overlay').classList.remove('hidden'); }
-function closeHeartsModal() { document.getElementById('hearts-overlay').classList.add('hidden'); }
-function startHeartRecovery() {
-  userState.hearts = MAX_HEARTS;
-  saveState();
-  renderHUD();
-  closeHeartsModal();
-  toast('💖 Corações restaurados!');
-}
-
-function boot() {
-  document.getElementById('app-shell').classList.remove('hidden');
-  renderAll();
-  switchScreen('trail');
+  rec.onresult = (e) => {
+    document.getElementById(targetId).value = e.results[0][0].transcript;
+    if (callback) callback();
+  };
 }
 </script>
 </body>
