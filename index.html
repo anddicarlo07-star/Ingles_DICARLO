@@ -3,28 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI English Master — Next-Gen Platform</title>
+<title>AI English Master — Plataforma de Ensino</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito+Sans:wght@400;600;700;800&display=swap');
 
 :root {
-  --bg: #F4F7FB;
+  --bg: #F8FAFC;
   --panel: #FFFFFF;
-  --ink: #1B2559;
-  --ink-soft: #6B7794;
-  --border: #E6EBF3;
-  --primary: #17A398;
-  --primary-dark: #0E7C73;
-  --coral: #FF6B6B;
-  --gold: #FFC857;
-  --success: #22C55E;
-  --danger: #EF4444;
-  --kids-color: #FF70A6;
-  --level-color: #34D399;
-  --level-color-dark: #059669;
-  --radius-lg: 22px;
-  --radius-md: 14px;
-  --shadow-soft: 0 8px 24px rgba(27, 37, 89, 0.06);
+  --ink: #0F172A;
+  --ink-soft: #64748B;
+  --border: #E2E8F0;
+  --primary: #2563EB;
+  --primary-dark: #1D4ED8;
+  --kids-primary: #EC4899;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --shadow-soft: 0 4px 20px rgba(15, 23, 42, 0.05);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,92 +30,83 @@ button { font-family: inherit; cursor: pointer; }
 input, select { font-family: inherit; }
 .hidden { display: none !important; }
 
-/* Modais e Overlays */
-.modal-overlay { position: fixed; inset: 0; background: rgba(27, 37, 89, 0.55); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
-.modal-card { background: var(--panel); padding: 34px; border-radius: var(--radius-lg); width: 100%; max-width: 620px; box-shadow: var(--shadow-soft); border: 1px solid var(--border); }
-.modal-card h2 { font-size: 1.6rem; margin-bottom: 6px; }
-.modal-card .sub { color: var(--ink-soft); margin-bottom: 22px; line-height: 1.5; }
+/* Modais */
+.modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.modal-card { background: var(--panel); padding: 32px; border-radius: var(--radius-lg); width: 100%; max-width: 600px; box-shadow: var(--shadow-soft); border: 1px solid var(--border); }
+.modal-card h2 { font-size: 1.6rem; margin-bottom: 8px; }
+.modal-card .sub { color: var(--ink-soft); margin-bottom: 20px; line-height: 1.5; }
 .modal-card input[type="text"] { width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: var(--radius-md); margin-bottom: 16px; outline: none; font-size: 1rem; }
 .modal-card input[type="text"]:focus { border-color: var(--primary); }
-.mascot-hero { font-size: 3.5rem; text-align: center; margin-bottom: 8px; }
 
-/* Dashboard & Cards */
 .profile-selector { display: flex; gap: 12px; margin-bottom: 20px; }
 .profile-card { flex: 1; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-md); text-align: center; cursor: pointer; transition: all 0.2s; }
-.profile-card:hover, .profile-card.active { border-color: var(--primary); background: #F0FBF9; }
+.profile-card:hover, .profile-card.active { border-color: var(--primary); background: #EFF6FF; }
+.profile-card.kids.active { border-color: var(--kids-primary); background: #FDF2F8; }
 .profile-card .icon { font-size: 2rem; display: block; margin-bottom: 4px; }
-.profile-card b { font-size: 0.95rem; color: var(--ink); }
 
-.btn { background: var(--primary); color: white; border: none; padding: 13px 22px; border-radius: 14px; font-weight: 700; font-size: 0.98rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: transform .12s, background .15s; box-shadow: 0 4px 0 var(--primary-dark); }
-.btn:hover { background: #159187; }
-.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--primary-dark); }
-.btn-outline { background: white; color: var(--ink); border: 2px solid var(--border); box-shadow: none; }
-.btn-outline:hover { border-color: var(--primary); background: white; }
-.btn-danger { background: var(--coral); box-shadow: 0 4px 0 #d94f4f; color: white; border: none; }
+.btn { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: var(--radius-md); font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: background .15s; }
+.btn:hover { background: var(--primary-dark); }
+.btn-outline { background: white; color: var(--ink); border: 1px solid var(--border); }
+.btn-outline:hover { background: #F1F5F9; }
+.btn-danger { background: #EF4444; color: white; border: none; }
 
+/* Layout Geral */
 #app-shell { display: flex; min-height: 100vh; }
-.sidebar { width: 270px; background: var(--panel); border-right: 1px solid var(--border); padding: 24px 18px; display: flex; flex-direction: column; gap: 20px; flex-shrink: 0; }
+.sidebar { width: 280px; background: var(--panel); border-right: 1px solid var(--border); padding: 24px 18px; display: flex; flex-direction: column; gap: 20px; flex-shrink: 0; }
 .brand { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: 800; color: var(--primary); }
 
-.hud-card { background: linear-gradient(155deg, #F0FBF9, #FFFFFF); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
-.hud-name-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.hud-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; }
-.hud-stats-row { display: flex; justify-content: space-between; font-size: 0.86rem; margin-bottom: 6px; }
-.hud-xp-track { background: var(--border); height: 9px; border-radius: 6px; overflow: hidden; margin-top: 10px; }
-.hud-xp-fill { background: linear-gradient(90deg, var(--gold), var(--coral)); height: 100%; width: 0%; transition: width .4s ease; }
+.user-summary { background: #F8FAFC; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px; }
+.user-summary b { display: block; font-size: 1rem; }
+.user-summary span { font-size: 0.8rem; color: var(--ink-soft); }
 
 nav.side-nav { display: flex; flex-direction: column; gap: 6px; }
-nav.side-nav button { text-align: left; padding: 12px 14px; border-radius: 12px; border: none; background: transparent; color: var(--ink); font-weight: 700; font-size: 0.95rem; transition: background .15s; }
-nav.side-nav button:hover { background: #F0F3FA; }
+nav.side-nav button { text-align: left; padding: 12px 14px; border-radius: 8px; border: none; background: transparent; color: var(--ink); font-weight: 600; font-size: 0.95rem; transition: background .15s; }
+nav.side-nav button:hover { background: #F1F5F9; }
 nav.side-nav button.active { background: var(--primary); color: white; }
 
-.main-area { flex: 1; padding: 26px 32px; overflow-y: auto; max-width: 1050px; }
-.level-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
-.level-tab { border: 2px solid var(--border); background: white; border-radius: 16px; padding: 10px 16px; display: flex; flex-direction: column; gap: 2px; min-width: 96px; position: relative; cursor: pointer; }
-.level-tab.active { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.08); }
+.main-area { flex: 1; padding: 28px 36px; overflow-y: auto; max-width: 1100px; }
 
-.mascot-banner { background: linear-gradient(120deg, var(--level-color) 0%, var(--level-color-dark) 100%); color: white; border-radius: var(--radius-lg); padding: 20px 22px; display: flex; align-items: center; gap: 16px; margin-bottom: 26px; box-shadow: var(--shadow-soft); }
-.unit-section { margin-bottom: 40px; }
-.path-line { display: flex; flex-direction: column; align-items: center; gap: 12px; position: relative; padding: 10px 0; }
-.node-wrap { display: flex; flex-direction: column; align-items: center; }
-.path-node { width: 76px; height: 76px; border-radius: 50%; border: none; background: var(--level-color); box-shadow: 0 6px 0 var(--level-color-dark); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; transition: transform .12s; }
-.path-node.completed { background: var(--success); box-shadow: 0 6px 0 #16803C; }
+/* Módulos do Curso */
+.module-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+.module-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; transition: border-color 0.2s; }
+.module-card:hover { border-color: var(--primary); }
+.module-info { flex: 1; }
+.module-info h3 { font-size: 1.15rem; margin-bottom: 4px; }
+.module-info p { font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 10px; }
+.module-progress { width: 100%; max-width: 200px; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden; }
+.module-progress-fill { height: 100%; background: var(--success); width: 0%; }
 
-/* Lições & Interação */
-#lesson-overlay { z-index: 900; align-items: flex-start; padding: 30px 16px; overflow-y: auto; }
+/* Lições */
+#lesson-overlay { z-index: 900; }
 .lesson-modal { background: var(--panel); border-radius: var(--radius-lg); width: 100%; max-width: 640px; margin: auto; box-shadow: var(--shadow-soft); }
-.lesson-modal-head { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--border); }
+.lesson-modal-head { display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border); }
 .lesson-inner { padding: 24px; }
-.flashcard { perspective: 1000px; height: 230px; cursor: pointer; margin-bottom: 14px; }
+
+.flashcard { perspective: 1000px; height: 230px; cursor: pointer; margin-bottom: 16px; }
 .flashcard > div { transition: transform .4s; transform-style: preserve-3d; position: relative; width: 100%; height: 100%; }
 .flashcard.flipped > .flash-front { transform: rotateY(180deg); }
-.flash-front, .flash-back { position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius-md); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(150deg, var(--level-color), var(--level-color-dark)); color: white; padding: 20px; text-align: center; }
-.flash-back { transform: rotateY(180deg); background: linear-gradient(150deg, #FFC857, #FB923C); }
+.flash-front, .flash-back { position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius-md); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(135deg, #3B82F6, #1D4ED8); color: white; padding: 20px; text-align: center; }
+.flash-back { transform: rotateY(180deg); background: linear-gradient(135deg, #F59E0B, #D97706); }
 
-.input-group { display: flex; gap: 10px; }
-.input-group input { flex: 1; padding: 12px 14px; border: 2px solid var(--border); border-radius: 12px; outline: none; }
-
-/* Chat Box & Inteligência Neural */
-.chat-box { height: 380px; overflow-y: auto; border: 1px solid var(--border); padding: 16px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 12px; background: #FAFBFE; margin-bottom: 14px; }
-.msg { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-size: 0.95rem; line-height: 1.45; }
-.msg.ai { background: white; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 3px; }
-.msg.user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 3px; }
-.memory-tag { display: inline-block; font-size: 0.72rem; background: #FEF3C7; color: #B45309; padding: 2px 8px; border-radius: 6px; margin-top: 4px; }
-
-/* Analytics Grid */
+/* Analytics */
 .analytics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
 .analytics-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; }
-.analytics-card h4 { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 8px; }
+.analytics-card h4 { font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 6px; }
 .analytics-card .val { font-size: 1.8rem; font-weight: 800; color: var(--ink); }
-.chart-container { width: 100%; height: 160px; margin-top: 10px; }
+
+/* Chat */
+.chat-box { height: 400px; overflow-y: auto; border: 1px solid var(--border); padding: 16px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 12px; background: #F8FAFC; margin-bottom: 14px; }
+.msg { max-width: 80%; padding: 12px 16px; border-radius: 12px; font-size: 0.95rem; line-height: 1.45; }
+.msg.ai { background: white; border: 1px solid var(--border); align-self: flex-start; }
+.msg.user { background: var(--primary); color: white; align-self: flex-end; }
 
 #toast-stack { position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1200; }
-.toast { background: var(--ink); color: white; padding: 12px 18px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; opacity: 0; transform: translateX(30px); transition: all .3s; }
+.toast { background: var(--ink); color: white; padding: 12px 18px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; opacity: 0; transform: translateX(30px); transition: all .3s; }
 .toast.show { opacity: 1; transform: translateX(0); }
 
-@media (max-width: 900px) {
+@media (max-width: 850px) {
   #app-shell { flex-direction: column; }
-  .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
+  .sidebar { width: 100%; }
   .main-area { padding: 18px; }
 }
 </style>
@@ -131,33 +118,32 @@ nav.side-nav button.active { background: var(--primary); color: white; }
 <!-- Modal Inicial -->
 <div id="modal-auth" class="modal-overlay">
   <div class="modal-card" style="text-align:center;">
-    <div class="mascot-hero">🦉</div>
     <h2>AI English Master</h2>
-    <p class="sub">Selecione seu modo de imersão linguística:</p>
+    <p class="sub">Selecione o perfil do aluno para carregar o plano de estudos:</p>
     
     <div class="profile-selector">
       <div class="profile-card active" id="mode-adult" onclick="selectProfile('adult')">
         <span class="icon">🎓</span>
-        <b>Modo Pro Geral</b>
-        <p style="font-size:0.75rem; color:var(--ink-soft);">A1 ao C2 (CEFR Engine)</p>
+        <b>Curso Geral (Adultos)</b>
+        <p style="font-size:0.75rem; color:var(--ink-soft);">CEFR A1 até C2 Fluência</p>
       </div>
-      <div class="profile-card" id="mode-kids" onclick="selectProfile('kids')">
+      <div class="profile-card kids" id="mode-kids" onclick="selectProfile('kids')">
         <span class="icon">🎨</span>
-        <b>Modo Kids</b>
-        <p style="font-size:0.75rem; color:var(--ink-soft);">Aprendizado Intuitivo Visual</p>
+        <b>Curso Kids</b>
+        <p style="font-size:0.75rem; color:var(--ink-soft);">Phonics, Vocabulário & Sons</p>
       </div>
     </div>
 
-    <input type="text" id="user-name-input" placeholder="Digite seu nome para iniciar">
-    <button class="btn" style="width:100%;" onclick="startApp()">Inicializar Plataforma</button>
+    <input type="text" id="user-name-input" placeholder="Digite seu nome">
+    <button class="btn" style="width:100%;" onclick="startApp()">Acessar Plataforma</button>
   </div>
 </div>
 
-<!-- Modal Lições -->
+<!-- Modal de Conteúdo -->
 <div id="lesson-overlay" class="modal-overlay hidden">
   <div class="lesson-modal">
     <div class="lesson-modal-head">
-      <h2 id="lesson-title">Estação de Aprendizado</h2>
+      <h3 id="lesson-title">Módulo de Estudo</h3>
       <button class="btn-outline" style="padding:4px 10px; border:none;" onclick="closeLesson()">✕</button>
     </div>
     <div id="lesson-body"></div>
@@ -167,81 +153,73 @@ nav.side-nav button.active { background: var(--primary); color: white; }
 <!-- Shell Principal -->
 <div id="app-shell" class="hidden">
   <aside class="sidebar">
-    <div class="brand"><span style="font-size:1.6rem;">🦉</span> AI Master</div>
+    <div class="brand"><span>📘</span> AI Master</div>
 
-    <div class="hud-card">
-      <div class="hud-name-row">
-        <div class="hud-avatar" id="hud-avatar-letter">A</div>
-        <div>
-          <b id="hud-name">Aluno</b>
-          <span style="font-size:0.75rem; color:var(--ink-soft);">Nível Player <b id="hud-player-level">1</b></span>
-        </div>
-      </div>
-      <div class="hud-stats-row">
-        <span>❤️ <b id="hud-hearts">5</b></span>
-        <span>🔥 <b id="hud-streak">0</b>d</span>
-        <span>💎 <b id="hud-coins">0</b></span>
-      </div>
-      <div class="hud-xp-track"><div class="hud-xp-fill" id="hud-xp-fill"></div></div>
+    <div class="user-summary">
+      <b id="hud-name">Aluno</b>
+      <span id="hud-mode-label">Modo Geral</span>
     </div>
 
     <nav class="side-nav">
-      <button id="nav-trail" class="active" onclick="switchScreen('trail')">🗺️ Trilha Gamificada</button>
-      <button id="nav-anki" onclick="switchScreen('anki')">🧠 Banco SRS (Anki)</button>
-      <button id="nav-chat" onclick="switchScreen('chat')">🗣️ Chat & Memória IA</button>
-      <button id="nav-analytics" onclick="switchScreen('analytics')">📊 Analytics & Relatórios</button>
+      <button id="nav-course" class="active" onclick="switchScreen('course')">📚 Plano de Curso</button>
+      <button id="nav-srs" onclick="switchScreen('srs')">🧠 Vocabulário (SRS)</button>
+      <button id="nav-chat" onclick="switchScreen('chat')">🗣️ Conversação com IA</button>
+      <button id="nav-analytics" onclick="switchScreen('analytics')">📊 Desempenho</button>
     </nav>
   </aside>
 
   <main class="main-area">
-    <!-- Trilha -->
-    <section id="screen-trail">
-      <div class="level-tabs" id="level-tabs"></div>
-      <div id="path-container"></div>
+    <!-- Grade de Módulos (Evolução de Curso) -->
+    <section id="screen-course">
+      <div style="margin-bottom:20px;">
+        <h2 id="course-title">Evolução do Curso</h2>
+        <p style="color:var(--ink-soft);" id="course-subtitle">Siga os módulos pedagógicos em sequência.</p>
+      </div>
+      <div class="module-grid" id="module-container"></div>
     </section>
 
-    <!-- Banco SRS / Anki Ilimitado -->
-    <section id="screen-anki" class="hidden">
-      <h2>Banco Ilimitado de Memorização (SRS)</h2>
-      <p style="color:var(--ink-soft); margin-bottom:16px;">Revisão espaçada automatizada para fixação permanente de vocabulário.</p>
-      <div id="anki-card-container"></div>
+    <!-- Banco SRS (Anki) -->
+    <section id="screen-srs" class="hidden">
+      <h2>Revisão Espaçada (SRS)</h2>
+      <p style="color:var(--ink-soft); margin-bottom:16px;">Sistema automatizado para fixação de termos na memória de longo prazo.</p>
+      <div id="srs-card-container"></div>
     </section>
 
-    <!-- Chat Neural -->
+    <!-- Chat com IA -->
     <section id="screen-chat" class="hidden">
-      <h2>Conversação Neural com Memória Integrada</h2>
-      <p style="color:var(--ink-soft); margin-bottom:16px;">A IA guarda contexto sobre você para adaptar o vocabulário e corrigir seus pontos fracos.</p>
+      <h2>Prática Conversacional</h2>
+      <p style="color:var(--ink-soft); margin-bottom:16px;">Converse e receba feedback imediato da IA adaptada ao seu nível.</p>
       <div class="chat-box" id="main-chat-box"></div>
-      <div class="input-group">
-        <input type="text" id="main-chat-input" placeholder="Converse em inglês com a IA...">
+      <div style="display:flex; gap:10px;">
+        <input type="text" id="main-chat-input" style="flex:1; padding:12px; border:1px solid var(--border); border-radius:8px;" placeholder="Digite em inglês...">
         <button class="btn" onclick="sendMainChatMessage()">Enviar</button>
         <button class="btn btn-danger" onclick="voiceInput('main-chat-input', sendMainChatMessage)">🎙️</button>
       </div>
     </section>
 
-    <!-- Analytics & Desempenho -->
+    <!-- Analytics -->
     <section id="screen-analytics" class="hidden">
-      <h2>Relatório de Desempenho Contínuo</h2>
-      <p style="color:var(--ink-soft);">Métricas em tempo real sobre seu desenvolvimento linguístico.</p>
+      <h2>Relatório Pedagógico</h2>
+      <p style="color:var(--ink-soft);">Acompanhamento de progresso real em horas e assimilação.</p>
       
       <div class="analytics-grid">
         <div class="analytics-card">
-          <h4>Taxa de Precisão Geral</h4>
-          <div class="val" id="analytics-accuracy">0%</div>
+          <h4>Módulos Concluídos</h4>
+          <div class="val" id="analytics-completed">0</div>
         </div>
         <div class="analytics-card">
-          <h4>Palavras Retidas (SRS)</h4>
+          <h4>Termos Retidos (SRS)</h4>
           <div class="val" id="analytics-words">0</div>
         </div>
         <div class="analytics-card">
-          <h4>Minutos de Conversação</h4>
-          <div class="val" id="analytics-minutes">0 min</div>
+          <h4>Precisão de Respostas</h4>
+          <div class="val" id="analytics-accuracy">0%</div>
         </div>
       </div>
 
       <div class="analytics-card" style="margin-top:20px;">
-        <h4>Distribuição de Aprendizado por Habilidade</h4>
-        <div class="chart-container" id="analytics-chart"></div>
+        <h4>Distribuição do Aprendizado</h4>
+        <div id="analytics-chart" style="height:140px; margin-top:10px;"></div>
       </div>
     </section>
   </main>
@@ -249,166 +227,71 @@ nav.side-nav button.active { background: var(--primary); color: white; }
 
 <script>
 // =====================================================================
-// BANCO ILIMITADO DE VOCABULÁRIO (GERADOR DETERMINÍSTICO DE CARDS SRS)
+// EVOLUÇÃO PEDAGÓGICA DO CURSO (KIDS E ADULTO)
 // =====================================================================
 
-const VOCAB_DATABASE_BASE = [
-  // A1
-  { en: "Apple", pt: "Maçã", cat: "Food", level: "A1", emoji: "🍎" },
-  { en: "Water", pt: "Água", cat: "Basics", level: "A1", emoji: "💧" },
-  { en: "House", pt: "Casa", cat: "Places", level: "A1", emoji: "🏠" },
-  { en: "Friend", pt: "Amigo", cat: "Social", level: "A1", emoji: "🤝" },
-  // A2
-  { en: "Journey", pt: "Jornada/Viagem", cat: "Travel", level: "A2", emoji: "✈️" },
-  { en: "Schedule", pt: "Agenda/Horário", cat: "Routine", level: "A2", emoji: "📅" },
-  // B1
-  { en: "Opportunity", pt: "Oportunidade", cat: "Business", level: "B1", emoji: "🔑" },
-  { en: "Achievement", pt: "Conquista", cat: "Life", level: "B1", emoji: "🏆" },
-  // B2
-  { en: "Hypothesis", pt: "Hipótese", cat: "Science", level: "B2", emoji: "🔬" },
-  { en: "Negotiation", pt: "Negociação", cat: "Business", level: "B2", emoji: "🤝" },
-  // C1 / C2
-  { en: "Eloquence", pt: "Eloquência", cat: "Advanced", level: "C1", emoji: "✨" },
-  { en: "Subtlety", pt: "Sutileza", cat: "Advanced", level: "C2", emoji: "🎨" }
+const KIDS_COURSE_MODULES = [
+  {
+    id: "k1", title: "Módulo 1: Alphabet & Phonics", desc: "Sons das letras, vogais e primeiras palavras.",
+    topics: ["Letters A-Z Sounds", "Short Vowels (A, E, I, O, U)", "First Words"],
+    vocab: [{ en: "Apple", pt: "Maçã", emoji: "🍎" }, { en: "Ball", pt: "Bola", emoji: "⚽" }, { en: "Cat", pt: "Gato", emoji: "🐱" }]
+  },
+  {
+    id: "k2", title: "Módulo 2: Colors, Shapes & Numbers", desc: "Cores primárias, formas geométricas e contagem até 20.",
+    topics: ["Colors", "Shapes (Circle, Square)", "Numbers 1-20"],
+    vocab: [{ en: "Red", pt: "Vermelho", emoji: "🔴" }, { en: "Blue", pt: "Azul", emoji: "🔵" }, { en: "One", pt: "Um", emoji: "1️⃣" }]
+  },
+  {
+    id: "k3", title: "Módulo 3: Animals & Feelings", desc: "Animais de estimação, da fazenda e emoções básicas.",
+    topics: ["Pets & Farm Animals", "Expressing Feelings (Happy, Sad)"],
+    vocab: [{ en: "Dog", pt: "Cachorro", emoji: "🐶" }, { en: "Happy", pt: "Feliz", emoji: "😊" }, { en: "Lion", pt: "Leão", emoji: "🦁" }]
+  },
+  {
+    id: "k4", title: "Módulo 4: My Family & My Body", desc: "Membros da família e partes do corpo humano.",
+    topics: ["Family Members", "Body Parts (Head, Knees, Toes)"],
+    vocab: [{ en: "Mother", pt: "Mãe", emoji: "👩" }, { en: "Father", pt: "Pai", emoji: "👨" }, { en: "Hand", pt: "Mão", emoji: "✋" }]
+  },
+  {
+    id: "k5", title: "Módulo 5: Daily Life & School", desc: "Objetos escolares, rotina e expressões educadas.",
+    topics: ["School Supplies", "Polite Expressions (Please, Thanks)"],
+    vocab: [{ en: "Pencil", pt: "Lápis", emoji: "✏️" }, { en: "Book", pt: "Livro", emoji: "📖" }, { en: "Thank you", pt: "Obrigado", emoji: "🙏" }]
+  }
 ];
 
-// Gerador Infinito de Variações Semânticas (para expansão dinâmica ilimitada)
-function generateDynamicVocab(count = 50) {
-  const prefixes = ["Super", "Micro", "Bio", "Eco", "Smart", "Ultra"];
-  const roots = ["system", "structure", "connect", "action", "trend", "flow"];
-  const result = [...VOCAB_DATABASE_BASE];
-
-  for(let i = 0; i < count; i++) {
-    const p = prefixes[i % prefixes.length];
-    const r = roots[i % roots.length];
-    result.push({
-      en: `${p}-${r}`,
-      pt: `Conceito ${p} ${r}`,
-      cat: "Generated",
-      level: i % 2 === 0 ? "B2" : "C1",
-      emoji: "⚡"
-    });
+const ADULT_COURSE_MODULES = [
+  {
+    id: "a1", title: "Módulo A1: Sobrevivência Inicial", desc: "Cumprimentos, apresentações pessoais e necessidades básicas.",
+    topics: ["Verbo To Be", "Presente Simples Introdutório", "Vocabulário de Rotina"],
+    vocab: [{ en: "Hello", pt: "Olá", emoji: "👋" }, { en: "House", pt: "Casa", emoji: "🏠" }, { en: "Water", pt: "Água", emoji: "💧" }]
+  },
+  {
+    id: "a2", title: "Módulo A2: Comunicação Cotidiana", desc: "Narrativas no passado, planos futuros e viagens.",
+    topics: ["Past Simple", "Future with Going To", "Travel Vocabulary"],
+    vocab: [{ en: "Yesterday", pt: "Ontem", emoji: "📅" }, { en: "Travel", pt: "Viajar", emoji: "✈️" }, { en: "Hotel", pt: "Hotel", emoji: "🏨" }]
+  },
+  {
+    id: "b1", title: "Módulo B1: Autonomia e Vida Profissional", desc: "Experiências pessoais, trabalho e opiniões.",
+    topics: ["Present Perfect", "First Conditional", "Workplace English"],
+    vocab: [{ en: "Experience", pt: "Experiência", emoji: "🌟" }, { en: "Deadline", pt: "Prazo", emoji: "⏰" }, { en: "Career", pt: "Carreira", emoji: "📈" }]
+  },
+  {
+    id: "b2", title: "Módulo B2: Argumentação e Hipóteses", desc: "Discussões complexas, voz passiva e condicional avançado.",
+    topics: ["Second/Third Conditional", "Passive Voice", "Debates"],
+    vocab: [{ en: "Hypothesis", pt: "Hipótese", emoji: "🔬" }, { en: "Negotiate", pt: "Negociar", emoji: "🤝" }, { en: "Strategy", pt: "Estratégia", emoji: "🧩" }]
+  },
+  {
+    id: "c1", title: "Módulo C1/C2: Fluência Nativa e Precisão", desc: "Nuances linguísticas, inversões gramaticais e idioms.",
+    topics: ["Advanced Inversion", "Native Idioms", "Formal Register"],
+    vocab: [{ en: "Nuance", pt: "Sutileza", emoji: "🎨" }, { en: "Eloquence", pt: "Eloquência", emoji: "✨" }, { en: "Hit the nail on the head", pt: "Acertar em cheio", emoji: "🔨" }]
   }
-  return result;
-}
-
-const FULL_VOCAB = generateDynamicVocab(100);
-
-// Algoritmo SRS (SM-2 Simplificado para Repetição Espaçada)
-function calculateSRS(card, performanceRating) {
-  // performanceRating: 1 = Difícil, 2 = Bom, 3 = Fáci
-  let interval = card.interval || 1;
-  let factor = card.factor || 2.5;
-
-  if (performanceRating === 1) {
-    interval = 1;
-  } else if (performanceRating === 2) {
-    interval = Math.round(interval * factor);
-  } else if (performanceRating === 3) {
-    interval = Math.round(interval * factor * 1.3);
-    factor += 0.15;
-  }
-
-  return {
-    interval,
-    factor: Math.max(1.3, factor),
-    nextReview: Date.now() + (interval * 24 * 60 * 60 * 1000)
-  };
-}
+];
 
 // =====================================================================
-// REDE NEURAL LOCAL & MEMÓRIA DO USUÁRIO
-// =====================================================================
-
-class UserNeuralMemory {
-  constructor() {
-    this.memoryKey = "aem_user_memory_v1";
-    this.data = JSON.parse(localStorage.getItem(this.memoryKey)) || {
-      interests: [],
-      errorPatterns: {},
-      chatHistoryContext: [],
-      masteredTopics: []
-    };
-  }
-
-  save() {
-    localStorage.setItem(this.memoryKey, JSON.stringify(this.data));
-  }
-
-  addInteraction(userInput, aiReply, correction = null) {
-    this.data.chatHistoryContext.push({ userInput, aiReply, timestamp: Date.now() });
-    if (this.data.chatHistoryContext.length > 20) this.data.chatHistoryContext.shift();
-
-    if (correction) {
-      const tag = correction.substring(0, 15);
-      this.data.errorPatterns[tag] = (this.data.errorPatterns[tag] || 0) + 1;
-    }
-
-    // Extrai interesses simples por palavra-chave
-    const words = userInput.toLowerCase().split(' ');
-    const keywords = ["music", "code", "travel", "work", "game", "family", "tech"];
-    words.forEach(w => {
-      if (keywords.includes(w) && !this.data.interests.includes(w)) {
-        this.data.interests.push(w);
-      }
-    });
-
-    this.save();
-  }
-
-  getContextSummary() {
-    const interests = this.data.interests.length > 0 ? this.data.interests.join(", ") : "Gerais";
-    const topErrors = Object.keys(this.data.errorPatterns).join(", ") || "Nenhum detectado";
-    return `Interesses: [${interests}] | Pontos de Atenção: [${topErrors}]`;
-  }
-}
-
-const neuralMemory = new UserNeuralMemory();
-
-// =====================================================================
-// ANALYTICS & MONITORAMENTO DE DESEMPENHO
-// =====================================================================
-
-class AnalyticsEngine {
-  constructor() {
-    this.key = "aem_analytics_data";
-    this.metrics = JSON.parse(localStorage.getItem(this.key)) || {
-      totalAnswers: 0,
-      correctAnswers: 0,
-      wordsMastered: 0,
-      conversationMinutes: 0,
-      skillBreakdown: { Grammar: 0, Listening: 0, Shadowing: 0, Vocab: 0 }
-    };
-  }
-
-  save() {
-    localStorage.setItem(this.key, JSON.stringify(this.metrics));
-  }
-
-  trackAnswer(isCorrect, skill = 'Grammar') {
-    this.metrics.totalAnswers += 1;
-    if (isCorrect) {
-      this.metrics.correctAnswers += 1;
-      this.metrics.skillBreakdown[skill] = (this.metrics.skillBreakdown[skill] || 0) + 1;
-    }
-    this.save();
-  }
-
-  getAccuracy() {
-    if (this.metrics.totalAnswers === 0) return 0;
-    return Math.round((this.metrics.correctAnswers / this.metrics.totalAnswers) * 100);
-  }
-}
-
-const analytics = new AnalyticsEngine();
-
-// =====================================================================
-// ENGINE PRINCIPAL DO APP E INTERFACE
+// ENGINE DA PLATAFORMA
 // =====================================================================
 
 let selectedProfile = 'adult';
 let userState = null;
-let currentLevelIdx = 0;
 
 function selectProfile(mode) {
   selectedProfile = mode;
@@ -418,138 +301,139 @@ function selectProfile(mode) {
 
 function startApp() {
   const name = document.getElementById('user-name-input').value.trim();
-  if (!name) return alert("Por favor, digite seu nome.");
-  document.getElementById('modal-auth').classList.add('hidden');
-  document.getElementById('app-shell').classList.remove('hidden');
+  if(!name) return alert("Por favor, informe o seu nome.");
 
   userState = {
     name,
     mode: selectedProfile,
-    xp: 0,
-    coins: 0,
-    hearts: 5,
-    streak: 1,
-    srsCards: {}
+    completedModules: [],
+    srsStats: { wordsMastered: 0, accuracy: 100 }
   };
 
-  renderAll();
-}
+  document.getElementById('modal-auth').classList.add('hidden');
+  document.getElementById('app-shell').classList.remove('hidden');
 
-function renderAll() {
-  // HUD
   document.getElementById('hud-name').innerText = userState.name;
-  document.getElementById('hud-avatar-letter').innerText = userState.name.charAt(0).toUpperCase();
-  document.getElementById('hud-hearts').innerText = userState.hearts;
-  document.getElementById('hud-streak').innerText = userState.streak;
-  document.getElementById('hud-coins').innerText = userState.coins;
-  document.getElementById('hud-xp-fill').style.width = (userState.xp % 100) + '%';
+  document.getElementById('hud-mode-label').innerText = userState.mode === 'kids' ? 'Modo Kids' : 'Modo Geral (Adultos)';
 
-  renderTrail();
+  renderCourseModules();
   renderSRS();
   renderAnalytics();
 }
 
-function renderTrail() {
-  const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
-  const tabs = document.getElementById('level-tabs');
-  tabs.innerHTML = '';
-  levels.forEach((l, idx) => {
-    const b = document.createElement('div');
-    b.className = 'level-tab' + (idx === currentLevelIdx ? ' active' : '');
-    b.innerHTML = `<b>${l}</b><span style="font-size:0.7rem; color:var(--ink-soft);">Nível ${idx + 1}</span>`;
-    b.onclick = () => { currentLevelIdx = idx; renderTrail(); };
-    tabs.appendChild(b);
-  });
+function renderCourseModules() {
+  const container = document.getElementById('module-container');
+  const modules = userState.mode === 'kids' ? KIDS_COURSE_MODULES : ADULT_COURSE_MODULES;
 
-  const path = document.getElementById('path-container');
-  path.innerHTML = `
-    <div class="mascot-banner">
-      <span style="font-size:2.5rem;">🦉</span>
-      <div><b>Trilha ${levels[currentLevelIdx]}</b><p>Siga o fluxo de estações para evoluir em imersão contínua.</p></div>
-    </div>
-    <div class="path-line">
-      <div class="node-wrap">
-        <button class="path-node completed" onclick="openLesson('Vocabulário')">📚</button>
-        <span style="font-size:0.8rem; margin-top:4px;">Vocabulário</span>
-      </div>
-      <div class="node-wrap">
-        <button class="path-node" onclick="openLesson('Shadowing')">🗣️</button>
-        <span style="font-size:0.8rem; margin-top:4px;">Shadowing</span>
-      </div>
-      <div class="node-wrap">
-        <button class="path-node" onclick="openLesson('Video')">🎬</button>
-        <span style="font-size:0.8rem; margin-top:4px;">Vídeo Contextual</span>
-      </div>
-    </div>`;
-}
+  document.getElementById('course-title').innerText = userState.mode === 'kids' ? 'Curso Kids: Trilha de Aprendizado' : 'Plano de Estudo Profissional (CEFR)';
+  document.getElementById('course-subtitle').innerText = userState.mode === 'kids' ? 'Desenvolvimento estruturado por sons, palavras e conceitos.' : 'Progresso modular focado em fluência real.';
 
-// Renderizador do Banco Anki SRS
-function renderSRS() {
-  const container = document.getElementById('anki-card-container');
-  if(!container) return;
-
-  const card = FULL_VOCAB[Math.floor(Math.random() * FULL_VOCAB.length)];
-  container.innerHTML = `
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+  container.innerHTML = '';
+  modules.forEach(m => {
+    const completed = userState.completedModules.includes(m.id);
+    const card = document.createElement('div');
+    card.className = 'module-card';
+    card.innerHTML = `
+      <div class="module-info">
+        <h3>${m.title}</h3>
+        <p>${m.desc}</p>
+        <div style="font-size:0.8rem; color:var(--ink-soft);">Tópicos: ${m.topics.join(' • ')}</div>
+      </div>
       <div>
-        <div class="flash-front">
-          <span style="font-size:3rem;">${card.emoji}</span>
-          <h2>${card.en}</h2>
-          <span style="font-size:0.8rem; opacity:0.8;">Clique para ver a tradução</span>
-        </div>
-        <div class="flash-back">
-          <h2>${card.pt}</h2>
-          <p>Categoria: ${card.cat} (${card.level})</p>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex; gap:10px; justify-content:center; margin-top:10px;">
-      <button class="btn btn-danger" onclick="rateSRS('${card.en}', 1)">Difícil (1d)</button>
-      <button class="btn btn-outline" onclick="rateSRS('${card.en}', 2)">Bom (3d)</button>
-      <button class="btn" onclick="rateSRS('${card.en}', 3)">Fácil (7d)</button>
-    </div>`;
+        <button class="btn ${completed ? 'btn-outline' : ''}" onclick="openModuleLesson('${m.id}')">
+          ${completed ? 'Revisar Módulo ✅' : 'Iniciar Estudo 📖'}
+        </button>
+      </div>`;
+    container.appendChild(card);
+  });
 }
 
-function rateSRS(word, rating) {
-  userState.srsCards[word] = calculateSRS(userState.srsCards[word] || {}, rating);
-  userState.xp += 5;
-  analytics.metrics.wordsMastered += 1;
-  analytics.save();
-  toast("🧠 Memória SRS atualizada!");
-  renderAll();
-}
+function openModuleLesson(moduleId) {
+  const modules = userState.mode === 'kids' ? KIDS_COURSE_MODULES : ADULT_COURSE_MODULES;
+  const mod = modules.find(m => m.id === moduleId);
 
-// Sistema de Vídeo Embed Dinâmico
-function openVideoEmbed(queryText) {
-  const encoded = encodeURIComponent(queryText + " english learning lesson");
-  return `<div style="width:100%; aspect-ratio:16/9; background:#000; border-radius:14px; overflow:hidden;">
-    <iframe width="100%" height="100%" src="https://www.youtube.com/embed?listType=search&list=${encoded}" frameborder="0" allowfullscreen></iframe>
-  </div>`;
-}
-
-function openLesson(type) {
   document.getElementById('lesson-overlay').classList.remove('hidden');
   const body = document.getElementById('lesson-body');
-  
-  if(type === 'Video') {
-    body.innerHTML = `
-      <h3>Imersão em Vídeo</h3>
-      <p style="margin-bottom:12px; color:var(--ink-soft);">Vídeo recomendado com base no seu nível atual:</p>
-      ${openVideoEmbed("English conversation level " + (currentLevelIdx + 1))}
-      <button class="btn" style="width:100%; margin-top:16px;" onclick="closeLesson(); userState.xp += 15; renderAll();">Concluir Vídeo (+15 XP)</button>`;
-  } else {
-    body.innerHTML = `
-      <h3>Estação ${type}</h3>
-      <p style="margin:16px 0;">Pratique e receba feedback em tempo real.</p>
-      <button class="btn" style="width:100%;" onclick="closeLesson(); userState.xp += 10; analytics.trackAnswer(true, '${type}'); renderAll();">Concluir Lição (+10 XP)</button>`;
+  document.getElementById('lesson-title').innerText = mod.title;
+
+  body.innerHTML = `
+    <p style="margin-bottom:16px; color:var(--ink-soft);">${mod.desc}</p>
+    <h4>Vocabulário-Chave do Módulo:</h4>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:14px 0;">
+      ${mod.vocab.map(v => `
+        <div style="background:#F8FAFC; border:1px solid var(--border); padding:12px; border-radius:8px; text-align:center;">
+          <span style="font-size:1.8rem;">${v.emoji}</span>
+          <b style="display:block;">${v.en}</b>
+          <span style="font-size:0.8rem; color:var(--ink-soft);">${v.pt}</span>
+          <button class="btn-outline" style="margin-top:6px; padding:2px 8px; font-size:0.75rem; width:100%;" onclick="speak('${v.en}')">🔊 Ouvir</button>
+        </div>
+      `).join('')}
+    </div>
+    <button class="btn" style="width:100%; margin-top:10px;" onclick="completeModule('${mod.id}')">Concluir Módulo de Estudo</button>`;
+}
+
+function completeModule(moduleId) {
+  if(!userState.completedModules.includes(moduleId)) {
+    userState.completedModules.push(moduleId);
   }
+  closeLesson();
+  renderCourseModules();
+  renderAnalytics();
+  toast("✨ Módulo concluído com sucesso!");
 }
 
 function closeLesson() {
   document.getElementById('lesson-overlay').classList.add('hidden');
 }
 
-// Chat e Neural Memory
+// SRS (Anki)
+function renderSRS() {
+  const container = document.getElementById('srs-card-container');
+  const modules = userState.mode === 'kids' ? KIDS_COURSE_MODULES : ADULT_COURSE_MODULES;
+  const pool = modules.flatMap(m => m.vocab);
+  const card = pool[Math.floor(Math.random() * pool.length)];
+
+  container.innerHTML = `
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div>
+        <div class="flash-front">
+          <span style="font-size:3rem;">${card.emoji}</span>
+          <h2>${card.en}</h2>
+          <span style="font-size:0.8rem; opacity:0.8;">Toque para ver a tradução</span>
+        </div>
+        <div class="flash-back">
+          <h2>${card.pt}</h2>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
+      <button class="btn btn-outline" onclick="reviewSRS(1)">Revisar em breve</button>
+      <button class="btn" onclick="reviewSRS(3)">Fixado na Memória</button>
+    </div>`;
+}
+
+function reviewSRS(rating) {
+  userState.srsStats.wordsMastered += 1;
+  toast("🧠 Resposta registrada no SRS!");
+  renderSRS();
+  renderAnalytics();
+}
+
+// Analytics
+function renderAnalytics() {
+  document.getElementById('analytics-completed').innerText = userState.completedModules.length;
+  document.getElementById('analytics-words').innerText = userState.srsStats.wordsMastered;
+  document.getElementById('analytics-accuracy').innerText = userState.srsStats.accuracy + '%';
+
+  const chart = document.getElementById('analytics-chart');
+  chart.innerHTML = `
+    <div style="display:flex; align-items:flex-end; gap:20px; height:100px; border-bottom:1px solid var(--border); padding-bottom:5px;">
+      <div style="flex:1; background:var(--primary); height:${Math.min(100, userState.completedModules.length * 20)}%; border-radius:4px; text-align:center; color:white; font-size:0.75rem;">Módulos</div>
+      <div style="flex:1; background:var(--success); height:${Math.min(100, userState.srsStats.wordsMastered * 10)}%; border-radius:4px; text-align:center; color:white; font-size:0.75rem;">SRS Retido</div>
+    </div>`;
+}
+
+// Chat e Voz
 function sendMainChatMessage() {
   const input = document.getElementById('main-chat-input');
   const text = input.value.trim();
@@ -560,54 +444,41 @@ function sendMainChatMessage() {
   input.value = '';
 
   setTimeout(() => {
-    const summary = neuralMemory.getContextSummary();
-    const reply = `I stored your progress! Based on your context (${summary}), you are improving quickly. You said: "${text}".`;
-    
-    neuralMemory.addInteraction(text, reply);
-    box.innerHTML += `<div class="msg ai">${reply}<br><span class="memory-tag">🧠 Contexto Retido</span></div>`;
+    const reply = `That is correct! Keep practicing your English. You mentioned: "${text}".`;
+    box.innerHTML += `<div class="msg ai">${reply}</div>`;
     box.scrollTop = box.scrollHeight;
-    
-    analytics.metrics.conversationMinutes += 1;
-    analytics.save();
-    renderAnalytics();
-  }, 600);
+    speak(reply);
+  }, 500);
 }
 
-// Analytics Visual Graph (Nativo em SVG)
-function renderAnalytics() {
-  document.getElementById('analytics-accuracy').innerText = analytics.getAccuracy() + '%';
-  document.getElementById('analytics-words').innerText = analytics.metrics.wordsMastered;
-  document.getElementById('analytics-minutes').innerText = analytics.metrics.conversationMinutes + ' min';
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = userState && userState.mode === 'kids' ? 0.8 : 0.95;
+  window.speechSynthesis.speak(u);
+}
 
-  const chart = document.getElementById('analytics-chart');
-  if(!chart) return;
-
-  const breakdown = analytics.metrics.skillBreakdown;
-  const max = Math.max(1, ...Object.values(breakdown));
-
-  let svgHtml = `<svg width="100%" height="100%" viewBox="0 0 400 120">`;
-  let x = 30;
-  Object.keys(breakdown).forEach(skill => {
-    const val = breakdown[skill];
-    const h = (val / max) * 80;
-    svgHtml += `
-      <rect x="${x}" y="${100 - h}" width="45" height="${h}" fill="#17A398" rx="6" />
-      <text x="${x + 5}" y="115" font-size="10" fill="#6B7794">${skill}</text>
-    `;
-    x += 95;
-  });
-  svgHtml += `</svg>`;
-  chart.innerHTML = svgHtml;
+function voiceInput(targetId, callback) {
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRec) return alert("Navegador sem suporte a reconhecimento de voz.");
+  const rec = new SpeechRec();
+  rec.lang = 'en-US';
+  rec.start();
+  rec.onresult = (e) => {
+    document.getElementById(targetId).value = e.results[0][0].transcript;
+    if (callback) callback();
+  };
 }
 
 function switchScreen(screen) {
-  ['trail', 'anki', 'chat', 'analytics'].forEach(s => {
+  ['course', 'srs', 'chat', 'analytics'].forEach(s => {
     document.getElementById('screen-' + s).classList.add('hidden');
     document.getElementById('nav-' + s).classList.remove('active');
   });
   document.getElementById('screen-' + screen).classList.remove('hidden');
   document.getElementById('nav-' + screen).classList.add('active');
-  if(screen === 'analytics') renderAnalytics();
 }
 
 function toast(text) {
@@ -616,19 +487,7 @@ function toast(text) {
   el.innerText = text;
   document.getElementById('toast-stack').appendChild(el);
   requestAnimationFrame(() => el.classList.add('show'));
-  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 350); }, 3000);
-}
-
-function voiceInput(targetId, callback) {
-  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRec) return alert("Reconhecimento de voz não suportado neste navegador.");
-  const rec = new SpeechRec();
-  rec.lang = 'en-US';
-  rec.start();
-  rec.onresult = (e) => {
-    document.getElementById(targetId).value = e.results[0][0].transcript;
-    if (callback) callback();
-  };
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 350); }, 2500);
 }
 </script>
 </body>
